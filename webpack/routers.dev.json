@@ -1,0 +1,9 @@
+{
+  "index": "market.html",
+  "routers": [{
+    "name": "market",
+    "entry": "./entries/market",
+    "template": "./templates/market.html",
+    "filename": "market.html"
+  }]
+}
