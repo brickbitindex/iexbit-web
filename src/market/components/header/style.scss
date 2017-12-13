@@ -1,0 +1,30 @@
+$logoHeight: 35px;
+
+#header {
+  height: 64px;
+  background: #1E2D39;
+  margin-bottom: 1px;
+  display: flex;
+  align-items: center;
+
+  .logo-container {
+    width: 300px;
+    margin-right: 1px;
+    padding-left: 22px;
+    height: $logoHeight;
+
+    img {
+      height: $logoHeight;
+    }
+  }
+
+  .header-price {
+    font-size: 14px;
+    height: 40px;
+    width: 200px;
+
+    &>div {
+      line-height: 20px;
+    }
+  }
+}
