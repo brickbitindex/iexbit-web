@@ -59,14 +59,18 @@
   },
   "dependencies": {
     "actioncable": "^5.1.4",
+    "autobind-decorator": "^2.1.0",
     "classnames": "^2.2.5",
     "dva": "^2.1.0",
     "dva-no-router": "^1.0.3",
     "jquery": "^3.2.1",
     "keymaster": "^1.6.2",
+    "moment": "^2.19.4",
     "preact": "^8.2.6",
     "preact-compat": "^3.17.0",
+    "qs": "^6.5.1",
     "react": "^16.2.0",
-    "react-intl": "^2.4.0"
+    "react-intl": "^2.4.0",
+    "react-select": "^1.1.0"
   }
 }

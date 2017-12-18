@@ -12,38 +12,111 @@
  * }]
  */
 
-// TODO: remove mock data
-import data from './market.mock';
+import QUERY, { fetch } from './querys';
+
+const addBidOrder = data => fetch.post(QUERY.ADD_BID_ORDER, data).catch(err => err);
 
 const model = {
   namespace: 'market',
   state: {
+    pair: 'btccny',
     prices: [],
+    current: {},
+    trades: [],
+    orderBook: {
+      asks: [],
+      bids: [],
+    },
   },
   subscriptions: {
     // TODO:
     setup({ dispatch }) {
-      dispatch({
-        type: 'updatePrice',
-        payload: data.prices,
-      });
+      // dispatch({
+      //   type: 'updatePrice',
+      //   payload: data.prices,
+      // });
     },
-    // keyboardWatcher({ dispatch }) {
-    //   key('⌘+up, ctrl+up', () => { dispatch({ type: 'add' }); });
-    // },
   },
   effects: {
-    // * add(action, { call, put }) {
-    //   yield call(delay, 1000);
-    //   yield put({ type: 'minus' });
-    // },
+    * addOrder({ payload }, { call, put }) {
+      const data = payload.data;
+      const params = {
+        order_bid: {
+          ord_type: data.type,
+          price: data.price,
+          origin_volume: data.amount,
+          total: (parseFloat(data.price) * parseFloat(data.amount)).toFixed(2),
+        },
+      };
+      const response = yield call(addBidOrder, params);
+      console.log(response);
+      // yield call(delay, 1000);
+      // yield put({ type: 'minus' });
+    },
   },
   reducers: {
-    updatePrice(state, { payload }) {
-      const prices = [...state.prices, ...payload];
+    updatePrices(state, { payload }) {
+      // 处理数据
+      // 结构
+      // {"btccny":{"name":"BTC/CNY","base_unit":"btc","quote_unit":"cny","low":"11214.0","high":"57000.0","last":"11214.0","open":19000,"volume":"131.1168","sell":"12002.0","buy":"11213.0","at":1513409205}}
+      const currentPair = state.pair;
+      let current;
+      const prices = Object.keys(payload).map((key) => {
+        const pair = payload[key];
+        pair.pair = key;
+        if (key === currentPair) {
+          current = pair;
+        }
+        return pair;
+      });
       return {
         ...state,
         prices,
+        current,
+      };
+    },
+    updateTrades(state, { payload }) {
+      // 处理数据
+      // 结构
+      // trades: [{
+      //   amount: "0.5216",
+      //   date: 1513407071,
+      //   price: "11353.0",
+      //   tid: 109,
+      //   type: "buy",
+      // }]
+      const trades = payload.trades.concat(state.trades).slice(0, 30);
+      return {
+        ...state,
+        trades,
+      };
+    },
+    updateOrderBook(state, { payload }) {
+      // 处理数据
+      // 结构
+      // ['price', 'amount', 'total', deep]
+      let deep = 0;
+      let max = 0;
+      const asks = payload.asks.map((row) => {
+        const amount = parseFloat(row[1]);
+        deep += amount;
+        return row.concat([(parseFloat(row[0] * amount)).toFixed(1), deep]);
+      });
+      max = deep;
+      deep = 0;
+      const bids = payload.bids.map((row) => {
+        const amount = parseFloat(row[1]);
+        deep += amount;
+        return row.concat([(parseFloat(row[0] * amount)).toFixed(1), deep]);
+      });
+      if (deep > max) max = deep;
+      return {
+        ...state,
+        orderBook: {
+          asks,
+          bids,
+          max,
+        },
       };
     },
   },

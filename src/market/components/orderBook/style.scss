@@ -1,0 +1,62 @@
+#orderBook {
+  display: flex;
+  width: 100%;
+
+  .order-book {
+    width: 50%;
+    &.bids {
+      .total {
+        padding-left: 24px;
+      }
+      .order-book-bar {
+        right: 0;
+        background: #255547;
+      }
+    }
+    &.asks {
+      .total {
+        padding-right: 24px;
+      }
+      .order-book-bar {
+        left: 0;
+        background: #4E3342;
+      }
+    }
+
+    .order-book-row {
+      display: flex;
+      position: relative;
+  
+      &.thead {
+        height: 30px;
+        line-height: 30px;
+      }
+
+      .order-book-bar {
+        position: absolute;
+        height: 100%;
+        z-index: 0;
+      }
+   
+      .order-book-col {
+        z-index: 1;
+        &.total {
+          width: 25%;
+          text-align: right;
+        }
+        &.price {
+          width: 35%;
+          text-align: right;
+        }
+        &.amount {
+          width: 40%;
+          text-align: right;
+        }
+      }
+    }
+  }
+}
+
+.cb-panel.history-panel {
+  margin-bottom: 3px;
+}

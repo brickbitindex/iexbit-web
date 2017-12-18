@@ -1,6 +1,21 @@
+@import '../assets/iconfont/iconfont.css';
+
+html,
+body,
+#main {
+  width: 100%;
+  font-size: 12px;
+}
+
 body {
   background: #151F28;
-  color: #fff;
+  color: #eee;
+}
+
+tt,
+pre,
+code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
 }
 
 .red-text {
@@ -8,4 +23,87 @@ body {
 }
 .green-text {
   color: #3DE777;
+}
+.light-text {
+  color: #4D708C;
+}
+
+.simple-btn {
+  cursor: pointer;
+  transition: all ease 0.2s;
+
+  &:hover {
+    background: rgba($color: #fff, $alpha: 0.2);
+  }
+}
+
+#square {
+  display: flex;
+
+  .left {
+    width: 250px;
+    margin-right: 3px;
+  }
+  .right {
+    flex-grow: 1;
+    flex-shrink: 1;
+
+    .right-top {
+      display: flex;
+      margin-bottom: 3px;
+    }
+  }
+}
+
+// component
+
+.cb-select.Select {
+  height: 30px;
+
+  &.error {
+    .Select-control {
+      background: #4E3342 !important;
+      border-color: #F74D64;
+    }
+  }
+
+  .Select-control {
+    background: #2E4152 !important;
+    border-color: #475B6D;
+    height: 30px;
+  }
+  .Select-arrow {
+    border-color: #4D708C transparent transparent;
+  }
+  .Select-placeholder {
+    color: #4D708C;
+    line-height: 28px;
+  }
+  .Select-input {
+    height: 28px;
+  }
+  .Select-value .Select-value-label {
+    color: #fff !important;
+    line-height: 28px;
+  }
+  .Select-control .Select-value {
+    line-height: 28px;
+  }
+  .Select-control .Select-input:focus {
+    background: transparent;
+  }
+  .Select-menu-outer {
+    background: #2E4152;
+    border-color: #475B6D;
+  }
+  .Select-option {
+    background: #2E4152;
+    color: #fff;
+
+    &.is-selected,
+    &.is-focused {
+      background-color: #4D708C;
+      // color: $select-option-selected-color;
+    }
+  }
 }

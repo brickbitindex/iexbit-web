@@ -1,0 +1,34 @@
+#market {
+  padding: 24px;
+
+  .market-row {
+    margin-bottom: 16px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .market-col {
+      display: inline-block;
+      width: 45%;
+
+      &:first-child {
+        width: 55%;
+      }
+
+      &>div {
+        height: 20px;
+        line-height: 20px;
+      }
+    }
+  }
+
+  .market-current {
+    text-align: center;
+    font-size: 22px;
+  }
+}
+
+.cb-panel.market-panel {
+  margin-bottom: 3px;
+}

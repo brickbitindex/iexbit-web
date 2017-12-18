@@ -8,12 +8,14 @@
 // <FormattedMessage id="hello" values={{ name: 'Sekai' }} />
 // <FormattedRelative value={Date.now()} />
 
+import zh from './i18n/zh.json';
+
 
 const model = {
   namespace: 'i18n',
   state: {
     locale: 'zh',
-    messages: {},
+    messages: zh,
   },
   subscriptions: {
     // keyboardWatcher({ dispatch }) {
