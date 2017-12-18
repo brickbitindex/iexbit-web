@@ -1,0 +1,22 @@
+$titleHeight: 32px;
+
+.cb-panel {
+  width: 100%;
+  background: #1E2D39;
+
+  .cb-panel-title {
+    background: #1A2631;
+    height: $titleHeight;
+    line-height: $titleHeight;
+    padding: 0 0 0 18px;
+    font-size: 16px;
+
+    .simple-btn {
+      float: right;
+      font-size: 14px;
+      width: 32px;
+      text-align: center;
+    }
+  }
+  .cb-panel-content {}
+}

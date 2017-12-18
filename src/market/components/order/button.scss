@@ -1,0 +1,21 @@
+.order-btn {
+  width: 100%;
+  border: none;
+
+  &.buy {
+    background: #2b7452;
+    color: #3DE777;
+    
+    &:disabled {
+      background: #295245;
+    }
+  }
+  &.sell {
+    background: #8b2e46;
+    color: #F74D64;
+
+    &:disabled {
+      background: #613746;
+    }
+  }
+}

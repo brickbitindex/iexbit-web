@@ -1,23 +1,26 @@
-// how to use.
-//
-// messages: {
-//   hello: 'Hello, {name}',
-// },
-//
-// import { FormattedMessage, FormattedRelative } from 'react-intl';
-// <FormattedMessage id="hello" values={{ name: 'Sekai' }} />
-// <FormattedRelative value={Date.now()} />
-
-
 const model = {
-  namespace: 'i18n',
+  namespace: 'utils',
   state: {
-    locale: 'zh',
-    messages: {},
+    loading: {
+      market: true,
+      chart: true,
+      trades: true,
+      myOrders: true,
+      history: true,
+      orderBook: true,
+      balance: true,
+    },
   },
   subscriptions: {
-    // keyboardWatcher({ dispatch }) {
-    //   key('⌘+up, ctrl+up', () => { dispatch({ type: 'add' }); });
+    // setup({ dispatch }) {
+    //   window.addEventListener('resize', () => {
+    //     dispatch({
+    //       type: 'updateState',
+    //       payload: {
+    //         windowWidth
+    //       },
+    //     });
+    //   });
     // },
   },
   effects: {
@@ -27,13 +30,20 @@ const model = {
     // },
   },
   reducers: {
-    // updatePrice(state, { payload }) {
-    //   const prices = { ...state.prices, ...payload };
-    //   return {
-    //     ...state,
-    //     prices,
-    //   };
-    // },
+    updateLoading(state, { payload }) {
+      const loading = { ...state.loading };
+      loading[payload.name] = payload.loading;
+      return {
+        ...state,
+        loading,
+      };
+    },
+    updateState(state, { payload }) {
+      return {
+        ...state,
+        ...payload,
+      };
+    },
   },
 };
 

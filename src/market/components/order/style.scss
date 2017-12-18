@@ -1,0 +1,29 @@
+$itemHeight: 30px;
+
+.order {
+  padding: 16px 24px;
+
+  .order-row {
+    display: flex;
+    height: $itemHeight;
+    width: 100%;
+    margin-bottom: 20px;
+
+    &:last-child {
+      margin-bottom: 0px;
+    }
+
+    .order-lable {
+      width: 20%;
+      line-height: $itemHeight;
+    }
+    .order-item {
+      width: 80%;
+    }
+  }
+}
+
+.cb-panel.buy-panel,
+.cb-panel.sell-panel {
+  margin-bottom: 3px;
+}

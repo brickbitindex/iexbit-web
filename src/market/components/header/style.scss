@@ -1,17 +1,20 @@
-$logoHeight: 35px;
+$logoHeight: 28px;
+$headerPadding: 22px;
 
 #header {
-  height: 64px;
+  height: 60px;
   background: #1E2D39;
-  margin-bottom: 1px;
+  margin-bottom: 3px;
   display: flex;
   align-items: center;
 
   .logo-container {
-    width: 300px;
+    width: 250px;
     margin-right: 1px;
-    padding-left: 22px;
+    padding-left: $headerPadding;
     height: $logoHeight;
+    flex-shrink: 0;
+    flex-grow: 0;
 
     img {
       height: $logoHeight;
@@ -19,12 +22,30 @@ $logoHeight: 35px;
   }
 
   .header-price {
-    font-size: 14px;
-    height: 40px;
-    width: 200px;
+    height: 36px;
+    max-width: 200px;
+    flex-shrink: 1;
+    flex-grow: 1;
 
     &>div {
       line-height: 20px;
+    }
+  }
+
+  .header-opts {
+    flex-shrink: 1;
+    flex-grow: 1;
+    text-align: right;
+    padding-right: $headerPadding;
+  }
+
+  .header-search {
+    display: inline-block;
+    padding: 5px 8px;
+    border-radius: 5px;
+
+    i {
+      font-size: 24px;
     }
   }
 }

@@ -1,0 +1,20 @@
+.loading-container {
+  width: 100%;
+  text-align: center;
+  height: 100%;
+  padding: 20px 0;
+
+  img {
+    height: 30px;
+    animation: loadingAnime 1s infinite;
+  }
+}
+
+@keyframes loadingAnime {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}
