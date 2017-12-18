@@ -1,5 +1,9 @@
 /* eslint no-confusing-arrow: 0 */
 
+import QUERY, { fetch } from './querys';
+
+const deleteOrder = id => fetch.delete(QUERY.DELETE_ORDER(id)).catch(err => err);
+
 const model = {
   namespace: 'account',
   state: {
@@ -16,10 +20,11 @@ const model = {
     // },
   },
   effects: {
-    // * add(action, { call, put }) {
-    //   yield call(delay, 1000);
-    //   yield put({ type: 'minus' });
-    // },
+    * deleteOrder({ payload }, { call }) {
+      const id = payload.id;
+      const response = yield call(deleteOrder, id);
+      console.log(response);
+    },
   },
   reducers: {
     updateBalance(state, { payload }) {
@@ -34,6 +39,21 @@ const model = {
       return {
         ...state,
         balance,
+      };
+    },
+    updateOrders(state, { payload }) {
+      const orders = [...state.orders];
+      console.log(payload);
+      const idArr = orders.filter(b => b.id === payload.id);
+      if (idArr.length === 0) {
+        orders.push(payload);
+      } else {
+        orders.splice(orders.indexOf(idArr[0]), 1, payload);
+      }
+      orders.sort((a, b) => b.id - a.id);
+      return {
+        ...state,
+        orders,
       };
     },
   },

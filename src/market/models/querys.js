@@ -7,6 +7,7 @@ const market = document.body.getAttribute('data-market') || null;
 const QUERY = {
   ADD_BID_ORDER: `/markets/${market}/order_bids`,
   ADD_ASK_ORDER: `/markets/${market}/order_asks`,
+  DELETE_ORDER: id => `/markets/${market}/orders/${id}`,
 };
 
 const $token = document.querySelector('meta[name=csrf-token]');
@@ -47,6 +48,18 @@ export const fetch = {
     })
     .then(checkStatus)
     .then(parseJSON);
+  },
+  delete(url, options = {}) {
+    return fetchlib(url, {
+      headers: {
+        Accept: '*/*',
+        'X-CSRF-Token': token,
+      },
+      ...options,
+      method: 'DELETE',
+      credentials: 'include',
+    })
+    .then(checkStatus);
   },
   get(url, options = {}) {
     return fetchlib(url, {

@@ -1,3 +1,50 @@
+#myOrders {
+  .myorder-row {
+    display: flex;
+    height: 16px;
+    align-items: center;
+
+    &:nth-child(odd) {
+      background: #253746;
+    }
+
+    &.thead {
+      height: 22px;
+      line-height: 22px;
+    }
+ 
+    .myorder-col {
+      &.type {
+        width: 15%;
+        text-align: center;
+        // padding-left: 12px;
+      }
+      &.state {
+        width: 15%;
+        text-align: center;
+      }
+      &.price {
+        width: 20%;
+        text-align: right;
+      }
+      &.amount {
+        width: 30%;
+        text-align: right;
+      }
+      &.opt {
+        width: 10%;
+        text-align: right;
+        // padding-right: 12px;
+      }
+    }
+  }
+}
+
 .cb-panel.myOrder-panel {
   margin-bottom: 3px;
+
+  .cb-panel-content {
+    max-height: 200px;
+    overflow: auto;
+  }
 }
