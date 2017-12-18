@@ -1,20 +1,19 @@
-// TODO: remove mock data
-import data from './account.mock';
+/* eslint no-confusing-arrow: 0 */
 
 const model = {
   namespace: 'account',
   state: {
-    balance: {},
+    balance: [],
     orders: [],
   },
   subscriptions: {
     // TODO:
-    setup({ dispatch }) {
-      dispatch({
-        type: 'updateBalance',
-        payload: data.balance,
-      });
-    },
+    // setup({ dispatch }) {
+    //   dispatch({
+    //     type: 'updateBalance',
+    //     payload: data.balance,
+    //   });
+    // },
   },
   effects: {
     // * add(action, { call, put }) {
@@ -24,10 +23,14 @@ const model = {
   },
   reducers: {
     updateBalance(state, { payload }) {
-      const balance = {
-        ...state.balance,
-        ...payload,
-      };
+      const balance = [...state.balance];
+      const currencyArr = balance.filter(b => b.currency === payload.currency);
+      if (currencyArr.length === 0) {
+        balance.push(payload);
+      } else {
+        balance.splice(balance.indexOf(currencyArr[0]), 1, payload);
+      }
+      balance.sort((a, b) => a.currency > b.currency ? 1 : -1);
       return {
         ...state,
         balance,

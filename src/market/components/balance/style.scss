@@ -1,3 +1,36 @@
 .cb-panel.balance-panel {
   margin-bottom: 3px;
+
+  .balance-row {
+    display: flex;
+    position: relative;
+    align-items: center;
+    padding: 14px;
+
+    &:nth-child(odd) {
+      background: #253746;
+    }
+    // &:nth-child(even) {
+    //   background: #1E2D39;
+    // }
+
+    .balance-col.currency {
+      width: 25%;
+      font-size: 18px;
+      padding-left: 20px;
+    }
+    .balance-col.balance {
+      text-align: right;
+      padding-right: 20px;
+      width: 75%;
+
+      i {
+        font-size: 12px;
+      }
+
+      .lock {
+        margin-left: 5px;
+      }
+    }
+  }
 }

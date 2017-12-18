@@ -15,11 +15,12 @@
 import QUERY, { fetch } from './querys';
 
 const addBidOrder = data => fetch.post(QUERY.ADD_BID_ORDER, data).catch(err => err);
+const addAskOrder = data => fetch.post(QUERY.ADD_ASK_ORDER, data).catch(err => err);
 
 const model = {
   namespace: 'market',
   state: {
-    pair: 'btccny',
+    pair: document.body.getAttribute('data-market') || null,
     prices: [],
     current: {},
     trades: [],
@@ -40,15 +41,30 @@ const model = {
   effects: {
     * addOrder({ payload }, { call, put }) {
       const data = payload.data;
-      const params = {
-        order_bid: {
-          ord_type: data.type,
-          price: data.price,
-          origin_volume: data.amount,
-          total: (parseFloat(data.price) * parseFloat(data.amount)).toFixed(2),
-        },
-      };
-      const response = yield call(addBidOrder, params);
+      let params;
+      let caller;
+      if (payload.type === 'bid') {
+        params = {
+          order_bid: {
+            ord_type: data.type,
+            price: data.price,
+            origin_volume: data.amount,
+            total: (parseFloat(data.price) * parseFloat(data.amount)).toFixed(2),
+          },
+        };
+        caller = addBidOrder;
+      } else {
+        params = {
+          order_ask: {
+            ord_type: data.type,
+            price: data.price,
+            origin_volume: data.amount,
+            total: (parseFloat(data.price) * parseFloat(data.amount)).toFixed(2),
+          },
+        };
+        caller = addAskOrder;
+      }
+      const response = yield call(caller, params);
       console.log(response);
       // yield call(delay, 1000);
       // yield put({ type: 'minus' });
