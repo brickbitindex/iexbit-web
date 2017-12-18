@@ -22,5 +22,12 @@
   "orderbook_total": "总价",
   "orderbook_amount": "数量",
   "orderbook_price": "价格",
-  "balance": "我的资产"
+  "balance": "我的资产",
+  "myorder_type": "类型",
+  "myorder_price": "价格",
+  "myorder_amount": "数量",
+  "myorder_state": "状态",
+  "myorder_opt": "操作",
+  "myorder_wait": "未成交",
+  "myorder_partail": "部分成交"
 }

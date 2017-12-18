@@ -128,7 +128,6 @@ class IActionCable extends Component {
   }
   // private
   handleAccount(data) {
-    // TODO:
     this.checkLoading('balance');
     this.props.dispatch({
       type: 'account/updateBalance',
@@ -137,7 +136,11 @@ class IActionCable extends Component {
   }
   handleOrder(data) {
     // TODO:
-    // console.log('PrivateChannel/order', data);
+    this.checkLoading('myOrders');
+    this.props.dispatch({
+      type: 'account/updateOrders',
+      payload: data,
+    });
   }
   handleTrade(data) {
     // TODO:
