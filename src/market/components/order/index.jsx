@@ -15,7 +15,7 @@ function WrapBuyOrder(props) {
         props.dispatch({
           type: 'market/addOrder',
           payload: {
-            type: 'bids',
+            type: 'bid',
             data,
           },
         });
@@ -33,7 +33,7 @@ function WrapSellOrder(props) {
         props.dispatch({
           type: 'market/addOrder',
           payload: {
-            type: 'asks',
+            type: 'ask',
             data,
           },
         });

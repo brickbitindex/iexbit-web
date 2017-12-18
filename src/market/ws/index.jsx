@@ -10,11 +10,14 @@ class IActionCable extends Component {
     this.cable = null;
   }
   componentDidMount() {
-    const cable = ActionCable.createConsumer('ws://test.exchange.grootapp.com/cable');
-    this.cable = cable;
-    this.createSubscription('HallChannel', { channel: 'HallChannel', market: 'btccny', init: true });
-    this.createSubscription('PrivateChannel', { channel: 'PrivateChannel', market: 'btccny', init: true });
-    this.createSubscription('HallChannel-g', { channel: 'HallChannel' });
+    const market = this.props.market;
+    if (market && market.length > 0) {
+      const cable = ActionCable.createConsumer('ws://test.exchange.grootapp.com/cable');
+      this.cable = cable;
+      this.createSubscription('HallChannel', { channel: 'HallChannel', market, init: true });
+      this.createSubscription('PrivateChannel', { channel: 'PrivateChannel', market, init: true });
+      this.createSubscription('HallChannel-g', { channel: 'HallChannel' });
+    }
   }
   createSubscription(tag, option, handlers = {}) {
     const baseHandler = {
@@ -126,15 +129,19 @@ class IActionCable extends Component {
   // private
   handleAccount(data) {
     // TODO:
-    // console.log(data);
+    this.checkLoading('balance');
+    this.props.dispatch({
+      type: 'account/updateBalance',
+      payload: data,
+    });
   }
   handleOrder(data) {
     // TODO:
-    console.log('PrivateChannel/order', data);
+    // console.log('PrivateChannel/order', data);
   }
   handleTrade(data) {
     // TODO:
-    console.log('PrivateChannel/trade', data);
+    // console.log('PrivateChannel/trade', data);
   }
   render() {
     return (
@@ -143,9 +150,10 @@ class IActionCable extends Component {
   }
 }
 
-function mapStateToProps({ utils }) {
+function mapStateToProps({ utils, market }) {
   return {
     loading: utils.loading,
+    market: market.pair,
   };
 }
 
