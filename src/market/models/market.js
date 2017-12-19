@@ -39,7 +39,7 @@ const model = {
     },
   },
   effects: {
-    * addOrder({ payload }, { call, put }) {
+    * addOrder({ payload }, { call }) {
       const data = payload.data;
       let params;
       let caller;
@@ -66,8 +66,6 @@ const model = {
       }
       const response = yield call(caller, params);
       console.log(response);
-      // yield call(delay, 1000);
-      // yield put({ type: 'minus' });
     },
   },
   reducers: {

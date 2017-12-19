@@ -43,7 +43,7 @@ const model = {
     },
     updateOrders(state, { payload }) {
       const orders = [...state.orders];
-      console.log(payload);
+      // console.log(payload);
       const idArr = orders.filter(b => b.id === payload.id);
       if (idArr.length === 0) {
         orders.push(payload);

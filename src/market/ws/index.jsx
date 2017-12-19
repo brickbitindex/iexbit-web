@@ -136,6 +136,7 @@ class IActionCable extends Component {
   }
   handleOrder(data) {
     // TODO:
+    console.log(data);
     this.checkLoading('myOrders');
     this.props.dispatch({
       type: 'account/updateOrders',
