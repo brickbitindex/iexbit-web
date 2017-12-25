@@ -5,10 +5,9 @@ import QUERY, { fetch } from './querys';
 const deleteOrder = id => fetch.delete(QUERY.DELETE_ORDER(id)).catch(err => err);
 
 const model = {
-  namespace: 'account',
+  namespace: 'chart',
   state: {
     balance: [],
-    orders: [],
   },
   subscriptions: {
     // TODO:
@@ -39,21 +38,6 @@ const model = {
       return {
         ...state,
         balance,
-      };
-    },
-    updateOrders(state, { payload }) {
-      const orders = [...state.orders];
-      // console.log(payload);
-      const idArr = orders.filter(b => b.id === payload.id);
-      if (idArr.length === 0) {
-        orders.push(payload);
-      } else {
-        orders.splice(orders.indexOf(idArr[0]), 1, payload);
-      }
-      orders.sort((a, b) => b.id - a.id);
-      return {
-        ...state,
-        orders,
       };
     },
   },
