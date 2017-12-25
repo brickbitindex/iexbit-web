@@ -41,7 +41,8 @@ function Index(props) {
           </div>
           <div className="right">
             <div className="right-top">
-              <Chart loading={loading.chart} />
+              {/* <Chart loading={loading.chart} /> */}
+              <Chart />
               <Trades loading={loading.trades} />
             </div>
             <MyOrders loading={loading.myOrders} />

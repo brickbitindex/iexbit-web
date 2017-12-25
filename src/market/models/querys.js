@@ -8,6 +8,7 @@ const QUERY = {
   ADD_BID_ORDER: `/markets/${market}/order_bids`,
   ADD_ASK_ORDER: `/markets/${market}/order_asks`,
   DELETE_ORDER: id => `/markets/${market}/orders/${id}`,
+  K: '/api/v2/k.json',
 };
 
 const $token = document.querySelector('meta[name=csrf-token]');
@@ -61,8 +62,12 @@ export const fetch = {
     })
     .then(checkStatus);
   },
-  get(url, options = {}) {
-    return fetchlib(url, {
+  get(url, data, options = {}) {
+    let queryUrl = url;
+    if (data) {
+      queryUrl += '?' + qs.stringify(data);
+    }
+    return fetchlib(queryUrl, {
       ...options,
       method: 'GET',
     })
