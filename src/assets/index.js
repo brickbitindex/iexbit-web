@@ -1,7 +1,7 @@
-import siEthbtc from './images/symbol_icon_ethbtc.png';
+// import siEthbtc from './images/symbol_icon_ethbtc.png';
 
 const SYMBOL_ICON = {
-  ethbtc: siEthbtc,
+  ethbtc: '/test/images/symbol_icon_ethbtc.png',
 };
 
 export {
