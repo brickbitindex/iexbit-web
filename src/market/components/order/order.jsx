@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'dva';
 import autobind from 'autobind-decorator';
 import classnames from 'classnames';
 import { FormattedMessage } from 'react-intl';
@@ -9,11 +10,16 @@ import OrderButton from './button';
 
 const numberReg = /^\d+(\.\d+)?$/;
 
-export default class Order extends Component {
+const typeOptions = [
+  { value: 'limit', label: <FormattedMessage id="order_type_limit" /> },
+  { value: 'market', label: <FormattedMessage id="order_type_market" /> },
+];
+
+class Order extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      type: undefined,
+      type: typeOptions[0],
       price: undefined,
       amount: undefined,
       error: {
@@ -21,6 +27,22 @@ export default class Order extends Component {
         price: false,
         amount: false,
       },
+    };
+  }
+  getBalance(key) {
+    const { balance } = this.props;
+    const keyBalance = balance.filter(b => b.currency === key);
+    if (keyBalance.length > 0) {
+      const balancep = parseFloat(keyBalance[0].balance);
+      const locked = parseFloat(keyBalance[0].locked);
+      return {
+        balance: balancep,
+        locked,
+      };
+    }
+    return {
+      balance: 0,
+      locked: 0,
     };
   }
   @autobind
@@ -88,10 +110,27 @@ export default class Order extends Component {
       });
     }
   }
+  handleQuickAmount(percentage) {
+    const { marketBasicInfo } = this.props;
+    const key = this.props.type === 'buy' ? marketBasicInfo.quote_unit : marketBasicInfo.base_unit;
+    const balance = this.getBalance(key);
+    const current = balance.balance - balance.locked;
+    this.setState({
+      amount: percentage * current,
+    });
+  }
+  // TODO: balance.toFixed
   render() {
     const { type, price, amount, error } = this.state;
+    const { marketBasicInfo } = this.props;
+    const key = this.props.type === 'buy' ? marketBasicInfo.quote_unit : marketBasicInfo.base_unit;
+    const balance = this.getBalance(key);
     return (
       <div className="order">
+        <div className="order-balance">
+          <div className="flex-fixed">{key.toUpperCase()}<FormattedMessage id="order_balance" /></div>
+          <div className="order-balance-value flex-autofixed">{(balance.balance - balance.locked).toFixed(2)}</div>
+        </div>
         <div className="order-row">
           <div className="order-lable"><FormattedMessage id="order_type" /></div>
           <Select
@@ -101,10 +140,7 @@ export default class Order extends Component {
             placeholder=""
             value={type}
             onChange={this.handleTypeChange}
-            options={[
-              { value: 'limit', label: <FormattedMessage id="order_type_limit" /> },
-              { value: 'market', label: <FormattedMessage id="order_type_market" /> },
-            ]}
+            options={typeOptions}
           />
         </div>
         <div className="order-row">
@@ -113,6 +149,7 @@ export default class Order extends Component {
             className={classnames('order-item', { error: error.price })}
             value={price}
             onChange={this.handlePriceChange}
+            suffix={marketBasicInfo.quote_unit.toUpperCase()}
           />
         </div>
         <div className="order-row">
@@ -121,18 +158,34 @@ export default class Order extends Component {
             className={classnames('order-item', { error: error.amount })}
             value={amount}
             onChange={this.handleAmountChange}
+            suffix={marketBasicInfo.base_unit.toUpperCase()}
           />
+        </div>
+        <div className="order-row small">
+          <div className="order-lable">{''}</div>
+          <div className="order-item order-amount-btns">
+            <span className="order-amount-btn" onClick={this.handleQuickAmount.bind(this, 0.25)}>25%</span>
+            <span className="order-amount-btn" onClick={this.handleQuickAmount.bind(this, 0.5)}>50%</span>
+            <span className="order-amount-btn" onClick={this.handleQuickAmount.bind(this, 0.75)}>75%</span>
+            <span className="order-amount-btn" onClick={this.handleQuickAmount.bind(this, 1)}>100%</span>
+          </div>
         </div>
         <div className="order-row">
           <OrderButton className={this.props.type} onClick={this.handleSubmit}>
-            {this.props.type === 'buy' ? (
-              <FormattedMessage id="order_buy" />
-            ) : (
-              <FormattedMessage id="order_sell" />
-            )}
+            <FormattedMessage id={`order_${this.props.type}`} />
+            <span>{marketBasicInfo.base_unit.toUpperCase()}</span>
           </OrderButton>
         </div>
       </div>
     );
   }
 }
+
+function mapStateToProps({ market, account }) {
+  return {
+    marketBasicInfo: market.currentBasicInfo,
+    balance: account.balance,
+  };
+}
+
+export default connect(mapStateToProps)(Order);

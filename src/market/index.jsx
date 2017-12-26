@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'dva-no-router';
-import 'react-select/dist/react-select.css';
 
 import { addLocaleData, IntlProvider } from 'react-intl';
 import en from 'react-intl/locale-data/en';
@@ -15,8 +14,8 @@ import { BuyOrder, SellOrder } from './components/order';
 import Chart from './components/chart';
 import Trades from './components/trades';
 import MyOrders from './components/myOrders';
-import History from './components/history';
-import Balance from './components/balance';
+// import History from './components/history';
+// import Balance from './components/balance';
 import OrderBook from './components/orderBook';
 
 import WS from './ws';
@@ -25,34 +24,37 @@ import './g.scss';
 
 addLocaleData([...en, ...zh, ...ja, ...ko]);
 
-function Index(props) {
-  const { locale, messages, loading } = props;
-  return (
-    <IntlProvider locale={locale} messages={messages}>
-      <div>
-        <WS />
-        <Header />
-        <div id="square">
-          <div className="left">
-            <Market loading={loading.market} />
-            <Balance loading={loading.balance} />
-            <BuyOrder />
-            <SellOrder />
-          </div>
-          <div className="right">
-            <div className="right-top">
-              {/* <Chart loading={loading.chart} /> */}
-              <Chart />
-              <Trades loading={loading.trades} />
+/* <MyOrders loading={loading.myOrders} />
+  <History loading={loading.history} />
+  <Balance loading={loading.balance} /> */
+
+class Index extends Component {
+  componentDidMount() {}
+  render() {
+    const { locale, messages, loading } = this.props;
+    return (
+      <IntlProvider locale={locale} messages={messages}>
+        <div id="squareContainer">
+          <WS />
+          <div id="square">
+            <Header />
+            <div className="top flex-autofixed">
+              <Chart className="flex-autofixed" />
+              <Trades loading={loading.trades} className="flex-fixed" />
+              <OrderBook loading={loading.orderBook} className="flex-fixed">
+                <Market loading={loading.market} />
+              </OrderBook>
             </div>
-            <MyOrders loading={loading.myOrders} />
-            <History loading={loading.history} />
-            <OrderBook loading={loading.orderBook} />
+            <div className="bottom flex-fixed">
+              <MyOrders loading={loading.myOrders} className="flex-autofixed" />
+              <BuyOrder className="flex-fixed" loading={loading.order} />
+              <SellOrder className="flex-fixed" loading={loading.order} />
+            </div>
           </div>
         </div>
-      </div>
-    </IntlProvider>
-  );
+      </IntlProvider>
+    );
+  }
 }
 
 function mapStateToProps({ i18n, utils }) {

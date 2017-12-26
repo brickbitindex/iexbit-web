@@ -1,11 +1,25 @@
+@import '../assets/styles/react-select.min.css';
 @import '../assets/iconfont/iconfont.css';
 
 html,
 body,
 #main {
   width: 100%;
+  
   font-size: 12px;
 }
+
+html,
+body,
+#main,
+#squareContainer,
+#square {
+  height: 100%;
+}
+
+// #square {
+//   perspective: 100px;
+// }
 
 body {
   background: #151F28;
@@ -40,20 +54,40 @@ code,
 
 #square {
   display: flex;
+  flex-direction: column;
 
-  .left {
-    width: 250px;
-    margin-right: 3px;
+  .top {
+    display: flex;
+    margin-bottom: 3px;
   }
-  .right {
-    flex-grow: 1;
-    flex-shrink: 1;
 
-    .right-top {
-      display: flex;
-      margin-bottom: 3px;
-    }
+  .bottom {
+    display: flex;
+    height: 250px;
   }
+
+  // .left {
+  //   width: 250px;
+  //   margin-right: 3px;
+  // }
+  // .right {
+  //   flex-grow: 1;
+  //   flex-shrink: 1;
+
+  //   .right-top {
+  //     display: flex;
+  //     margin-bottom: 3px;
+  //   }
+  // }
+}
+
+.flex-autofixed {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+.flex-fixed {
+  flex-grow: 0;
+  flex-shrink: 0;
 }
 
 // component

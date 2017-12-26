@@ -6,6 +6,7 @@ const model = {
       chart: true,
       trades: true,
       myOrders: true,
+      order: true,
       history: true,
       orderBook: true,
       balance: true,

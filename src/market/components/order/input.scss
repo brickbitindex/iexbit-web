@@ -1,5 +1,6 @@
 .order-input {
   width: 100%;
+  position: relative;
 
   input {
     width: 100%;
@@ -12,7 +13,14 @@
     outline: none;
     border-radius: 4px;
     color: #fff;
-    text-align: right;
+  }
+
+  .order-input-suffix {
+    height: 100%;
+    line-height: 30px;
+    position: absolute;
+    top: 0;
+    right: 5px;
   }
 
   &.error input {

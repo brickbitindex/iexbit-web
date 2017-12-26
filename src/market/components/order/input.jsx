@@ -7,7 +7,7 @@ export default function OrderInput(props) {
     <div className={classnames('order-input', props.className)}>
       <input className="tt" type="text" value={props.value} onChange={props.onChange} />
       {props.suffix && (
-        <span className="order-input-suffix">{props.suffix}</span>
+        <span className="order-input-suffix light-text">{props.suffix}</span>
       )}
     </div>
   );

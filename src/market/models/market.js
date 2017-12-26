@@ -23,6 +23,7 @@ const model = {
     pair: document.body.getAttribute('data-market') || null,
     prices: [],
     current: {},
+    currentBasicInfo: undefined,
     trades: [],
     orderBook: {
       asks: [],
@@ -83,10 +84,18 @@ const model = {
         }
         return pair;
       });
+      let currentBasicInfo = state.currentBasicInfo;
+      if (!state.currentBasicInfo) {
+        currentBasicInfo = {
+          quote_unit: current.quote_unit,
+          base_unit: current.base_unit,
+        };
+      }
       return {
         ...state,
         prices,
         current,
+        currentBasicInfo,
       };
     },
     updateTrades(state, { payload }) {
@@ -99,7 +108,16 @@ const model = {
       //   tid: 109,
       //   type: "buy",
       // }]
-      const trades = payload.trades.concat(state.trades).slice(0, 30);
+      const tradesObj = {};
+      state.trades.forEach((t) => {
+        tradesObj[t.tid] = t;
+      });
+      payload.trades.forEach((t) => {
+        tradesObj[t.tid] = t;
+      });
+      const trades = Object.keys(tradesObj).map(k => tradesObj[k]);
+      trades.sort((a, b) => b.date - a.date);
+      payload.trades.concat().slice(0, 30);
       return {
         ...state,
         trades,

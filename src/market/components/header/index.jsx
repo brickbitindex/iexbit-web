@@ -11,7 +11,7 @@ class Header extends Component {
   render() {
     const { prices } = this.props;
     return (
-      <div id="header">
+      <div id="header" className="flex-fixed">
         <div className="logo-container">
           <a><img src={logoImg} alt="Cool.Bi" /></a>
         </div>

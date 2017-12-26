@@ -12,6 +12,7 @@
   "order_amount": "数量",
   "order_buy": "买入",
   "order_sell": "卖出",
+  "order_balance": "可用余额",
   "trades": "最近交易",
   "trades_time": "时间",
   "trades_price": "价格",

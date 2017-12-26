@@ -47,7 +47,6 @@ function mapStateToProps() {
 }
 
 const BuyOrder = wrapWithPanel(connect(mapStateToProps)(WrapBuyOrder), {
-  title: <FormattedMessage id="order" />,
   className: 'buy-panel',
 });
 

@@ -80,7 +80,10 @@ class IActionCable extends Component {
         this.handleAccount(data);
         break;
       case 'PrivateChannel/order':
-        this.handleOrder(data);
+        this.handleOrders([data]);
+        break;
+      case 'PrivateChannel/orders':
+        this.handleOrders(data);
         break;
       case 'PrivateChannel/trade':
         this.handleTrade(data);
@@ -121,6 +124,7 @@ class IActionCable extends Component {
   }
   handleTickers(data) {
     this.checkLoading('market');
+    this.checkLoading('order');
     this.props.dispatch({
       type: 'market/updatePrices',
       payload: data,
@@ -134,9 +138,8 @@ class IActionCable extends Component {
       payload: data,
     });
   }
-  handleOrder(data) {
+  handleOrders(data) {
     // TODO:
-    console.log(data);
     this.checkLoading('myOrders');
     this.props.dispatch({
       type: 'account/updateOrders',

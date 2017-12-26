@@ -35,10 +35,12 @@ export default function wrapWithPanel(C, defaultState) {
       });
     }
     render() {
-      const { title, show, className, slideable } = this.state;
+      const { title, show, slideable } = this.state;
+      const innerClassName = this.state.className;
       const { loading } = this.props;
+      const outerClassName = this.props.className;
       return (
-        <div className={classnames('cb-panel', className)}>
+        <div className={classnames('cb-panel', innerClassName, outerClassName, { loading, 'no-title': !title })}>
           {title && (
             <div className="cb-panel-title">
               {title}

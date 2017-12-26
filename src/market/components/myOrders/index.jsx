@@ -78,6 +78,5 @@ function mapStateToProps({ account }) {
 
 export default wrapWithPanel(connect(mapStateToProps)(injectIntl(MyOrders)), {
   title: <FormattedMessage id="myorders" />,
-  slideable: true,
   className: 'myOrder-panel',
 });
