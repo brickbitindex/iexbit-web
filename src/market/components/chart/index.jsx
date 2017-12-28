@@ -5,13 +5,36 @@ import { connect } from 'dva';
 // import { FormattedMessage } from 'react-intl';
 import wrapWithPanel from '../panel';
 import Datefeed from './datafeed';
+import overrides from './overrides';
 
 import './style.scss';
+
+function objToForm(inData, prefix = '') {
+  const ret = {};
+  Object.keys(inData).forEach((key) => {
+    const child = inData[key];
+    if (typeof child === 'object') {
+      const childRet = objToForm(child, prefix + key + '.');
+      Object.keys(childRet).forEach((childKey) => {
+        ret[childKey] = childRet[childKey];
+      });
+    } else {
+      ret[prefix + key] = child;
+    }
+  });
+  return ret;
+}
 
 class Chart extends Component {
   constructor(props) {
     super(props);
     this.tvWidget = undefined;
+  }
+  componentDidMount() {
+    const TradingView = window.TradingView;
+    TradingView.onready(() => {
+      this.initWidget();
+    });
   }
   initWidget() {
     const TradingView = window.TradingView;
@@ -36,19 +59,7 @@ class Chart extends Component {
       user_id: 'public_user_id',
       autosize: true,
       timezone: 'Asia/Shanghai',
-      // overrides: {
-      //   'paneProperties.background': '#222222',
-      //   'paneProperties.vertGridProperties.color': '#454545',
-      //   'paneProperties.horzGridProperties.color': '#454545',
-      //   'symbolWatermarkProperties.transparency': 90,
-      //   'scalesProperties.textColor': '#AAA',
-      // },
-    });
-  }
-  componentDidMount() {
-    const TradingView = window.TradingView;
-    TradingView.onready(() => {
-      this.initWidget();
+      overrides: objToForm(overrides),
     });
   }
   render() {
@@ -59,7 +70,7 @@ class Chart extends Component {
 }
 
 function mapStateToProps({ market }) {
-  return { market: market.pair };
+  return { market: market.pairSymbol };
 }
 
 export default wrapWithPanel(connect(mapStateToProps)(Chart), {

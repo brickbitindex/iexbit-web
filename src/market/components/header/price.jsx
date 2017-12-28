@@ -3,8 +3,11 @@ import classnames from 'classnames';
 
 export default function Price(props) {
   const price = props.data;
-  const change = (parseFloat(price.last) - price.open) / price.open;
+  const last = parseFloat(price.last);
+  const open = parseFloat(price.open);
+  const change = open === 0 ? 0 : (last - open) / open;
   const down = change < 0;
+  // console.log(price);
   return (
     <div className="header-price">
       <div className="header-price-name">{price.name}</div>

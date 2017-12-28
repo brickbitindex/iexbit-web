@@ -20,7 +20,9 @@ const addAskOrder = data => fetch.post(QUERY.ADD_ASK_ORDER, data).catch(err => e
 const model = {
   namespace: 'market',
   state: {
-    pair: document.body.getAttribute('data-market') || null,
+    id: '',
+    pair: '',
+    pairSymbol: '',
     prices: [],
     current: {},
     currentBasicInfo: undefined,
@@ -33,10 +35,18 @@ const model = {
   subscriptions: {
     // TODO:
     setup({ dispatch }) {
-      // dispatch({
-      //   type: 'updatePrice',
-      //   payload: data.prices,
-      // });
+      const pair = document.body.getAttribute('data-market') || '';
+      const id = document.body.getAttribute('data-market_id') || '';
+      const pairSymbol = pair.toLowerCase().replace('/', '_');
+
+      dispatch({
+        type: 'updateState',
+        payload: {
+          id,
+          pair,
+          pairSymbol,
+        },
+      });
     },
   },
   effects: {
@@ -78,8 +88,7 @@ const model = {
       let current;
       const prices = Object.keys(payload).map((key) => {
         const pair = payload[key];
-        pair.pair = key;
-        if (key === currentPair) {
+        if (pair.name === currentPair) {
           current = pair;
         }
         return pair;
@@ -149,6 +158,12 @@ const model = {
           bids,
           max,
         },
+      };
+    },
+    updateState(state, { payload }) {
+      return {
+        ...state,
+        ...payload,
       };
     },
   },

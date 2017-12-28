@@ -35,32 +35,32 @@ class IActionCable extends Component {
     }
     if (handlers.connected) {
       baseHandler.connected = () => {
-        console.log(option.channel + ' channel connected');
+        console.log(tag + ' channel connected');
         handlers.connected();
       };
     } else {
       baseHandler.connected = () => {
-        console.log(option.channel + ' channel connected');
+        console.log(tag + ' channel connected');
       };
     }
     if (handlers.disconnected) {
       baseHandler.disconnected = () => {
-        console.log(option.channel + ' channel disconnected');
+        console.log(tag + ' channel disconnected');
         handlers.disconnected();
       };
     } else {
       baseHandler.disconnected = () => {
-        console.log(option.channel + ' channel disconnected');
+        console.log(tag + ' channel disconnected');
       };
     }
     if (handlers.rejected) {
       baseHandler.rejected = () => {
-        console.log(option.channel + ' channel rejected');
+        console.log(tag + ' channel rejected');
         handlers.rejected();
       };
     } else {
       baseHandler.rejected = () => {
-        console.log(option.channel + ' channel rejected');
+        console.log(tag + ' channel rejected');
       };
     }
     this.cable.subscriptions.create(option, baseHandler);
@@ -125,6 +125,7 @@ class IActionCable extends Component {
   handleTickers(data) {
     this.checkLoading('market');
     this.checkLoading('order');
+    console.log(data);
     this.props.dispatch({
       type: 'market/updatePrices',
       payload: data,
@@ -160,7 +161,7 @@ class IActionCable extends Component {
 function mapStateToProps({ utils, market }) {
   return {
     loading: utils.loading,
-    market: market.pair,
+    market: market.id,
   };
 }
 
