@@ -125,7 +125,6 @@ class IActionCable extends Component {
   handleTickers(data) {
     this.checkLoading('market');
     this.checkLoading('order');
-    console.log(data);
     this.props.dispatch({
       type: 'market/updatePrices',
       payload: data,
@@ -134,6 +133,7 @@ class IActionCable extends Component {
   // private
   handleAccount(data) {
     this.checkLoading('balance');
+    console.log(data);
     this.props.dispatch({
       type: 'account/updateBalance',
       payload: data,
@@ -147,7 +147,7 @@ class IActionCable extends Component {
       payload: data,
     });
   }
-  handleTrade(data) {
+  handleTrade(/* data */) {
     // TODO:
     // console.log('PrivateChannel/trade', data);
   }

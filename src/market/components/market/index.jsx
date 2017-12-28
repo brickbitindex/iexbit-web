@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'dva';
 // import autobind from 'autobind-decorator';
 import classnames from 'classnames';
-import { FormattedMessage } from 'react-intl';
+// import { FormattedMessage } from 'react-intl';
 import wrapWithPanel from '../panel';
 import { SYMBOL_ICON } from '../../../assets';
 
@@ -10,7 +10,7 @@ import './style.scss';
 
 class Market extends Component {
   render() {
-    const { data } = this.props;
+    const { data, pairSymbol } = this.props;
     const change = (parseFloat(data.last) - data.open) / data.open;
     const down = change < 0;
     const baseUnit = data.base_unit;
@@ -18,7 +18,7 @@ class Market extends Component {
     return (
       <div id="market">
         <div className="market-icon">
-          <img src={SYMBOL_ICON[data.pair]} alt={baseUnit} />
+          <img src={SYMBOL_ICON[pairSymbol]} alt={baseUnit} />
         </div>
         <div className="market-current tt">{data.last}</div>
         <div className="market-info">
@@ -46,7 +46,6 @@ class Market extends Component {
           </div>
           <div className="market-col">
             <div>
-              
             </div>
             <div className="light-text"><FormattedMessage id="market_change" /></div>
           </div>
@@ -57,7 +56,10 @@ class Market extends Component {
 }
 
 function mapStateToProps({ market }) {
-  return { data: market.current };
+  return {
+    data: market.current,
+    pairSymbol: market.pairSymbol,
+  };
 }
 
 export default wrapWithPanel(connect(mapStateToProps)(Market), {

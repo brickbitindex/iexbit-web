@@ -1,7 +1,8 @@
+/* eslint import/prefer-default-export: 0 */
 // import siEthbtc from './images/symbol_icon_ethbtc.png';
 
 const SYMBOL_ICON = {
-  ethbtc: '/test/images/symbol_icon_ethbtc.png',
+  eth_btc: '/test/images/symbol_icon_ethbtc.png',
 };
 
 export {

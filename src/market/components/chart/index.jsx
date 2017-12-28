@@ -60,6 +60,7 @@ class Chart extends Component {
       autosize: true,
       timezone: 'Asia/Shanghai',
       overrides: objToForm(overrides),
+      // toolbar_bg: '#1E2D39',
     });
   }
   render() {

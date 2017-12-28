@@ -1,0 +1,73 @@
+/* 1b262d => 1E2D39 */
+
+html, body {
+  background-color:#1E2D39 !important;
+  color: #999;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+html,
+body,
+#footer-chart-panel,
+.chart-controls-bar {
+  background-color:#1E2D39 !important;
+}
+
+.chart-container {
+  border: none !important;
+  border-top: 1px solid #c9cbcd;
+  background: transparent !important;
+}
+
+.chart-loading-screen {
+  background-color: #1E2D39 !important;
+}
+
+.tv-side-toolbar,
+.header-chart-panel-sizer {
+  border: none !important;
+  background: #1A2631;
+}
+
+.header-chart-panel .group {
+  margin: 1px 0;
+}
+
+.header-chart-panel .button {
+  background: #2E4152;
+  border: #475B6D solid 1px;
+  outline: none;
+  border-radius: 4px;
+}
+
+/* TODO: active */
+.header-chart-panel .button::before {
+  display: none !important;
+}
+
+.header-chart-panel .button:hover {
+  background: #2E4152 !important;
+  border-color: #475B6D;
+}
+
+.favored-list-container span {
+  border-color: #475B6D;
+  background: #2E4152 !important;
+}
+.favored-list-container .quick span.apply-common-tooltip {
+  border-radius: 4px 0 0 4px;
+}
+.favored-list-container span.submenu.apply-common-tooltip {
+  border-radius: 0 4px 4px 0;
+}
+
+
+/* sidebar */
+.drawing-favorites-toolbar .tools-group .button, .feature-no-touch .tv-side-toolbar .tools-group .button:active, .feature-no-touch .tv-side-toolbar .tools-group .button:hover, .feature-touch .tv-side-toolbar .tools-group .button:active, .properties-toolbar .tools-group .button, .tv-side-toolbar .tools-group .button.active, .tv-side-toolbar .tools-group .button.selected {
+  border-color: #475B6D;
+  background: #2E4152 !important;
+}
+
+.tv-side-toolbar .tools-group .button.selected .main {
+  background: #2E4152 !important;
+}
