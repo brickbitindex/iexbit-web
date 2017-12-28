@@ -32,6 +32,7 @@ class Order extends Component {
   getBalance(key) {
     const { balance } = this.props;
     const keyBalance = balance.filter(b => b.currency_code === key);
+    console.log(balance, key);
     if (keyBalance.length > 0) {
       const balancep = parseFloat(keyBalance[0].balance);
       const locked = parseFloat(keyBalance[0].locked);

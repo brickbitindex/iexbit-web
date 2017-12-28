@@ -29,13 +29,13 @@ const model = {
   reducers: {
     updateBalance(state, { payload }) {
       const balance = [...state.balance];
-      const currencyArr = balance.filter(b => b.currency === payload.currency);
+      const currencyArr = balance.filter(b => b.currency_code === payload.currency_code);
       if (currencyArr.length === 0) {
         balance.push(payload);
       } else {
         balance.splice(balance.indexOf(currencyArr[0]), 1, payload);
       }
-      balance.sort((a, b) => a.currency > b.currency ? 1 : -1);
+      balance.sort((a, b) => a.currency_code > b.currency_code ? 1 : -1);
       return {
         ...state,
         balance,
