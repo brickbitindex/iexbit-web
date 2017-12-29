@@ -5,6 +5,7 @@ import moment from 'moment';
 import classnames from 'classnames';
 import { FormattedMessage } from 'react-intl';
 import wrapWithPanel from '../panel';
+import ZeroFormattedNumber from '../common/zeroFormattedNumber';
 
 import './style.scss';
 
@@ -27,7 +28,7 @@ class Trades extends Component {
               <tt>{row.price}</tt>
             </div>
             <div className="trades-col amount">
-              <tt>{row.amount}</tt>
+              <tt><ZeroFormattedNumber value={row.amount} option={{ minimumFractionDigits: 3 }} /></tt>
             </div>
           </div>
         ))}

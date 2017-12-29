@@ -6,6 +6,7 @@
   .order-book {
     background: #1E2D39;
     box-sizing: content-box;
+    overflow: auto;
 
     .order-book-bar {
       right: 0;

@@ -150,3 +150,38 @@ code,
   border: #475B6D solid 1px;
   padding: 2px 4px;
 }
+
+.pop-dialog {
+  background: #1E2D39;
+  box-shadow: 0px 0px 15px 5px #0d151d;
+  position: absolute;
+  transition: all ease 0.5s;
+}
+
+.pop-dialog.show {
+  transform: translate(0px) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.pop-dialog::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.pop-dialog.a-left {
+  transform: translate(50px);
+  opacity: 0;
+  visibility: hidden;
+}
+
+.pop-dialog.a-left::after {
+  border-top: 8px solid transparent;
+  border-left: 8px solid #1E2D39;
+  border-bottom: 8px solid transparent;
+  left: 100%;
+  top: 50%;
+  transform: translate(0, -50%);
+}

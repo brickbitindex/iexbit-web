@@ -5,6 +5,7 @@ import { connect } from 'dva';
 // import classnames from 'classnames';
 import { FormattedMessage } from 'react-intl';
 import wrapWithPanel from '../panel';
+import ZeroFormattedNumber from '../common/zeroFormattedNumber';
 
 import './style.scss';
 
@@ -24,12 +25,12 @@ class OrderBook extends Component {
         <div className="order-book-container flex-autofixed">
           <div className="order-book asks">
             {asks.map((row, i) => (
-              <div className="order-book-row" key={i}>
+              <div className="order-book-row flex-fixed" key={i}>
                 <div className="order-book-col price">
-                  <tt>{row[0]}</tt>
+                  <tt className="red-text">{row[0]}</tt>
                 </div>
                 <div className="order-book-col amount">
-                  <tt>{row[1]}</tt>
+                  <tt><ZeroFormattedNumber value={row[1]} option={{ minimumFractionDigits: 3 }} /></tt>
                 </div>
                 <div className="order-book-col total">
                   <tt>{row[2]}</tt>
@@ -43,12 +44,12 @@ class OrderBook extends Component {
           </div>
           <div className="order-book bids">
             {bids.map((row, i) => (
-              <div className="order-book-row" key={i}>
+              <div className="order-book-row flex-fixed" key={i}>
                 <div className="order-book-col price">
-                  <tt>{row[0]}</tt>
+                  <tt className="green-text">{row[0]}</tt>
                 </div>
                 <div className="order-book-col amount">
-                  <tt>{row[1]}</tt>
+                  <tt><ZeroFormattedNumber value={row[1]} option={{ minimumFractionDigits: 3 }} /></tt>
                 </div>
                 <div className="order-book-col total">
                   <tt>{row[2]}</tt>

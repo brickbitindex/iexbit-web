@@ -4,6 +4,22 @@ import { connect } from 'dva';
 
 import ActionCable from 'actioncable';
 
+const channalConnect = {};
+
+function checkAllChannelConnect() {
+  let c = true;
+  Object.keys(channalConnect).forEach((key) => {
+    c = c && channalConnect[key];
+  });
+  if (c) {
+    console.log('all con');
+  }
+}
+
+function channalDisconnected(tag) {
+  channalConnect[tag] = false;
+}
+
 class IActionCable extends Component {
   constructor(props) {
     super(props);
@@ -23,6 +39,7 @@ class IActionCable extends Component {
     const baseHandler = {
       ...handlers,
     };
+    channalConnect[tag] = false;
     if (handlers.received) {
       baseHandler.received = (data) => {
         this.dataRoute(tag + '/' + data[0], data[1]);
@@ -37,20 +54,24 @@ class IActionCable extends Component {
       baseHandler.connected = () => {
         console.log(tag + ' channel connected');
         handlers.connected();
+        checkAllChannelConnect();
       };
     } else {
       baseHandler.connected = () => {
         console.log(tag + ' channel connected');
+        checkAllChannelConnect();
       };
     }
     if (handlers.disconnected) {
       baseHandler.disconnected = () => {
         console.log(tag + ' channel disconnected');
         handlers.disconnected();
+        channalDisconnected(tag);
       };
     } else {
       baseHandler.disconnected = () => {
         console.log(tag + ' channel disconnected');
+        channalDisconnected(tag);
       };
     }
     if (handlers.rejected) {
@@ -133,7 +154,6 @@ class IActionCable extends Component {
   // private
   handleAccount(data) {
     this.checkLoading('balance');
-    console.log(data);
     this.props.dispatch({
       type: 'account/updateBalance',
       payload: data,
