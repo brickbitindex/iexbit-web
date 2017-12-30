@@ -1,22 +1,31 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 // import autobind from 'autobind-decorator';
-
 import ActionCable from 'actioncable';
+
+import toast from '../components/common/toast';
 
 const channalConnect = {};
 
-function checkAllChannelConnect() {
+function getAllChannelConnect() {
   let c = true;
   Object.keys(channalConnect).forEach((key) => {
     c = c && channalConnect[key];
   });
-  if (c) {
-    console.log('all con');
+  return c;
+}
+
+function checkAllChannelConnect(tag) {
+  channalConnect[tag] = true;
+  if (getAllChannelConnect()) {
+    toast.info('text_connect');
   }
 }
 
 function channalDisconnected(tag) {
+  if (getAllChannelConnect()) {
+    toast.warn('text_disconnect');
+  }
   channalConnect[tag] = false;
 }
 
@@ -54,12 +63,12 @@ class IActionCable extends Component {
       baseHandler.connected = () => {
         console.log(tag + ' channel connected');
         handlers.connected();
-        checkAllChannelConnect();
+        checkAllChannelConnect(tag);
       };
     } else {
       baseHandler.connected = () => {
         console.log(tag + ' channel connected');
-        checkAllChannelConnect();
+        checkAllChannelConnect(tag);
       };
     }
     if (handlers.disconnected) {
@@ -99,6 +108,9 @@ class IActionCable extends Component {
         break;
       case 'PrivateChannel/account':
         this.handleAccount(data);
+        break;
+      case 'PrivateChannel/accounts':
+        this.handleAccount(data.attributes);
         break;
       case 'PrivateChannel/order':
         this.handleOrders([data]);

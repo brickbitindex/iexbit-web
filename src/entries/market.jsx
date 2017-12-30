@@ -12,3 +12,5 @@ app.router(param => (
 ));
 
 app.start('#main');
+
+window._appStore = app._store;

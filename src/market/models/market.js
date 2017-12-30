@@ -13,6 +13,7 @@
  */
 
 import QUERY, { fetch } from './querys';
+import toast from '../components/common/toast';
 
 const addBidOrder = data => fetch.post(QUERY.ADD_BID_ORDER, data).catch(err => err);
 const addAskOrder = data => fetch.post(QUERY.ADD_ASK_ORDER, data).catch(err => err);
@@ -76,7 +77,9 @@ const model = {
         caller = addAskOrder;
       }
       const response = yield call(caller, params);
-      console.log(response);
+      if (response.result) {
+        toast.info('text_order_success');
+      }
     },
   },
   reducers: {

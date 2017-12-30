@@ -31,5 +31,8 @@
   "myorder_state": "状态",
   "myorder_opt": "操作",
   "myorder_wait": "未成交",
-  "myorder_partial": "部分成交"
+  "myorder_partial": "部分成交",
+  "text_connect": "已连接市场",
+  "text_disconnect": "已断开连接",
+  "text_order_success": "下单成功"
 }

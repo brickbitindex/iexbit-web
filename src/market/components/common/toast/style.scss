@@ -1,0 +1,52 @@
+#toasts {
+  position: absolute;
+  left: 16px;
+  bottom: 32px;
+}
+
+.cb-toast {
+  transition: all ease 0.5s;
+  transform: translate(-30px);
+  opacity: 0;
+  visibility: hidden;
+  transition: all ease 0.5s;
+  margin: 12px 0;
+}
+
+.cb-toast>span {
+  display: inline-block;
+  color: #eee;
+  background: #1E2D39;
+  box-shadow: 0px 0px 15px 5px #0d151d;
+  padding: 8px 12px;
+}
+
+.cb-toast>span>i {
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+.cb-toast>span>span {
+  vertical-align: middle;
+  line-height: 16px;
+  height: 16px;
+  display: inline-block;
+}
+
+.cb-toast.info i {
+  color: #3DE777;
+}
+
+.cb-toast.warn i {
+  color: #e7d63d;
+}
+
+.cb-toast.error i {
+  color: #F74D64;
+}
+
+.cb-toast.show {
+  transform: translate(0px);
+  opacity: 1;
+  visibility: visible;
+}
