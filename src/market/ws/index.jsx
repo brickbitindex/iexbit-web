@@ -15,20 +15,6 @@ function getAllChannelConnect() {
   return c;
 }
 
-function checkAllChannelConnect(tag) {
-  channalConnect[tag] = true;
-  if (getAllChannelConnect()) {
-    toast.info('text_connect');
-  }
-}
-
-function channalDisconnected(tag) {
-  if (getAllChannelConnect()) {
-    toast.warn('text_disconnect');
-  }
-  channalConnect[tag] = false;
-}
-
 class IActionCable extends Component {
   constructor(props) {
     super(props);
@@ -37,12 +23,40 @@ class IActionCable extends Component {
   componentDidMount() {
     const market = this.props.market;
     if (market && market.length > 0) {
-      const cable = ActionCable.createConsumer('ws://test.exchange.grootapp.com/cable');
+      const cable = ActionCable.createConsumer();
       this.cable = cable;
       this.createSubscription('HallChannel', { channel: 'HallChannel', market, init: true });
       this.createSubscription('PrivateChannel', { channel: 'PrivateChannel', market, init: true });
       this.createSubscription('HallChannel-g', { channel: 'HallChannel' });
     }
+  }
+  checkAllChannelConnect(tag) {
+    channalConnect[tag] = true;
+    if (getAllChannelConnect()) {
+      toast.info('text_connect');
+      this.props.dispatch({
+        type: 'utils/pushMessage',
+        payload: {
+          message: 'text_connect',
+          from: 'system',
+          level: 'info',
+        },
+      });
+    }
+  }
+  channalDisconnected(tag) {
+    if (getAllChannelConnect()) {
+      toast.warn('text_disconnect');
+      this.props.dispatch({
+        type: 'utils/pushMessage',
+        payload: {
+          message: 'text_disconnect',
+          from: 'system',
+          level: 'warn',
+        },
+      });
+    }
+    channalConnect[tag] = false;
   }
   createSubscription(tag, option, handlers = {}) {
     const baseHandler = {
@@ -63,24 +77,24 @@ class IActionCable extends Component {
       baseHandler.connected = () => {
         console.log(tag + ' channel connected');
         handlers.connected();
-        checkAllChannelConnect(tag);
+        this.checkAllChannelConnect(tag);
       };
     } else {
       baseHandler.connected = () => {
         console.log(tag + ' channel connected');
-        checkAllChannelConnect(tag);
+        this.checkAllChannelConnect(tag);
       };
     }
     if (handlers.disconnected) {
       baseHandler.disconnected = () => {
         console.log(tag + ' channel disconnected');
         handlers.disconnected();
-        channalDisconnected(tag);
+        this.channalDisconnected(tag);
       };
     } else {
       baseHandler.disconnected = () => {
         console.log(tag + ' channel disconnected');
-        channalDisconnected(tag);
+        this.channalDisconnected(tag);
       };
     }
     if (handlers.rejected) {

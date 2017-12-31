@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'dva-no-router';
 
-import { addLocaleData, IntlProvider } from 'react-intl';
+import { addLocaleData, IntlProvider, FormattedMessage } from 'react-intl';
 import en from 'react-intl/locale-data/en';
 import zh from 'react-intl/locale-data/zh';
 import ja from 'react-intl/locale-data/ja';
 import ko from 'react-intl/locale-data/ko';
 
 import models from './models';
+import { wrapWithTabPanel } from './components/panel';
 import Header from './components/header';
 import Market from './components/market';
 import { BuyOrder, SellOrder } from './components/order';
 import Chart from './components/chart';
 import Trades from './components/trades';
 import MyOrders from './components/myOrders';
+import MessageCenter from './components/messageCenter';
 // import History from './components/history';
 // import Balance from './components/balance';
 import OrderBook from './components/orderBook';
@@ -27,6 +29,19 @@ addLocaleData([...en, ...zh, ...ja, ...ko]);
 /* <MyOrders loading={loading.myOrders} />
   <History loading={loading.history} />
   <Balance loading={loading.balance} /> */
+
+const WrappedTabPanel = wrapWithTabPanel({
+  myOrders: {
+    C: MyOrders,
+    title: <FormattedMessage id="myorders" />,
+  },
+  messageCenter: {
+    C: MessageCenter,
+    title: <FormattedMessage id="messageCenter" />,
+  },
+}, {
+  currentKey: 'myOrders',
+});
 
 class Index extends Component {
   componentDidMount() {}
@@ -46,7 +61,7 @@ class Index extends Component {
               </OrderBook>
             </div>
             <div className="bottom flex-fixed">
-              <MyOrders loading={loading.myOrders} className="flex-autofixed" />
+              <WrappedTabPanel loadings={loading} className="flex-autofixed the-tabs" />
               <BuyOrder className="flex-fixed" loading={loading.order} />
               <SellOrder className="flex-fixed" loading={loading.order} />
             </div>

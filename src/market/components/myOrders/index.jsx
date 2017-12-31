@@ -4,7 +4,6 @@ import { connect } from 'dva';
 // import autobind from 'autobind-decorator';
 import classnames from 'classnames';
 import { injectIntl, FormattedMessage, FormattedTime, FormattedDate, FormattedNumber } from 'react-intl';
-import wrapWithPanel from '../panel';
 import ZeroFormattedNumber from '../common/zeroFormattedNumber';
 
 import './style.scss';
@@ -77,7 +76,4 @@ function mapStateToProps({ account }) {
   return { data: account.orders };
 }
 
-export default wrapWithPanel(connect(mapStateToProps)(injectIntl(MyOrders)), {
-  title: <FormattedMessage id="myorders" />,
-  className: 'myOrder-panel',
-});
+export default connect(mapStateToProps)(injectIntl(MyOrders));

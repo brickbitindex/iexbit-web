@@ -34,5 +34,6 @@
   "myorder_partial": "部分成交",
   "text_connect": "已连接市场",
   "text_disconnect": "已断开连接",
-  "text_order_success": "下单成功"
+  "text_order_success": "下单成功",
+  "messageCenter": "信息中心"
 }

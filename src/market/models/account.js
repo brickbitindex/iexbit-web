@@ -2,7 +2,7 @@
 
 import QUERY, { fetch } from './querys';
 
-const deleteOrder = id => fetch.delete(QUERY.DELETE_ORDER(id)).catch(err => err);
+const deleteOrder = (id, type) => fetch.delete(QUERY.DELETE_ORDER(id, type)).catch(err => err);
 
 const model = {
   namespace: 'account',
@@ -21,8 +21,8 @@ const model = {
   },
   effects: {
     * deleteOrder({ payload }, { call }) {
-      const id = payload.id;
-      const response = yield call(deleteOrder, id);
+      console.log(payload);
+      const response = yield call(deleteOrder, payload.id, payload.kind);
       console.log(response);
     },
   },

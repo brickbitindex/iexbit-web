@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'dva';
-import { FormattedMessage } from 'react-intl';
+// import { FormattedMessage } from 'react-intl';
 import Order from './order';
 import wrapWithPanel from '../panel';
 
