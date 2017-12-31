@@ -38,7 +38,7 @@ class IActionCable extends Component {
         type: 'utils/pushMessage',
         payload: {
           message: 'text_connect',
-          from: 'system',
+          from: 'sys',
           level: 'info',
         },
       });
@@ -51,7 +51,7 @@ class IActionCable extends Component {
         type: 'utils/pushMessage',
         payload: {
           message: 'text_disconnect',
-          from: 'system',
+          from: 'sys',
           level: 'warn',
         },
       });
@@ -187,6 +187,7 @@ class IActionCable extends Component {
   }
   handleOrders(data) {
     // TODO:
+    console.log(data);
     this.checkLoading('myOrders');
     this.props.dispatch({
       type: 'account/updateOrders',

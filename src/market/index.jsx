@@ -37,7 +37,7 @@ const WrappedTabPanel = wrapWithTabPanel({
   },
   messageCenter: {
     C: MessageCenter,
-    title: <FormattedMessage id="messageCenter" />,
+    title: <FormattedMessage id="messagecenter" />,
   },
 }, {
   currentKey: 'myOrders',

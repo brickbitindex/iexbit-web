@@ -24,7 +24,7 @@ function toast(message, level = 'info') {
   const $toast = $(`<div class="cb-toast ${level}"><span>${iconMap[level]}<span>${_message}</span></span></div>`);
   setTimeout(() => {
     $toast.addClass('show');
-  }, 0);
+  }, 10);
   setTimeout(() => {
     $toast.removeClass('show');
 

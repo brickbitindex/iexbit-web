@@ -32,9 +32,21 @@ const model = {
     //   yield put({ type: 'minus' });
     // },
     * pushMessage({ payload }, { select, put }) {
-      const messages = yield select(({ utils }) => utils.messages);
-      messages.push({
+      const { messages, texts } = yield select(({ utils, i18n }) => ({
+        messages: utils.messages,
+        texts: i18n.messages,
+      }));
+      const processedPayload = {
         ...payload,
+      };
+      if (('messagecenter_from_' + processedPayload.from) in texts) {
+        processedPayload.from = texts['messagecenter_from_' + processedPayload.from];
+      }
+      if (processedPayload.message in texts) {
+        processedPayload.message = texts[processedPayload.message];
+      }
+      messages.push({
+        ...processedPayload,
         time: new Date(),
       });
       yield put({

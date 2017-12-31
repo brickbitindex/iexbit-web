@@ -35,5 +35,7 @@
   "text_connect": "已连接市场",
   "text_disconnect": "已断开连接",
   "text_order_success": "下单成功",
-  "messageCenter": "信息中心"
+  "text_order_delete": "删除订单成功",
+  "messagecenter": "信息中心",
+  "messagecenter_from_sys": "系统"
 }

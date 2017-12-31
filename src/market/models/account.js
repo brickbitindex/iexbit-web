@@ -1,6 +1,7 @@
 /* eslint no-confusing-arrow: 0 */
 
 import QUERY, { fetch } from './querys';
+import toast from '../components/common/toast';
 
 const deleteOrder = (id, type) => fetch.delete(QUERY.DELETE_ORDER(id, type)).catch(err => err);
 
@@ -21,9 +22,10 @@ const model = {
   },
   effects: {
     * deleteOrder({ payload }, { call }) {
-      console.log(payload);
       const response = yield call(deleteOrder, payload.id, payload.kind);
-      console.log(response);
+      if (response.ok) {
+        toast.info('text_order_delete');
+      }
     },
   },
   reducers: {
