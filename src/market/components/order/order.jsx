@@ -129,7 +129,7 @@ class Order extends Component {
       <div className="order">
         <div className="order-balance">
           <div className="flex-fixed">{key.toUpperCase()}<FormattedMessage id="order_balance" /></div>
-          <div className="order-balance-value flex-autofixed">{(balance.balance - balance.locked).toFixed(2)}</div>
+          <div className="order-balance-value flex-autofixed">{balance.balance.toFixed(2)}</div>
         </div>
         <div className="order-row">
           <div className="order-lable"><FormattedMessage id="order_type" /></div>

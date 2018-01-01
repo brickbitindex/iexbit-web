@@ -48,6 +48,7 @@ const model = {
           // 订单成交
           orders.splice(orders.indexOf(idArr[0]), 1);
           const currentBasicInfo = yield select(({ market }) => market.currentBasicInfo);
+          toast.info('text_order_done');
           yield put({
             type: 'utils/pushMessage',
             payload: {

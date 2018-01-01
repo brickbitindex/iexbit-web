@@ -94,6 +94,8 @@ const model = {
             },
           },
         });
+      } else {
+        toast.error(response.errors);
       }
     },
   },
