@@ -26,9 +26,14 @@ $headerPadding: 22px;
     max-width: 200px;
     flex-shrink: 1;
     flex-grow: 1;
+    padding: 12px;
 
     &>div {
       line-height: 20px;
+    }
+
+    .highlight {
+      background: #afdcfd;
     }
   }
 
@@ -46,6 +51,60 @@ $headerPadding: 22px;
 
     i {
       font-size: 24px;
+    }
+  }
+}
+
+#search {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 99;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  .search-area {
+    width: 660px;
+  }
+
+  .search-input {
+    width: 100%;
+    position: relative;
+    margin-top: 16px;
+    text-align: center;
+    height: 32px;
+  
+    input {
+      width: 60%;
+      height: 100%;
+      padding: 0 10px;
+      margin: 0;
+      box-sizing: border-box;
+      background: #2E4152;
+      border: #475B6D solid 1px;
+      outline: none;
+      border-radius: 4px;
+      color: #fff;
+      font-size: 20px;
+      text-align: center;
+    }
+  }
+
+  .search-prices {
+    text-align: center;
+    margin-top: 32px;
+
+    .header-price {
+      display: inline-block;
+      width: 160px;
+
+      .header-price-name {
+        color: #4D708C;
+      }
     }
   }
 }

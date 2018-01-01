@@ -1,16 +1,36 @@
 import React from 'react';
 import classnames from 'classnames';
 
+function goto(name) {
+  window.location = `/markets/${name.replace('/', '_').toLowerCase()}`;
+}
+
+function highlight(name, highlightReg) {
+  const match = name.match(highlightReg);
+  if (!match) {
+    return name;
+  }
+  const index = match.index;
+  const p0 = name.substr(0, index);
+  const p1 = name.substr(index, match[0].length);
+  const p2 = name.substr(index + match[0].length);
+  return (
+    <span>{p0}<span className="highlight">{p1}</span>{p2}</span>
+  );
+}
+
 export default function Price(props) {
   const price = props.data;
+  const highlightReg = props.highlightReg;
   const last = parseFloat(price.last);
   const open = parseFloat(price.open);
   const change = open === 0 ? 0 : (last - open) / open;
   const down = change < 0;
-  // console.log(price);
   return (
-    <div className="header-price">
-      <div className="header-price-name">{price.name}</div>
+    <div className="header-price simple-btn" onClick={goto.bind(null, price.name)}>
+      <div className="header-price-name">
+        {highlightReg ? highlight(price.name, highlightReg) : price.name}
+      </div>
       <div className="header-price-current">
         <span>{price.last} {price.quote_unit.toUpperCase()}</span>
         <span>&nbsp;</span>
