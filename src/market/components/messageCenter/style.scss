@@ -17,5 +17,11 @@
     .message-from {
       margin-right: 5px;
     }
+
+    &.verbose {
+      .message-message {
+        color: #4D708C;
+      }
+    }
   }
 }

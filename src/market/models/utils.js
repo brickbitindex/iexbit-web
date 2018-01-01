@@ -45,6 +45,12 @@ const model = {
       if (processedPayload.message in texts) {
         processedPayload.message = texts[processedPayload.message];
       }
+      if (processedPayload.data) {
+        Object.keys(processedPayload.data).forEach((key) => {
+          const value = processedPayload.data[key];
+          processedPayload.message = processedPayload.message.replace(`{${key}}`, value);
+        });
+      }
       messages.push({
         ...processedPayload,
         time: new Date(),
@@ -52,7 +58,7 @@ const model = {
       yield put({
         type: 'updateState',
         payload: {
-          messages,
+          messages: [...messages],
         },
       });
     },

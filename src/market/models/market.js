@@ -51,7 +51,7 @@ const model = {
     },
   },
   effects: {
-    * addOrder({ payload }, { call }) {
+    * addOrder({ payload }, { call, put, select }) {
       const data = payload.data;
       let params;
       let caller;
@@ -79,6 +79,21 @@ const model = {
       const response = yield call(caller, params);
       if (response.result) {
         toast.info('text_order_success');
+        const currentBasicInfo = yield select(({ market }) => market.currentBasicInfo);
+        yield put({
+          type: 'utils/pushMessage',
+          payload: {
+            message: `messagecenter_order_${payload.type}_success`,
+            from: 'trade',
+            level: 'info',
+            data: {
+              price: data.price,
+              amount: data.amount,
+              quote_unit: currentBasicInfo.quote_unit,
+              base_unit: currentBasicInfo.base_unit,
+            },
+          },
+        });
       }
     },
   },

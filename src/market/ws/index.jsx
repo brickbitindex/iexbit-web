@@ -39,7 +39,7 @@ class IActionCable extends Component {
         payload: {
           message: 'text_connect',
           from: 'sys',
-          level: 'info',
+          level: 'verbose',
         },
       });
     }
@@ -187,7 +187,6 @@ class IActionCable extends Component {
   }
   handleOrders(data) {
     // TODO:
-    console.log(data);
     this.checkLoading('myOrders');
     this.props.dispatch({
       type: 'account/updateOrders',

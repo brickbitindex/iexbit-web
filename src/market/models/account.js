@@ -27,6 +27,51 @@ const model = {
         toast.info('text_order_delete');
       }
     },
+    * updateOrders({ payload }, { select, put }) {
+      let orders = yield select(({ account }) => account.orders);
+      orders = [...orders];
+      for (let i = 0; i < payload.length; i += 1) {
+        const p = payload[i];
+        const idArr = orders.filter(b => b.id === p.id);
+        if (idArr.length === 0) {
+          // 未在当前列表中找到
+          if (p.state === 'wait') {
+            orders.push(p);
+          }
+        } else if (p.state === 'wait') {
+          // 找到了，更新
+          orders.splice(orders.indexOf(idArr[0]), 1, p);
+        } else if (p.state === 'cancel') {
+          // 取消了订单
+          orders.splice(orders.indexOf(idArr[0]), 1);
+        } else if (p.state === 'done') {
+          // 订单成交
+          orders.splice(orders.indexOf(idArr[0]), 1);
+          const currentBasicInfo = yield select(({ market }) => market.currentBasicInfo);
+          yield put({
+            type: 'utils/pushMessage',
+            payload: {
+              message: `messagecenter_order_${p.kind}_done`,
+              from: 'trade',
+              level: 'info',
+              data: {
+                price: p.price,
+                amount: p.origin_volume,
+                quote_unit: currentBasicInfo.quote_unit,
+                base_unit: currentBasicInfo.base_unit,
+              },
+            },
+          });
+        }
+      }
+      orders.sort((a, b) => b.id - a.id);
+      yield put({
+        type: 'updateState',
+        payload: {
+          orders,
+        },
+      });
+    },
   },
   reducers: {
     updateBalance(state, { payload }) {
@@ -43,21 +88,10 @@ const model = {
         balance,
       };
     },
-    updateOrders(state, { payload }) {
-      const orders = [...state.orders];
-      // console.log(payload);
-      payload.forEach((p) => {
-        const idArr = orders.filter(b => b.id === p.id);
-        if (idArr.length === 0) {
-          orders.push(p);
-        } else {
-          orders.splice(orders.indexOf(idArr[0]), 1, p);
-        }
-      });
-      orders.sort((a, b) => b.id - a.id);
+    updateState(state, { payload }) {
       return {
         ...state,
-        orders,
+        ...payload,
       };
     },
   },
