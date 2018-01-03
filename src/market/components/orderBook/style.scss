@@ -1,25 +1,36 @@
 #orderBook {
   display: flex;
-  width: 100%;
+  flex-direction: column;
+  height: 100%;
 
   .order-book {
-    width: 50%;
+    background: #1E2D39;
+    box-sizing: content-box;
+    overflow: auto;
+
+    .order-book-bar {
+      right: 0;
+    }
+    &.asks,
     &.bids {
-      .total {
-        padding-left: 24px;
-      }
-      .order-book-bar {
-        right: 0;
-        background: #255547;
-      }
+      display: flex;
+      position: absolute;
+      width: 100%;
+      left: 0;
+      height: calc(50% - 33px);
     }
     &.asks {
-      .total {
-        padding-right: 24px;
-      }
+      flex-direction: column-reverse;
+      top: 0;
       .order-book-bar {
-        left: 0;
         background: #4E3342;
+      }
+    }
+    &.bids {
+      flex-direction: column;
+      bottom: 0;
+      .order-book-bar {
+        background: #255547;
       }
     }
 
@@ -28,8 +39,8 @@
       position: relative;
   
       &.thead {
-        height: 30px;
-        line-height: 30px;
+        height: 22px;
+        line-height: 22px;
       }
 
       .order-book-bar {
@@ -40,23 +51,42 @@
    
       .order-book-col {
         z-index: 1;
-        &.total {
-          width: 25%;
-          text-align: right;
-        }
+        box-sizing: border-box;
         &.price {
           width: 35%;
           text-align: right;
+          padding-left: 12px;
         }
         &.amount {
-          width: 40%;
+          width: 30%;
           text-align: right;
+        }
+        &.total {
+          width: 35%;
+          text-align: right;
+          padding-right: 12px;
         }
       }
     }
   }
+
+  .order-book-container {
+    position: relative;
+    .market-container {
+      height: 60px;
+      position: absolute;
+      left: 0;
+      width: 100%;
+      top: calc(50% - 30px);
+    }
+  }
 }
 
-.cb-panel.history-panel {
-  margin-bottom: 3px;
+.cb-panel.orderBook-panel {
+  width: 250px;
+  background: transparent;
+}
+
+.cb-panel.orderBook-panel.loading {
+  background: #1E2D39;
 }

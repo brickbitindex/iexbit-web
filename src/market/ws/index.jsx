@@ -1,8 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 // import autobind from 'autobind-decorator';
-
 import ActionCable from 'actioncable';
+
+import toast from '../components/common/toast';
+
+const channalConnect = {};
+
+function getAllChannelConnect() {
+  let c = true;
+  Object.keys(channalConnect).forEach((key) => {
+    c = c && channalConnect[key];
+  });
+  return c;
+}
 
 class IActionCable extends Component {
   constructor(props) {
@@ -12,17 +23,46 @@ class IActionCable extends Component {
   componentDidMount() {
     const market = this.props.market;
     if (market && market.length > 0) {
-      const cable = ActionCable.createConsumer('ws://test.exchange.grootapp.com/cable');
+      const cable = ActionCable.createConsumer();
       this.cable = cable;
       this.createSubscription('HallChannel', { channel: 'HallChannel', market, init: true });
       this.createSubscription('PrivateChannel', { channel: 'PrivateChannel', market, init: true });
       this.createSubscription('HallChannel-g', { channel: 'HallChannel' });
     }
   }
+  checkAllChannelConnect(tag) {
+    channalConnect[tag] = true;
+    if (getAllChannelConnect()) {
+      toast.info('text_connect');
+      this.props.dispatch({
+        type: 'utils/pushMessage',
+        payload: {
+          message: 'text_connect',
+          from: 'sys',
+          level: 'verbose',
+        },
+      });
+    }
+  }
+  channalDisconnected(tag) {
+    if (getAllChannelConnect()) {
+      toast.warn('text_disconnect');
+      this.props.dispatch({
+        type: 'utils/pushMessage',
+        payload: {
+          message: 'text_disconnect',
+          from: 'sys',
+          level: 'warn',
+        },
+      });
+    }
+    channalConnect[tag] = false;
+  }
   createSubscription(tag, option, handlers = {}) {
     const baseHandler = {
       ...handlers,
     };
+    channalConnect[tag] = false;
     if (handlers.received) {
       baseHandler.received = (data) => {
         this.dataRoute(tag + '/' + data[0], data[1]);
@@ -35,32 +75,36 @@ class IActionCable extends Component {
     }
     if (handlers.connected) {
       baseHandler.connected = () => {
-        console.log(option.channel + ' channel connected');
+        console.log(tag + ' channel connected');
         handlers.connected();
+        this.checkAllChannelConnect(tag);
       };
     } else {
       baseHandler.connected = () => {
-        console.log(option.channel + ' channel connected');
+        console.log(tag + ' channel connected');
+        this.checkAllChannelConnect(tag);
       };
     }
     if (handlers.disconnected) {
       baseHandler.disconnected = () => {
-        console.log(option.channel + ' channel disconnected');
+        console.log(tag + ' channel disconnected');
         handlers.disconnected();
+        this.channalDisconnected(tag);
       };
     } else {
       baseHandler.disconnected = () => {
-        console.log(option.channel + ' channel disconnected');
+        console.log(tag + ' channel disconnected');
+        this.channalDisconnected(tag);
       };
     }
     if (handlers.rejected) {
       baseHandler.rejected = () => {
-        console.log(option.channel + ' channel rejected');
+        console.log(tag + ' channel rejected');
         handlers.rejected();
       };
     } else {
       baseHandler.rejected = () => {
-        console.log(option.channel + ' channel rejected');
+        console.log(tag + ' channel rejected');
       };
     }
     this.cable.subscriptions.create(option, baseHandler);
@@ -79,8 +123,14 @@ class IActionCable extends Component {
       case 'PrivateChannel/account':
         this.handleAccount(data);
         break;
+      case 'PrivateChannel/accounts':
+        this.handleAccount(data.attributes);
+        break;
       case 'PrivateChannel/order':
-        this.handleOrder(data);
+        this.handleOrders([data]);
+        break;
+      case 'PrivateChannel/orders':
+        this.handleOrders(data);
         break;
       case 'PrivateChannel/trade':
         this.handleTrade(data);
@@ -121,6 +171,7 @@ class IActionCable extends Component {
   }
   handleTickers(data) {
     this.checkLoading('market');
+    this.checkLoading('order');
     this.props.dispatch({
       type: 'market/updatePrices',
       payload: data,
@@ -134,16 +185,15 @@ class IActionCable extends Component {
       payload: data,
     });
   }
-  handleOrder(data) {
+  handleOrders(data) {
     // TODO:
-    console.log(data);
     this.checkLoading('myOrders');
     this.props.dispatch({
       type: 'account/updateOrders',
       payload: data,
     });
   }
-  handleTrade(data) {
+  handleTrade(/* data */) {
     // TODO:
     // console.log('PrivateChannel/trade', data);
   }
@@ -157,7 +207,7 @@ class IActionCable extends Component {
 function mapStateToProps({ utils, market }) {
   return {
     loading: utils.loading,
-    market: market.pair,
+    market: market.id,
   };
 }
 

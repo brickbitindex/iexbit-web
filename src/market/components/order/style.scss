@@ -7,7 +7,7 @@ $itemHeight: 30px;
     display: flex;
     height: $itemHeight;
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 
     &:last-child {
       margin-bottom: 0px;
@@ -20,10 +20,54 @@ $itemHeight: 30px;
     .order-item {
       width: 80%;
     }
+
+    &.small {
+      height: auto;
+    }
+  }
+
+  .order-balance {
+    display: flex;
+    height: $itemHeight;
+    line-height: $itemHeight;
+    margin-bottom: 10px;
+
+    .order-balance-value {
+      text-align: right;
+    }
+  }
+
+  .order-amount-btns {
+    display: flex;
+
+    .order-amount-btn {
+      display: block;
+      width: 25%;
+      background: #2E4152;
+      text-align: center;
+      border: #475B6D solid 1px;
+      border-radius: 4px;
+      padding: 3px;
+      margin: 0 2px;
+      cursor: pointer;
+    }
+    .order-amount-btn:first-child {
+      margin-left: 0;
+    }
+    .order-amount-btn:last-child {
+      margin-right: 0;
+    }
   }
 }
 
-.cb-panel.buy-panel,
+
+
+.cb-panel.buy-panel {
+  overflow: hidden;
+  width: 250px;
+  margin-right: 3px;
+}
 .cb-panel.sell-panel {
-  margin-bottom: 3px;
+  overflow: hidden;
+  width: 250px;
 }

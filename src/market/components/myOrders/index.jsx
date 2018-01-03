@@ -4,7 +4,7 @@ import { connect } from 'dva';
 // import autobind from 'autobind-decorator';
 import classnames from 'classnames';
 import { injectIntl, FormattedMessage, FormattedTime, FormattedDate, FormattedNumber } from 'react-intl';
-import wrapWithPanel from '../panel';
+import ZeroFormattedNumber from '../common/zeroFormattedNumber';
 
 import './style.scss';
 
@@ -53,9 +53,9 @@ class MyOrders extends Component {
                 <FormattedNumber value={row.price} />
               </div>
               <div className="myorder-col amount tt">
-                {this.formatNumber(row.volume, { minimumFractionDigits: 3 })}
+                <ZeroFormattedNumber value={row.volume} option={{ minimumFractionDigits: 3 }} />
                 {partial && (
-                  <span className="light-text"> / {this.formatNumber(row.origin_volume, { minimumFractionDigits: 3 })}</span>
+                  <span className="light-text"> / <ZeroFormattedNumber value={row.origin_volume} option={{ minimumFractionDigits: 3 }} /></span>
                 )}
               </div>
               <div className="myorder-col placed tt">
@@ -76,8 +76,4 @@ function mapStateToProps({ account }) {
   return { data: account.orders };
 }
 
-export default wrapWithPanel(connect(mapStateToProps)(injectIntl(MyOrders)), {
-  title: <FormattedMessage id="myorders" />,
-  slideable: true,
-  className: 'myOrder-panel',
-});
+export default connect(mapStateToProps)(injectIntl(MyOrders));

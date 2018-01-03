@@ -1,4 +1,7 @@
 #myOrders {
+  overflow: auto;
+  height: 100%;
+
   .myorder-row {
     display: flex;
     height: 22px;
@@ -53,10 +56,9 @@
 }
 
 .cb-panel.myOrder-panel {
-  margin-bottom: 3px;
+  margin-right: 3px;
 
   .cb-panel-content {
-    max-height: 200px;
     overflow: auto;
   }
 }

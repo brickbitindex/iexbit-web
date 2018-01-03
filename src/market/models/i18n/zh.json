@@ -12,6 +12,7 @@
   "order_amount": "数量",
   "order_buy": "买入",
   "order_sell": "卖出",
+  "order_balance": "可用余额",
   "trades": "最近交易",
   "trades_time": "时间",
   "trades_price": "价格",
@@ -30,5 +31,17 @@
   "myorder_state": "状态",
   "myorder_opt": "操作",
   "myorder_wait": "未成交",
-  "myorder_partial": "部分成交"
+  "myorder_partial": "部分成交",
+  "text_connect": "已连接市场",
+  "text_disconnect": "已断开连接",
+  "text_order_success": "下单成功",
+  "text_order_delete": "删除订单成功",
+  "text_order_done": "您有订单已成交",
+  "messagecenter": "信息中心",
+  "messagecenter_from_sys": "系统",
+  "messagecenter_from_trade": "交易",
+  "messagecenter_order_bid_success": "下单成功，价格{price}{quote_unit}，买入{amount}{base_unit}",
+  "messagecenter_order_bid_done": "成交，价格{price}{quote_unit}，买入{amount}{base_unit}",
+  "messagecenter_order_ask_success": "下单成功，价格{price}{quote_unit}，卖出{amount}{base_unit}",
+  "messagecenter_order_ask_done": "成交，价格{price}{quote_unit}，卖出{amount}{base_unit}"
 }

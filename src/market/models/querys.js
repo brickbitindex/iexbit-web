@@ -2,12 +2,14 @@ import qs from 'qs';
 import '../../assets/lib/fetch';
 
 const fetchlib = window.fetch;
-const market = document.body.getAttribute('data-market') || null;
+const market = document.body.getAttribute('data-market') || '';
+// const pairSymbol = market.toLowerCase().replace('/', '_');
+const marketId = document.body.getAttribute('data-market_id') || '';
 
 const QUERY = {
   ADD_BID_ORDER: `/markets/${market}/order_bids`,
   ADD_ASK_ORDER: `/markets/${market}/order_asks`,
-  DELETE_ORDER: id => `/markets/${market}/orders/${id}`,
+  DELETE_ORDER: (id, type) => `/markets/${marketId}/order_${type}s/${id}`,
   K: '/api/v2/k.json',
 };
 
@@ -21,9 +23,7 @@ function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response;
   }
-  const error = new Error(response.statusText);
-  error.response = response;
-  throw error;
+  throw response.json();
 }
 
 function parseJSON(response) {

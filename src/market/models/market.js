@@ -13,6 +13,7 @@
  */
 
 import QUERY, { fetch } from './querys';
+import toast from '../components/common/toast';
 
 const addBidOrder = data => fetch.post(QUERY.ADD_BID_ORDER, data).catch(err => err);
 const addAskOrder = data => fetch.post(QUERY.ADD_ASK_ORDER, data).catch(err => err);
@@ -20,9 +21,12 @@ const addAskOrder = data => fetch.post(QUERY.ADD_ASK_ORDER, data).catch(err => e
 const model = {
   namespace: 'market',
   state: {
-    pair: document.body.getAttribute('data-market') || null,
+    id: '',
+    pair: '',
+    pairSymbol: '',
     prices: [],
     current: {},
+    currentBasicInfo: undefined,
     trades: [],
     orderBook: {
       asks: [],
@@ -32,14 +36,22 @@ const model = {
   subscriptions: {
     // TODO:
     setup({ dispatch }) {
-      // dispatch({
-      //   type: 'updatePrice',
-      //   payload: data.prices,
-      // });
+      const pair = document.body.getAttribute('data-market') || '';
+      const id = document.body.getAttribute('data-market_id') || '';
+      const pairSymbol = pair.toLowerCase().replace('/', '_');
+
+      dispatch({
+        type: 'updateState',
+        payload: {
+          id,
+          pair,
+          pairSymbol,
+        },
+      });
     },
   },
   effects: {
-    * addOrder({ payload }, { call }) {
+    * addOrder({ payload }, { call, put, select }) {
       const data = payload.data;
       let params;
       let caller;
@@ -65,7 +77,26 @@ const model = {
         caller = addAskOrder;
       }
       const response = yield call(caller, params);
-      console.log(response);
+      if (response.result) {
+        toast.info('text_order_success');
+        const currentBasicInfo = yield select(({ market }) => market.currentBasicInfo);
+        yield put({
+          type: 'utils/pushMessage',
+          payload: {
+            message: `messagecenter_order_${payload.type}_success`,
+            from: 'trade',
+            level: 'info',
+            data: {
+              price: data.price,
+              amount: data.amount,
+              quote_unit: currentBasicInfo.quote_unit,
+              base_unit: currentBasicInfo.base_unit,
+            },
+          },
+        });
+      } else {
+        toast.error(response.errors);
+      }
     },
   },
   reducers: {
@@ -77,16 +108,23 @@ const model = {
       let current;
       const prices = Object.keys(payload).map((key) => {
         const pair = payload[key];
-        pair.pair = key;
-        if (key === currentPair) {
+        if (pair.name === currentPair) {
           current = pair;
         }
         return pair;
       });
+      let currentBasicInfo = state.currentBasicInfo;
+      if (!state.currentBasicInfo) {
+        currentBasicInfo = {
+          quote_unit: current.quote_unit,
+          base_unit: current.base_unit,
+        };
+      }
       return {
         ...state,
         prices,
         current,
+        currentBasicInfo,
       };
     },
     updateTrades(state, { payload }) {
@@ -99,7 +137,16 @@ const model = {
       //   tid: 109,
       //   type: "buy",
       // }]
-      const trades = payload.trades.concat(state.trades).slice(0, 30);
+      const tradesObj = {};
+      state.trades.forEach((t) => {
+        tradesObj[t.tid] = t;
+      });
+      payload.trades.forEach((t) => {
+        tradesObj[t.tid] = t;
+      });
+      const trades = Object.keys(tradesObj).map(k => tradesObj[k]);
+      trades.sort((a, b) => b.date - a.date);
+      payload.trades.concat().slice(0, 30);
       return {
         ...state,
         trades,
@@ -131,6 +178,12 @@ const model = {
           bids,
           max,
         },
+      };
+    },
+    updateState(state, { payload }) {
+      return {
+        ...state,
+        ...payload,
       };
     },
   },

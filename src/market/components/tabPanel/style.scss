@@ -1,0 +1,29 @@
+.cb-panel {
+  .cb-panel-tab-title {
+    height: 28px;
+    display: inline-block;
+    padding: 0 12px;
+    vertical-align: bottom;
+    font-size: 12px;
+    color: #aaa;
+    cursor: pointer;
+    margin-right: 4px;
+
+    &:first-child {
+      margin-left: -12px;
+    }
+    &.active {
+      background: #253746 !important;
+      color: #eee;
+    }
+    &:hover {
+      background: rgba(#253746, 0.5);
+    }
+  }
+}
+
+.cb-panel.cb-panel-tab {
+  .cb-panel-title {
+    border-bottom: #253746 solid 1px;
+  }
+}
