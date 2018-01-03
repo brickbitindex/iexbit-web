@@ -10,5 +10,10 @@
     "entry": "./entries/signin",
     "template": "./templates/signin.html",
     "filename": "signin.html"
+  }, {
+    "name": "home",
+    "entry": "./entries/home",
+    "template": "./templates/home.html",
+    "filename": "home.html"
   }]
 }
