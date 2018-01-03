@@ -63,6 +63,7 @@
     "classnames": "^2.2.5",
     "dva": "^2.1.0",
     "dva-no-router": "^1.0.3",
+    "html-loader": "^0.5.1",
     "jquery": "^3.2.1",
     "keymaster": "^1.6.2",
     "moment": "^2.19.4",
