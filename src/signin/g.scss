@@ -1,0 +1,134 @@
+html,
+body {
+  background-color: #151f28;
+  height: 100%;
+  width: 100%;
+  font-family: "Helvetica Neue", Arial, "Hiragino Sans GB", sans-serif;
+  font-size: 12px;
+}
+
+body {
+  background-image: url(../assets/images/big-bg.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 52px;
+  width: 100%;
+
+  img {
+    height: 26px;
+    display: block;
+    margin: 13px 15px;
+  }
+}
+
+#main {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 550px;
+  height: 350px;
+  transform: translate(-50%, -50%);
+  background-color: #2E4152;
+  display: flex;
+  color: #fff;
+  box-shadow: 0px 0px 5px 2px rgba(6, 23, 37, 0.5);
+
+  .img {
+    width: 200px;
+    background-image: url(../assets/images/sml-bg-1.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center left;
+    position: relative;
+
+    img {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      display: block;
+      width: 100%;
+    }
+  }
+
+  .form {
+    width: 350px;
+    padding: 40px 35px;
+
+    .title {
+      font-size: 24px;
+      margin-bottom: 25px;
+    }
+
+    .input-container {
+      border-bottom: solid 1px #466A87;
+
+      &.email {
+        margin-bottom: 16px;
+
+        input {
+          width: 100%;
+        }
+      }
+
+      &.password {
+        margin-bottom: 60px;
+
+        input {
+          width: 75%;
+        }
+
+        a {
+          display: inline-block;
+          width: 23%;
+          text-align: right;
+          color: #4D708C;
+          text-decoration: none;
+        }
+      }
+
+      input {
+        border: none;
+        outline: none;
+        padding: 0;
+        background: transparent;
+        color: #fff;
+        font-size: 14px;
+        line-height: 38px;
+      }
+      input::placeholder {
+        color: #4D708C;
+      }
+    }
+
+    .submit-container {
+      margin-bottom: 12px;
+
+      input {
+        width: 100%;
+        background: #4D708C;
+        height: 40px;
+        color: #fff;
+        border: none;
+        font-size: 20px;
+        border-radius: 3px;
+      }
+    }
+
+    .extra {
+      text-align: center;
+      color: #4D708C;
+
+      a {
+        color: #9cc5e4;
+        text-decoration: none;
+      }
+    }
+  }
+}

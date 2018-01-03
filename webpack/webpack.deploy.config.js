@@ -90,6 +90,10 @@ var config = {
         test: /\.json$/,
         loader: 'json-loader'
       },
+      {
+        test: /\.html$/,
+        loader: "html"
+      },
     ]
   },
   resolve: {
