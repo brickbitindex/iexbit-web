@@ -3,7 +3,7 @@ body {
   background-color: #151f28;
   height: 100%;
   width: 100%;
-  font-family: "Helvetica Neue", Arial, "Hiragino Sans GB", sans-serif;
+  font-family: 'Helvetica Neue', Arial, 'Hiragino Sans GB', sans-serif;
   font-size: 12px;
   color: #fff;
 }
@@ -15,45 +15,96 @@ body {
   background-position: center;
 }
 
+a {
+  text-decoration: none;
+  color: white;
+}
+
 header {
   position: fixed;
   top: 0;
   left: 0;
-  height: 52px;
+  height: 62px;
   width: 100%;
 
   img {
-    height: 26px;
+    height: 28px;
     display: block;
-    margin: 13px 25px;
+    margin: 16px 25px;
   }
 
   .header-opts {
     position: absolute;
     top: 0;
     right: 0;
-    height: 52px;
-    line-height: 52px;
+    height: 62px;
+    line-height: 62px;
 
-    .a-container {
+    .item-container {
       display: inline-block;
       margin-right: 25px;
     }
 
-    a {
-      color: #fff;
-      text-decoration: none;
-    }
-
-    .signin {
+    .signup {
       background: #fff;
-      color: #1E2D39;
+      color: #1e2d39;
       padding: 5px 13px;
       border-radius: 3px;
     }
   }
 }
 
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  margin: 40px auto;
+  display: flex;
+  justify-content: center;
+  .item-container {
+    display: inline-block;
+    margin-right: 25px;
+
+    &:last-of-type {
+      margin-right: 0;
+    }
+  }
+}
+
+.content {
+  .container-wrap {
+    position: absolute;
+    padding-top: 62px;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+
+    .welcome {
+      text-align: center;
+      font-size: 50px;
+      margin-bottom: 40px;
+    }
+
+    button {
+      display: block;
+      border: 1px solid white;
+      border-radius: 2px;
+      width: 140px;
+      height: 40px;
+      margin: 24px auto;
+      background: transparent;
+      cursor: pointer;
+      &:hover {
+        background-color: rgba(255,255,255,0.3);
+      }
+      a {
+        color: #ececec;
+        opacity: 1;
+        text-decoration: none;
+      }
+    }
+  }
+}
 #main {
   position: absolute;
   left: 50%;
