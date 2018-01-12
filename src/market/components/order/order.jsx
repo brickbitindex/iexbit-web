@@ -7,6 +7,7 @@ import Select from 'react-select';
 
 import OrderInput from './input';
 import OrderButton from './button';
+import Mask from '../common/anonymousMask';
 
 const numberReg = /^\d+(\.\d+)?$/;
 
@@ -102,6 +103,8 @@ class Order extends Component {
   @autobind
   handleSubmit() {
     const { type, price, amount } = this.state;
+    const { anonymous } = this.props;
+    if (anonymous) return;
     if (!this.formError()) {
       this.props.onSubmit({
         type: type.value,
@@ -122,7 +125,7 @@ class Order extends Component {
   // TODO: balance.toFixed
   render() {
     const { type, price, amount, error } = this.state;
-    const { marketBasicInfo } = this.props;
+    const { marketBasicInfo, anonymous } = this.props;
     const key = this.props.type === 'buy' ? marketBasicInfo.quote_unit : marketBasicInfo.base_unit;
     const balance = this.getBalance(key);
     return (
@@ -176,6 +179,9 @@ class Order extends Component {
             <span>{marketBasicInfo.base_unit.toUpperCase()}</span>
           </OrderButton>
         </div>
+        {anonymous && (
+          <Mask />
+        )}
       </div>
     );
   }
@@ -185,6 +191,7 @@ function mapStateToProps({ market, account }) {
   return {
     marketBasicInfo: market.currentBasicInfo,
     balance: account.balance,
+    anonymous: account.anonymous,
   };
 }
 
