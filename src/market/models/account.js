@@ -10,6 +10,7 @@ const model = {
   state: {
     balance: [],
     orders: [],
+    anonymous: !window.gon.current_user,
   },
   subscriptions: {
     // TODO:

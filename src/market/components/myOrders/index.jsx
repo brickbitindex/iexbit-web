@@ -6,6 +6,8 @@ import classnames from 'classnames';
 import { injectIntl, FormattedMessage, FormattedTime, FormattedDate, FormattedNumber } from 'react-intl';
 import ZeroFormattedNumber from '../common/zeroFormattedNumber';
 
+import Mask from '../common/anonymousMask';
+
 import './style.scss';
 
 const reg = /0+$/;
@@ -27,7 +29,7 @@ class MyOrders extends Component {
     return <span>{ret}</span>;
   }
   render() {
-    const { data } = this.props;
+    const { data, anonymous } = this.props;
     return (
       <div id="myOrders">
         <div className="myorder-row thead light-text">
@@ -67,13 +69,19 @@ class MyOrders extends Component {
             </div>
           );
         })}
+        {anonymous && (
+          <Mask />
+        )}
       </div>
     );
   }
 }
 
 function mapStateToProps({ account }) {
-  return { data: account.orders };
+  return {
+    data: account.orders,
+    anonymous: account.anonymous,
+  };
 }
 
 export default connect(mapStateToProps)(injectIntl(MyOrders));

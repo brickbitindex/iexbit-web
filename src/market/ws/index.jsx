@@ -26,13 +26,18 @@ class IActionCable extends Component {
       const cable = ActionCable.createConsumer();
       this.cable = cable;
       this.createSubscription('HallChannel', { channel: 'HallChannel', market, init: true });
-      this.createSubscription('PrivateChannel', { channel: 'PrivateChannel', market, init: true });
       this.createSubscription('HallChannel-g', { channel: 'HallChannel' });
+      if (!this.props.anonymous) {
+        this.createSubscription('PrivateChannel', { channel: 'PrivateChannel', market, init: true });
+      }
     }
   }
   checkAllChannelConnect(tag) {
     channalConnect[tag] = true;
     if (getAllChannelConnect()) {
+      if (this.props.anonymous) {
+        this.checkLoading('myOrders');
+      }
       toast.info('text_connect');
       this.props.dispatch({
         type: 'utils/pushMessage',
@@ -204,10 +209,11 @@ class IActionCable extends Component {
   }
 }
 
-function mapStateToProps({ utils, market }) {
+function mapStateToProps({ utils, market, account }) {
   return {
     loading: utils.loading,
     market: market.id,
+    anonymous: account.anonymous,
   };
 }
 
