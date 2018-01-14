@@ -11,12 +11,45 @@
  *   fix: 5,
  * }]
  */
-
+import Decimal from 'decimal.js-light';
 import QUERY, { fetch } from './querys';
 import toast from '../components/common/toast';
 
 const addBidOrder = data => fetch.post(QUERY.ADD_BID_ORDER, data).catch(err => err);
 const addAskOrder = data => fetch.post(QUERY.ADD_ASK_ORDER, data).catch(err => err);
+
+function getDecimalFixed(decimal) {
+  if (new Decimal('1').lte(decimal)) return 0;
+  return decimal.log().abs().toNumber();
+}
+
+function initCurrentBasicInfo() {
+  const origin = window.gon.current_market;
+  const currentBasicInfo = {};
+  currentBasicInfo.base_unit = origin.base_unit;
+  currentBasicInfo.quote_unit = origin.quote_unit;
+  currentBasicInfo.ask_config = {
+    fee_rate: new Decimal(origin.ask_config.fee_rate),
+    price_minmov: new Decimal(origin.ask_config.price_minmov),
+    min_amount: new Decimal(origin.ask_config.min_amount),
+  };
+  // 用于chart的pricescale
+  currentBasicInfo.ask_config.pricescale = parseInt(new Decimal('1').div(currentBasicInfo.ask_config.price_minmov).toString(), 10);
+  // 用于价格的fixed
+  currentBasicInfo.ask_config.price_fixed = getDecimalFixed(currentBasicInfo.ask_config.price_minmov);
+  // 用于数量的fixed
+  currentBasicInfo.ask_config.amount_fixed = getDecimalFixed(currentBasicInfo.ask_config.min_amount);
+  currentBasicInfo.bid_config = {
+    fee_rate: new Decimal(origin.bid_config.fee_rate),
+    price_minmov: new Decimal(origin.bid_config.price_minmov),
+    min_amount: new Decimal(origin.bid_config.min_amount),
+  };
+  currentBasicInfo.bid_config.pricescale = parseInt(new Decimal('1').div(currentBasicInfo.bid_config.price_minmov).toString(), 10);
+  currentBasicInfo.bid_config.price_fixed = getDecimalFixed(currentBasicInfo.bid_config.price_minmov);
+  currentBasicInfo.bid_config.amount_fixed = getDecimalFixed(currentBasicInfo.bid_config.min_amount);
+  console.log(currentBasicInfo);
+  return currentBasicInfo;
+}
 
 const model = {
   namespace: 'market',
@@ -39,6 +72,7 @@ const model = {
       const pair = document.body.getAttribute('data-market') || '';
       const id = document.body.getAttribute('data-market_id') || '';
       const pairSymbol = pair.toLowerCase().replace('/', '_');
+      const currentBasicInfo = initCurrentBasicInfo();
 
       dispatch({
         type: 'updateState',
@@ -46,6 +80,7 @@ const model = {
           id,
           pair,
           pairSymbol,
+          currentBasicInfo,
         },
       });
     },
@@ -89,8 +124,8 @@ const model = {
             data: {
               price: data.price,
               amount: data.amount,
-              quote_unit: currentBasicInfo.quote_unit,
-              base_unit: currentBasicInfo.base_unit,
+              quote_unit: currentBasicInfo.quote_unit.code,
+              base_unit: currentBasicInfo.base_unit.code,
             },
           },
         });
@@ -113,18 +148,10 @@ const model = {
         }
         return pair;
       });
-      let currentBasicInfo = state.currentBasicInfo;
-      if (!state.currentBasicInfo) {
-        currentBasicInfo = {
-          quote_unit: current.quote_unit,
-          base_unit: current.base_unit,
-        };
-      }
       return {
         ...state,
         prices,
         current,
-        currentBasicInfo,
       };
     },
     updateTrades(state, { payload }) {

@@ -41,10 +41,10 @@ class Index extends Component {
             <Header />
             <div className="top flex-autofixed">
               <Chart className="flex-autofixed" />
-              <Trades loading={loading.trades} className="flex-fixed" />
               <OrderBook loading={loading.orderBook} className="flex-fixed">
                 <Market loading={loading.market} />
               </OrderBook>
+              <Trades loading={loading.trades} className="flex-fixed" />
             </div>
             <div className="bottom flex-fixed">
               <TabPanel loadings={loading} className="flex-autofixed the-tabs" />

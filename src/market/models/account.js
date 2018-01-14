@@ -59,8 +59,8 @@ const model = {
               data: {
                 price: p.price,
                 amount: p.origin_volume,
-                quote_unit: currentBasicInfo.quote_unit,
-                base_unit: currentBasicInfo.base_unit,
+                quote_unit: currentBasicInfo.quote_unit.code,
+                base_unit: currentBasicInfo.base_unit.code,
               },
             },
           });

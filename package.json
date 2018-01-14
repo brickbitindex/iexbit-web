@@ -61,6 +61,7 @@
     "actioncable": "^5.1.4",
     "autobind-decorator": "^2.1.0",
     "classnames": "^2.2.5",
+    "decimal.js-light": "^2.3.1",
     "dva": "^2.1.0",
     "dva-no-router": "^1.0.3",
     "html-loader": "^0.5.1",

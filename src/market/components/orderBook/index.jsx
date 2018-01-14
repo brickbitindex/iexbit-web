@@ -10,8 +10,20 @@ import ZeroFormattedNumber from '../common/zeroFormattedNumber';
 import './style.scss';
 
 class OrderBook extends Component {
+  handleAskPriceClick(price) {
+    this.props.dispatch({
+      type: 'order/updateAskPrice',
+      payload: price,
+    });
+  }
+  handleBidPriceClick(price) {
+    this.props.dispatch({
+      type: 'order/updateBidPrice',
+      payload: price,
+    });
+  }
   render() {
-    const { data } = this.props;
+    const { data, basicInfo } = this.props;
     const { bids, asks, max } = data;
     return (
       <div id="orderBook">
@@ -26,14 +38,14 @@ class OrderBook extends Component {
           <div className="order-book asks">
             {asks.map((row, i) => (
               <div className="order-book-row flex-fixed" key={i}>
-                <div className="order-book-col price">
-                  <tt className="red-text">{row[0]}</tt>
+                <div className="order-book-col price" onClick={this.handleAskPriceClick.bind(this, row[0])}>
+                  <tt className="red-text"><ZeroFormattedNumber value={row[0]} fixed={basicInfo.ask_config.price_fixed} /></tt>
                 </div>
                 <div className="order-book-col amount">
-                  <tt><ZeroFormattedNumber value={row[1]} option={{ minimumFractionDigits: 3 }} /></tt>
+                  <tt><ZeroFormattedNumber value={row[1]} fixed={basicInfo.ask_config.amount_fixed} /></tt>
                 </div>
                 <div className="order-book-col total">
-                  <tt>{row[2]}</tt>
+                  <tt><ZeroFormattedNumber value={row[2]} fixed={basicInfo.ask_config.price_fixed} /></tt>
                 </div>
                 <div className="order-book-bar" style={{ width: `${row[3] * 100 / max}%` }} />
               </div>
@@ -45,14 +57,14 @@ class OrderBook extends Component {
           <div className="order-book bids">
             {bids.map((row, i) => (
               <div className="order-book-row flex-fixed" key={i}>
-                <div className="order-book-col price">
-                  <tt className="green-text">{row[0]}</tt>
+                <div className="order-book-col price" onClick={this.handleBidPriceClick.bind(this, row[0])}>
+                  <tt className="green-text"><ZeroFormattedNumber value={row[0]} fixed={basicInfo.bid_config.price_fixed} /></tt>
                 </div>
                 <div className="order-book-col amount">
-                  <tt><ZeroFormattedNumber value={row[1]} option={{ minimumFractionDigits: 3 }} /></tt>
+                  <tt><ZeroFormattedNumber value={row[1]} fixed={basicInfo.bid_config.amount_fixed} /></tt>
                 </div>
                 <div className="order-book-col total">
-                  <tt>{row[2]}</tt>
+                  <tt><ZeroFormattedNumber value={row[2]} fixed={basicInfo.bid_config.price_fixed} /></tt>
                 </div>
                 <div className="order-book-bar" style={{ width: `${row[3] * 100 / max}%` }} />
               </div>
@@ -65,7 +77,10 @@ class OrderBook extends Component {
 }
 
 function mapStateToProps({ market }) {
-  return { data: market.orderBook };
+  return {
+    data: market.orderBook,
+    basicInfo: market.currentBasicInfo,
+  };
 }
 
 export default wrapWithPanel(connect(mapStateToProps)(OrderBook), {

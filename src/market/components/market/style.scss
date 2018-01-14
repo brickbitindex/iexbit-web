@@ -19,11 +19,6 @@
     font-size: 40px;
     text-align: right;
     vertical-align: bottom;
-
-    &.small {
-      height: 30px;
-      font-size: 30px;
-    }
   }
   .market-info {
     width: 25%;
@@ -38,21 +33,23 @@
 
   .market-detail {
     right: calc(100% + 12px);
-    width: 150px;
     z-index: 2;
     padding: 15px;
 
     .market-row {
-      display: flex;
+      white-space: nowrap;
+      margin-bottom: 12px;
 
       .mt {
-        width: 50%;
+        font-size: 18px;
       }
       .mv {
-        width: 50%;
-        text-align: right;
+      }
+      &:last-child {
+        margin-bottom: 0;
       }
     }
+
   }
 }
 

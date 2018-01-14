@@ -9,6 +9,19 @@ import ZeroFormattedNumber from '../common/zeroFormattedNumber';
 
 import './style.scss';
 
+const fontSize = {
+  1: 40,
+  2: 40,
+  3: 40,
+  4: 40,
+  5: 40,
+  6: 40,
+  7: 35,
+  8: 31,
+  9: 27,
+  10: 24,
+};
+
 class Market extends Component {
   constructor(props) {
     super(props);
@@ -34,12 +47,14 @@ class Market extends Component {
     const down = change < 0;
     const baseUnit = data.base_unit;
     const quoteUnit = data.quote_unit;
+
+    const fs = fontSize[data.last.length];
     return (
       <div id="market" onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
         <div className="market-icon">
           <img src={SYMBOL_ICON[pairSymbol]} alt={baseUnit} />
         </div>
-        <div className={classnames('market-current tt', { small: data.last.length > 6 })}>{data.last}</div>
+        <div className="market-current tt" style={{ fontSize: fs, height: fs }}>{data.last}</div>
         <div className="market-info">
           <div className="light-text">{quoteUnit.toUpperCase()}</div>
           <div>
@@ -51,15 +66,15 @@ class Market extends Component {
         <div className={classnames('market-detail pop-dialog a-left', { show: this.state.hover })}>
           <div className="market-row">
             <div className="mt"><FormattedMessage id="market_low" /></div>
-            <div className="mv tt"><ZeroFormattedNumber value={data.low} option={{ minimumFractionDigits: 3 }} /> <span className="light-text">{quoteUnit}</span></div>
+            <div className="mv tt"><ZeroFormattedNumber value={data.low} fixed={3} /> <span className="light-text">{quoteUnit}</span></div>
           </div>
           <div className="market-row">
             <div className="mt"><FormattedMessage id="market_high" /></div>
-            <div className="mv tt"><ZeroFormattedNumber value={data.high} option={{ minimumFractionDigits: 3 }} /> <span className="light-text">{quoteUnit}</span></div>
+            <div className="mv tt"><ZeroFormattedNumber value={data.high} fixed={3} /> <span className="light-text">{quoteUnit}</span></div>
           </div>
           <div className="market-row">
             <div className="mt"><FormattedMessage id="market_vol" /></div>
-            <div className="mv tt"><ZeroFormattedNumber value={data.volume} option={{ minimumFractionDigits: 3 }} /> <span className="light-text">{baseUnit}</span></div>
+            <div className="mv tt"><ZeroFormattedNumber value={data.volume} fixed={3} /> <span className="light-text">{baseUnit}</span></div>
           </div>
         </div>
         {/* <div className="market-row">

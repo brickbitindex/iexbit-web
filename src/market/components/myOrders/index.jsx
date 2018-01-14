@@ -29,7 +29,7 @@ class MyOrders extends Component {
     return <span>{ret}</span>;
   }
   render() {
-    const { data, anonymous } = this.props;
+    const { data, anonymous, basicInfo } = this.props;
     return (
       <div id="myOrders">
         <div className="myorder-row thead light-text">
@@ -43,6 +43,7 @@ class MyOrders extends Component {
         {data.map((row) => {
           const partial = row.volume !== row.origin_volume;
           const date = new Date(row.at * 1000);
+          const config = row.kind === 'bid' ? basicInfo.bid_config : basicInfo.ask_config;
           return (
             <div className="myorder-row" key={row.id}>
               <div className="myorder-col type light-text">
@@ -52,12 +53,12 @@ class MyOrders extends Component {
                 <span className={classnames('tag', { partial })}><FormattedMessage id={partial ? 'myorder_partial' : 'myorder_wait'} /></span>
               </div>
               <div className={classnames('myorder-col price tt', row.kind === 'bid' ? 'green-text' : 'red-text')}>
-                <FormattedNumber value={row.price} />
+                <ZeroFormattedNumber value={row.price} fixed={config.price_fixed} />
               </div>
               <div className="myorder-col amount tt">
-                <ZeroFormattedNumber value={row.volume} option={{ minimumFractionDigits: 3 }} />
+                <ZeroFormattedNumber value={row.volume} fixed={config.amount_fixed} />
                 {partial && (
-                  <span className="light-text"> / <ZeroFormattedNumber value={row.origin_volume} option={{ minimumFractionDigits: 3 }} /></span>
+                  <span className="light-text"> / <ZeroFormattedNumber value={row.origin_volume} fixed={config.amount_fixed} /></span>
                 )}
               </div>
               <div className="myorder-col placed tt">
@@ -77,10 +78,11 @@ class MyOrders extends Component {
   }
 }
 
-function mapStateToProps({ account }) {
+function mapStateToProps({ account, market }) {
   return {
     data: account.orders,
     anonymous: account.anonymous,
+    basicInfo: market.currentBasicInfo,
   };
 }
 
