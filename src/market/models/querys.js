@@ -11,6 +11,7 @@ const QUERY = {
   ADD_ASK_ORDER: `/markets/${market}/order_asks`,
   DELETE_ORDER: (id, type) => `/markets/${marketId}/order_${type}s/${id}`,
   K: '/api/v2/k.json',
+  QUERY_PRICES: '/api/v2/markets',
 };
 
 const $token = document.querySelector('meta[name=csrf-token]');

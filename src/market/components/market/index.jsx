@@ -9,6 +9,22 @@ import ZeroFormattedNumber from '../common/zeroFormattedNumber';
 
 import './style.scss';
 
+const fontSize = {
+  1: 40,
+  2: 40,
+  3: 40,
+  4: 40,
+  5: 40,
+  6: 40,
+  7: 35,
+  8: 31,
+  9: 27,
+  10: 24,
+};
+
+let maxLength = 0;
+let fs = 24;
+
 class Market extends Component {
   constructor(props) {
     super(props);
@@ -29,17 +45,24 @@ class Market extends Component {
     });
   }
   render() {
-    const { data, pairSymbol } = this.props;
-    const change = (parseFloat(data.last) - data.open) / data.open;
+    const { data, pairSymbol, currentPrice, basicInfo } = this.props;
+    const ticker = data.ticker;
+    const change = (parseFloat(currentPrice) - ticker.open) / ticker.open;
     const down = change < 0;
-    const baseUnit = data.base_unit;
-    const quoteUnit = data.quote_unit;
+    const baseUnit = basicInfo.base_unit.code;
+    const quoteUnit = basicInfo.quote_unit.code;
+
+    if (currentPrice.length > maxLength) {
+      maxLength = currentPrice.length;
+      fs = fontSize[maxLength];
+    }
+
     return (
       <div id="market" onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
         <div className="market-icon">
           <img src={SYMBOL_ICON[pairSymbol]} alt={baseUnit} />
         </div>
-        <div className={classnames('market-current tt', { small: data.last.length > 6 })}>{data.last}</div>
+        <div className="market-current tt" style={{ fontSize: fs, height: fs }}>{currentPrice}</div>
         <div className="market-info">
           <div className="light-text">{quoteUnit.toUpperCase()}</div>
           <div>
@@ -51,15 +74,15 @@ class Market extends Component {
         <div className={classnames('market-detail pop-dialog a-left', { show: this.state.hover })}>
           <div className="market-row">
             <div className="mt"><FormattedMessage id="market_low" /></div>
-            <div className="mv tt"><ZeroFormattedNumber value={data.low} option={{ minimumFractionDigits: 3 }} /> <span className="light-text">{quoteUnit}</span></div>
+            <div className="mv tt"><ZeroFormattedNumber value={ticker.low} fixed={3} /> <span className="light-text">{quoteUnit}</span></div>
           </div>
           <div className="market-row">
             <div className="mt"><FormattedMessage id="market_high" /></div>
-            <div className="mv tt"><ZeroFormattedNumber value={data.high} option={{ minimumFractionDigits: 3 }} /> <span className="light-text">{quoteUnit}</span></div>
+            <div className="mv tt"><ZeroFormattedNumber value={ticker.high} fixed={3} /> <span className="light-text">{quoteUnit}</span></div>
           </div>
           <div className="market-row">
             <div className="mt"><FormattedMessage id="market_vol" /></div>
-            <div className="mv tt"><ZeroFormattedNumber value={data.volume} option={{ minimumFractionDigits: 3 }} /> <span className="light-text">{baseUnit}</span></div>
+            <div className="mv tt"><ZeroFormattedNumber value={ticker.volume} fixed={3} /> <span className="light-text">{baseUnit}</span></div>
           </div>
         </div>
         {/* <div className="market-row">
@@ -92,6 +115,8 @@ function mapStateToProps({ market }) {
   return {
     data: market.current,
     pairSymbol: market.pairSymbol,
+    currentPrice: market.currentPrice,
+    basicInfo: market.currentBasicInfo,
   };
 }
 

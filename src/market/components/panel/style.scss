@@ -38,6 +38,10 @@ $titleHeight: 32px;
   }
 }
 
+.no-panel-anime .cb-panel {
+  animation: none;
+}
+
 @keyframes panelAnime {
   0% {
     opacity: 0;

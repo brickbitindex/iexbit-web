@@ -30,21 +30,30 @@ addLocaleData([...en, ...zh, ...ja, ...ko]);
   <Balance loading={loading.balance} /> */
 
 class Index extends Component {
-  componentDidMount() {}
+  componentDidMount() {
+    // TODO: .no-panel-anime
+    // const config = this.props;
+    // if (config.lastUpdate && config.lastUpdate) {
+
+    // }
+    this.props.dispatch({
+      type: 'utils/init',
+    });
+  }
   render() {
     const { locale, messages, loading } = this.props;
     return (
       <IntlProvider locale={locale} messages={messages}>
-        <div id="squareContainer">
+        <div id="squareContainer" className="no-panel-anime">
           <WS />
           <div id="square">
             <Header />
             <div className="top flex-autofixed">
               <Chart className="flex-autofixed" />
-              <Trades loading={loading.trades} className="flex-fixed" />
               <OrderBook loading={loading.orderBook} className="flex-fixed">
                 <Market loading={loading.market} />
               </OrderBook>
+              <Trades loading={loading.trades} className="flex-fixed" />
             </div>
             <div className="bottom flex-fixed">
               <TabPanel loadings={loading} className="flex-autofixed the-tabs" />
@@ -63,6 +72,7 @@ function mapStateToProps({ i18n, utils }) {
     locale: i18n.locale,
     messages: i18n.messages,
     loading: utils.loading,
+    config: utils.config,
   };
 }
 

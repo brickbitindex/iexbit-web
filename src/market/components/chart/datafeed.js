@@ -1,4 +1,5 @@
 /* eslint no-prototype-builtins: 0 */
+import Decimal from 'decimal.js-light';
 import QUERY, { fetch } from './../../models/querys';
 
 const defaultConfig = {
@@ -123,9 +124,10 @@ class DataPulseUpdater {
 
 
 export default class Datafeed {
-  constructor(symbolName, updateFrequency = 2 * 1000) {
+  constructor(symbolName, basicInfo, updateFrequency = 2 * 1000) {
     this.updateFrequency = updateFrequency;
     this.symbolName = symbolName;
+    this.basicInfo = basicInfo;
     this._callbacks = {};
     this._configuration = null;
     this._initializationFinished = false;
@@ -164,7 +166,7 @@ export default class Datafeed {
       'exchange-listed': 'Cool.bi',
       'exchange-traded': 'Cool.bi',
       minmov: 1,
-      pricescale: 1000,
+      pricescale: this.basicInfo.bid_config.pricescale,
       minmov2: 0,
       has_intraday: true,
       has_empty_bars: true,

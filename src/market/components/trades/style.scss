@@ -10,6 +10,12 @@
       height: 22px;
       line-height: 22px;
     }
+    &:not(.thead) {
+      cursor: pointer;
+    }
+    &:not(.thead):hover {
+      background: #2E4152;
+    }
  
     .trades-col {
       &.time {
@@ -18,11 +24,11 @@
         padding-left: 12px;
       }
       &.price {
-        width: 35%;
+        width: 37.5%;
         text-align: right;
       }
       &.amount {
-        width: 40%;
+        width: 37.5%;
         text-align: right;
         padding-right: 12px;
       }
@@ -31,6 +37,9 @@
 }
 
 .cb-panel.trades-panel {
-  margin-right: 3px;
   width: 250px;
+
+  .cb-panel-content {
+    overflow: hidden;
+  }
 }

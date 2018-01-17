@@ -38,13 +38,13 @@ class Chart extends Component {
   }
   initWidget() {
     const TradingView = window.TradingView;
-    const symbol = this.props.market;
+    const symbol = this.props.symbol;
     this.tvWidget = new TradingView.widget({
       symbol: 'Cool.bi:' + symbol,
       interval: '15',
       container_id: 'chart',
       // BEWARE: no trailing slash is expected in feed URL
-      datafeed: new Datefeed(symbol),
+      datafeed: new Datefeed(symbol, this.props.basicInfo),
       library_path: '/tv/',
       locale: 'zh',
       // Regression Trend-related functionality is not implemented yet, so it's hidden for a while
@@ -71,7 +71,10 @@ class Chart extends Component {
 }
 
 function mapStateToProps({ market }) {
-  return { market: market.pairSymbol };
+  return {
+    symbol: market.pairSymbol,
+    basicInfo: market.currentBasicInfo,
+  };
 }
 
 export default wrapWithPanel(connect(mapStateToProps)(Chart), {
