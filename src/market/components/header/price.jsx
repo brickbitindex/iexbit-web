@@ -22,8 +22,9 @@ function highlight(name, highlightReg) {
 export default function Price(props) {
   const price = props.data;
   const highlightReg = props.highlightReg;
-  const last = parseFloat(price.last);
-  const open = parseFloat(price.open);
+  const ticker = price.ticker;
+  const last = parseFloat(ticker.last);
+  const open = parseFloat(ticker.open);
   const change = open === 0 ? 0 : (last - open) / open;
   const down = change < 0;
   return (
@@ -32,7 +33,7 @@ export default function Price(props) {
         {highlightReg ? highlight(price.name, highlightReg) : price.name}
       </div>
       <div className="header-price-current">
-        <span>{price.last} {price.quote_unit.toUpperCase()}</span>
+        <span>{ticker.last} {/* price.quote_unit.toUpperCase() */}</span>
         <span>&nbsp;</span>
         <span className={classnames(down ? 'red-text' : 'green-text')}>
           ({down ? '-' : '+'}{Math.abs(change * 100).toFixed(2)}%)

@@ -38,11 +38,29 @@ class Order extends Component {
   }
   handleQuickAmount(percentage) {
     const balance = this.getBalance();
-    this.props.onAmountChange({
-      target: {
-        value: percentage * balance.balance,
-      },
-    });
+    const price = this.props.form.price;
+    let value;
+    const amountFixed = this.props.config.amount_fixed;
+    if (this.props.type === 'buy') {
+      if (price) {
+        const priceFixed = this.props.config.price_fixed;
+        const scaledAmount = parseInt(percentage * balance.balance * Math.pow(10, amountFixed), 10);
+        const scaledPrice = parseInt(parseFloat(price) * Math.pow(10, priceFixed), 10) * Math.pow(10, amountFixed - priceFixed);
+        value = parseInt(scaledAmount / scaledPrice * Math.pow(10, amountFixed), 10) / Math.pow(10, amountFixed);
+        this.props.onAmountChange({
+          target: {
+            value,
+          },
+        });
+      }
+    } else {
+      value = parseInt(percentage * balance.balance * Math.pow(10, amountFixed), 10) / Math.pow(10, amountFixed);
+      this.props.onAmountChange({
+        target: {
+          value,
+        },
+      });
+    }
   }
   render() {
     const { basicInfo, anonymous, form } = this.props;

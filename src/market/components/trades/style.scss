@@ -10,6 +10,12 @@
       height: 22px;
       line-height: 22px;
     }
+    &:not(.thead) {
+      cursor: pointer;
+    }
+    &:not(.thead):hover {
+      background: #2E4152;
+    }
  
     .trades-col {
       &.time {
@@ -32,4 +38,8 @@
 
 .cb-panel.trades-panel {
   width: 250px;
+
+  .cb-panel-content {
+    overflow: hidden;
+  }
 }

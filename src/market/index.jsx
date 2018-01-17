@@ -30,12 +30,21 @@ addLocaleData([...en, ...zh, ...ja, ...ko]);
   <Balance loading={loading.balance} /> */
 
 class Index extends Component {
-  componentDidMount() {}
+  componentDidMount() {
+    // TODO: .no-panel-anime
+    // const config = this.props;
+    // if (config.lastUpdate && config.lastUpdate) {
+
+    // }
+    this.props.dispatch({
+      type: 'utils/init',
+    });
+  }
   render() {
     const { locale, messages, loading } = this.props;
     return (
       <IntlProvider locale={locale} messages={messages}>
-        <div id="squareContainer">
+        <div id="squareContainer" className="no-panel-anime">
           <WS />
           <div id="square">
             <Header />
@@ -63,6 +72,7 @@ function mapStateToProps({ i18n, utils }) {
     locale: i18n.locale,
     messages: i18n.messages,
     loading: utils.loading,
+    config: utils.config,
   };
 }
 

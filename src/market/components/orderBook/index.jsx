@@ -37,8 +37,8 @@ class OrderBook extends Component {
         <div className="order-book-container flex-autofixed">
           <div className="order-book asks">
             {asks.map((row, i) => (
-              <div className="order-book-row flex-fixed" key={i}>
-                <div className="order-book-col price" onClick={this.handleAskPriceClick.bind(this, row[0])}>
+              <div className="order-book-row flex-fixed" key={i} onClick={this.handleAskPriceClick.bind(this, row[0])}>
+                <div className="order-book-col price">
                   <tt className="red-text"><ZeroFormattedNumber value={row[0]} fixed={basicInfo.ask_config.price_fixed} /></tt>
                 </div>
                 <div className="order-book-col amount">
@@ -56,8 +56,8 @@ class OrderBook extends Component {
           </div>
           <div className="order-book bids">
             {bids.map((row, i) => (
-              <div className="order-book-row flex-fixed" key={i}>
-                <div className="order-book-col price" onClick={this.handleBidPriceClick.bind(this, row[0])}>
+              <div className="order-book-row flex-fixed" key={i} onClick={this.handleBidPriceClick.bind(this, row[0])}>
+                <div className="order-book-col price">
                   <tt className="green-text"><ZeroFormattedNumber value={row[0]} fixed={basicInfo.bid_config.price_fixed} /></tt>
                 </div>
                 <div className="order-book-col amount">

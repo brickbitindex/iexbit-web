@@ -66,15 +66,17 @@ function WrapSellOrder(props) {
   );
 }
 
-function mapStateToPropsBuy({ order }) {
+function mapStateToPropsBuy({ order, market }) {
   return {
     form: order.bid,
+    config: market.currentBasicInfo.bid_config,
   };
 }
 
-function mapStateToPropsSell({ order }) {
+function mapStateToPropsSell({ order, market }) {
   return {
     form: order.ask,
+    config: market.currentBasicInfo.ask_config,
   };
 }
 

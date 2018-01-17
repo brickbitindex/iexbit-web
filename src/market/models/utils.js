@@ -14,18 +14,21 @@ const model = {
     },
     messages: [],
     gon: window.gon,
+    config: {},
+    tradesLength: 0,
   },
   subscriptions: {
-    // setup({ dispatch }) {
-    //   window.addEventListener('resize', () => {
-    //     dispatch({
-    //       type: 'updateState',
-    //       payload: {
-    //         windowWidth
-    //       },
-    //     });
-    //   });
-    // },
+    setup({ dispatch }) {
+      const storedConfig = localStorage.getItem('CB_M_CONFIG');
+      const payload = {};
+      if (storedConfig) {
+        payload.config = JSON.parse(storedConfig);
+      }
+      dispatch({
+        type: 'updateState',
+        payload,
+      });
+    },
   },
   effects: {
     // * add(action, { call, put }) {
@@ -61,6 +64,15 @@ const model = {
         payload: {
           messages: [...messages],
         },
+      });
+    },
+    * init(_, { put }) {
+      const payload = {};
+      payload.tradesLength = parseInt(document.querySelector('.cb-panel.trades-panel .cb-panel-content').offsetHeight / 14 + 10, 10);
+      console.log(payload);
+      yield put({
+        type: 'updateState',
+        payload,
       });
     },
   },

@@ -42,6 +42,12 @@
         height: 22px;
         line-height: 22px;
       }
+      &:not(.thead) {
+        cursor: pointer;
+      }
+      &:not(.thead):hover {
+        background: #2E4152;
+      }
 
       .order-book-bar {
         position: absolute;

@@ -26,7 +26,7 @@ class IActionCable extends Component {
       const cable = ActionCable.createConsumer();
       this.cable = cable;
       this.createSubscription('HallChannel', { channel: 'HallChannel', market, init: true });
-      this.createSubscription('HallChannel-g', { channel: 'HallChannel' });
+      // this.createSubscription('HallChannel-g', { channel: 'HallChannel' });
       if (!this.props.anonymous) {
         this.createSubscription('PrivateChannel', { channel: 'PrivateChannel', market, init: true });
       }
@@ -122,9 +122,9 @@ class IActionCable extends Component {
       case 'HallChannel/trades':
         this.handleTrades(data);
         break;
-      case 'HallChannel-g/tickers':
-        this.handleTickers(data);
-        break;
+      // case 'HallChannel-g/tickers':
+      //   this.handleTickers(data);
+      //   break;
       case 'PrivateChannel/account':
         this.handleAccount(data);
         break;
@@ -168,20 +168,21 @@ class IActionCable extends Component {
     });
   }
   handleTrades(data) {
+    console.log(data);
     this.checkLoading('trades');
     this.props.dispatch({
       type: 'market/updateTrades',
       payload: data,
     });
   }
-  handleTickers(data) {
-    this.checkLoading('market');
-    this.checkLoading('order');
-    this.props.dispatch({
-      type: 'market/updatePrices',
-      payload: data,
-    });
-  }
+  // handleTickers(data) {
+  //   this.checkLoading('market');
+  //   this.checkLoading('order');
+  //   this.props.dispatch({
+  //     type: 'market/updatePrices',
+  //     payload: data,
+  //   });
+  // }
   // private
   handleAccount(data) {
     this.checkLoading('balance');
@@ -193,6 +194,7 @@ class IActionCable extends Component {
   handleOrders(data) {
     // TODO:
     this.checkLoading('myOrders');
+    this.checkLoading('order');
     this.props.dispatch({
       type: 'account/updateOrders',
       payload: data,

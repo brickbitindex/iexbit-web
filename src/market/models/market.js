@@ -17,6 +17,7 @@ import toast from '../components/common/toast';
 
 const addBidOrder = data => fetch.post(QUERY.ADD_BID_ORDER, data).catch(err => err);
 const addAskOrder = data => fetch.post(QUERY.ADD_ASK_ORDER, data).catch(err => err);
+const queryPrices = () => fetch.get(QUERY.QUERY_PRICES).catch(err => err);
 
 function getDecimalFixed(decimal) {
   if (new Decimal('1').lte(decimal)) return 0;
@@ -47,7 +48,6 @@ function initCurrentBasicInfo() {
   currentBasicInfo.bid_config.pricescale = parseInt(new Decimal('1').div(currentBasicInfo.bid_config.price_minmov).toString(), 10);
   currentBasicInfo.bid_config.price_fixed = getDecimalFixed(currentBasicInfo.bid_config.price_minmov);
   currentBasicInfo.bid_config.amount_fixed = getDecimalFixed(currentBasicInfo.bid_config.min_amount);
-  console.log(currentBasicInfo);
   return currentBasicInfo;
 }
 
@@ -59,6 +59,7 @@ const model = {
     pairSymbol: '',
     prices: [],
     current: {},
+    currentPrice: '',
     currentBasicInfo: undefined,
     trades: [],
     orderBook: {
@@ -83,6 +84,13 @@ const model = {
           currentBasicInfo,
         },
       });
+
+      function qp() {
+        dispatch({ type: 'queryPrices' });
+      }
+
+      setInterval(qp, 5000);
+      qp();
     },
   },
   effects: {
@@ -130,8 +138,28 @@ const model = {
           },
         });
       } else {
-        toast.error(response.errors);
+        toast.error(response.message);
       }
+    },
+    * queryPrices(_, { select, call, put }) {
+      const data = yield call(queryPrices);
+      const loading = yield select(({ utils }) => utils.loading.market);
+      if (loading) {
+        yield put({
+          type: 'utils/updateLoading',
+          payload: {
+            name: 'market',
+            loading: false,
+          },
+        });
+      }
+      yield put({
+        type: 'updatePrices',
+        payload: data,
+      });
+    },
+    * updateTrades({ payload }, { put }) {
+      yield put({ type: 'updateTrades' });
     },
   },
   reducers: {
@@ -177,6 +205,7 @@ const model = {
       return {
         ...state,
         trades,
+        currentPrice: trades[0].price,
       };
     },
     updateOrderBook(state, { payload }) {
