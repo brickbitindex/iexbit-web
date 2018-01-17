@@ -109,13 +109,6 @@ var config = {
     //     changeOrigin: true,
     //   },
     // }
-    proxy: {
-      '/test/market2.bundle.js': {
-        target: 'http://localhost:8111/market.bundle.js',
-        pathRewrite: { '/test/market2.bundle.js': '' }
-      },
-    },
-    disableHostCheck: true,
   },
   externals: {
     jquery: "jQuery",
