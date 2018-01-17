@@ -158,8 +158,66 @@ const model = {
         payload: data,
       });
     },
-    * updateTrades({ payload }, { put }) {
-      yield put({ type: 'updateTrades' });
+    * updateTrades({ payload }, { select, put }) {
+      // 处理数据
+      // 结构
+      // trades: [{
+      //   amount: "0.5216",
+      //   date: 1513407071,
+      //   price: "11353.0",
+      //   tid: 109,
+      //   type: "buy",
+      // }]
+      const tradesObj = {};
+      let trades = yield select(({ market }) => market.trades);
+      trades.forEach((t) => {
+        tradesObj[t.tid] = t;
+      });
+      payload.trades.forEach((t) => {
+        tradesObj[t.tid] = t;
+      });
+      trades = Object.keys(tradesObj).map(k => tradesObj[k]);
+      trades.sort((a, b) => b.date - a.date);
+      const tradesLength = yield select(({ utils }) => utils.tradesLength);
+      trades = trades.slice(0, tradesLength);
+      yield put({
+        type: 'updateState',
+        payload: {
+          trades,
+          currentPrice: trades[0].price,
+        },
+      });
+    },
+    * updateOrderBook({ payload }, { select, put }) {
+      // 处理数据
+      // 结构
+      // ['price', 'amount', 'total', deep]
+      let deep = 0;
+      let max = 0;
+      const orderBookLength = yield select(({ utils }) => utils.orderBookLength);
+      const asks = payload.asks.slice(0, orderBookLength).map((row) => {
+        const amount = parseFloat(row[1]);
+        deep += amount;
+        return row.concat([(parseFloat(row[0] * amount)).toFixed(1), deep]);
+      });
+      max = deep;
+      deep = 0;
+      const bids = payload.bids.slice(0, orderBookLength).map((row) => {
+        const amount = parseFloat(row[1]);
+        deep += amount;
+        return row.concat([(parseFloat(row[0] * amount)).toFixed(1), deep]);
+      });
+      if (deep > max) max = deep;
+      yield put({
+        type: 'updateState',
+        payload: {
+          orderBook: {
+            asks,
+            bids,
+            max,
+          },
+        },
+      });
     },
   },
   reducers: {
@@ -180,60 +238,6 @@ const model = {
         ...state,
         prices,
         current,
-      };
-    },
-    updateTrades(state, { payload }) {
-      // 处理数据
-      // 结构
-      // trades: [{
-      //   amount: "0.5216",
-      //   date: 1513407071,
-      //   price: "11353.0",
-      //   tid: 109,
-      //   type: "buy",
-      // }]
-      const tradesObj = {};
-      state.trades.forEach((t) => {
-        tradesObj[t.tid] = t;
-      });
-      payload.trades.forEach((t) => {
-        tradesObj[t.tid] = t;
-      });
-      const trades = Object.keys(tradesObj).map(k => tradesObj[k]);
-      trades.sort((a, b) => b.date - a.date);
-      payload.trades.concat().slice(0, 30);
-      return {
-        ...state,
-        trades,
-        currentPrice: trades[0].price,
-      };
-    },
-    updateOrderBook(state, { payload }) {
-      // 处理数据
-      // 结构
-      // ['price', 'amount', 'total', deep]
-      let deep = 0;
-      let max = 0;
-      const asks = payload.asks.map((row) => {
-        const amount = parseFloat(row[1]);
-        deep += amount;
-        return row.concat([(parseFloat(row[0] * amount)).toFixed(1), deep]);
-      });
-      max = deep;
-      deep = 0;
-      const bids = payload.bids.map((row) => {
-        const amount = parseFloat(row[1]);
-        deep += amount;
-        return row.concat([(parseFloat(row[0] * amount)).toFixed(1), deep]);
-      });
-      if (deep > max) max = deep;
-      return {
-        ...state,
-        orderBook: {
-          asks,
-          bids,
-          max,
-        },
       };
     },
     updateState(state, { payload }) {

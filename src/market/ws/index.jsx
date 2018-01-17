@@ -162,13 +162,12 @@ class IActionCable extends Component {
     this.props.dispatch({
       type: 'market/updateOrderBook',
       payload: {
-        asks: data.asks.slice(0, 30),
-        bids: data.bids.slice(0, 30),
+        asks: data.asks,
+        bids: data.bids,
       },
     });
   }
   handleTrades(data) {
-    console.log(data);
     this.checkLoading('trades');
     this.props.dispatch({
       type: 'market/updateTrades',
