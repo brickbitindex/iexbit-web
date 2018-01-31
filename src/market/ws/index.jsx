@@ -37,6 +37,7 @@ class IActionCable extends Component {
     if (getAllChannelConnect()) {
       if (this.props.anonymous) {
         this.checkLoading('myOrders');
+        this.checkLoading('order');
       }
       toast.info('text_connect');
       this.props.dispatch({
@@ -80,7 +81,7 @@ class IActionCable extends Component {
     }
     if (handlers.connected) {
       baseHandler.connected = () => {
-        console.log(tag + ' channel connected');
+        console.log(tag + ' channel connected111');
         handlers.connected();
         this.checkAllChannelConnect(tag);
       };

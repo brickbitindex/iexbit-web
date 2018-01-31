@@ -198,14 +198,14 @@ const model = {
       const asks = payload.asks.slice(0, orderBookLength).map((row) => {
         const amount = parseFloat(row[1]);
         deep += amount;
-        return row.concat([(parseFloat(row[0] * amount)).toFixed(1), deep]);
+        return row.concat([(parseFloat(row[0] * amount)), deep]);
       });
       max = deep;
       deep = 0;
       const bids = payload.bids.slice(0, orderBookLength).map((row) => {
         const amount = parseFloat(row[1]);
         deep += amount;
-        return row.concat([(parseFloat(row[0] * amount)).toFixed(1), deep]);
+        return row.concat([(parseFloat(row[0] * amount)), deep]);
       });
       if (deep > max) max = deep;
       yield put({

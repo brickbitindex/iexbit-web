@@ -59,12 +59,12 @@
         z-index: 1;
         box-sizing: border-box;
         &.price {
-          width: 35%;
+          width: 30%;
           text-align: right;
           padding-left: 12px;
         }
         &.amount {
-          width: 30%;
+          width: 35%;
           text-align: right;
         }
         &.total {
@@ -89,7 +89,7 @@
 }
 
 .cb-panel.orderBook-panel {
-  width: 250px;
+  width: 275px;
   margin-right: 3px;
   background: transparent;
 }

@@ -5,7 +5,7 @@ import { connect } from 'dva-no-router';
 import Price from './price';
 import Search from './search';
 
-import logoImg from '../../../assets/images/logo_all.svg';
+// import logoImg from '../../../assets/images/logo_all.svg';
 
 import './style.scss';
 
@@ -27,7 +27,7 @@ class Header extends Component {
     return (
       <div id="header" className="flex-fixed">
         <div className="logo-container">
-          <a><img src={logoImg} alt="Cool.Bi" /></a>
+          <a><img src="/logo.svg" alt="Cool.Bi" /></a>
         </div>
         {prices.slice(0, 4).map((price, i) => (<Price key={i} data={price} />))}
         <div className="header-opts">

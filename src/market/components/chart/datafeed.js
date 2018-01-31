@@ -10,11 +10,27 @@ const defaultConfig = {
   supports_time: true,
   exchanges: [],
   symbols_types: [],
-  supported_resolutions: ['1', '5', '15', '30', '60', '180', '360', '720', '1D', '1W'],
+  supported_resolutions: ['1', '5', '15', '30', '60', '180', '360', '720', '1D', '3D'],
 };
 
 // {"supports_search":false,"supports_group_request":false,"supports_marks":false,"supports_timescale_marks":false,"supports_time":true,"exchanges":[],"symbols_types":[]}
 // {"supports_search":false,"supports_group_request":false,"supports_marks":false,"supports_timescale_marks":false,"supports_time":true,"exchanges":[],"symbols_types":[],"supported_resolutions":["1","5","15","30","60","180","360","720","1D","1W"]}
+
+const resolutionToMinutes = {
+  1: 1,
+  5: 5,
+  15: 15,
+  30: 30,
+  60: 60,
+  180: 180,
+  360: 360,
+  720: 720,
+  '1D': 1440,
+  D: 1440,
+  '3D': 4320,
+  '1W': 10080,
+  W: 10080,
+};
 
 class DataPulseUpdater {
   constructor(datafeed, updateFrequency) {
@@ -175,10 +191,11 @@ export default class Datafeed {
     };
   }
   getNearestBarTime(time, resolution) {
-    const s = this.getResolutionSeconds(resolution);
+    const s = resolutionToMinutes[resolution] * 60;
     return time - time % s + s;
   }
-  getResolutionSeconds(resolution) {
+  // 直接用map，这个函数暂时放弃
+  getResolutionMinutes(resolution) {
     let _resolution = 1;
     if (resolution === 'D') {
       _resolution = 24 * 60;
@@ -189,7 +206,7 @@ export default class Datafeed {
     } else {
       _resolution = parseInt(resolution, 10);
     }
-    return _resolution *= 60;
+    return _resolution;
   }
 
   // life
@@ -240,17 +257,22 @@ export default class Datafeed {
     // source: [时间戳，开盘价，最高价，最低价，收盘价，交易量]
     // target: {"time":1482969600000,"close":116.73,"open":116.45,"high":117.1095,"low":116.4,"volume":15039519}
 
-    let limit;
-    if (firstDataRequest) {
-      limit = 200;
-    } else {
-      limit = 2;
-    }
-    fetch.get(QUERY.K, {
+    const resolutionMinutes = resolutionToMinutes[resolution];
+    let limit = (rangeEndDate - rangeStartDate) / (resolutionMinutes * 60);
+    if (limit > 200) limit = 200;
+    // console.log(rangeStartDate, rangeEndDate, limit, firstDataRequest);
+    // console.log(new Date(rangeStartDate * 1000));
+    // console.log(new Date(rangeEndDate * 1000));
+    const params = {
       market: this.symbolName,
       limit,
-      period: resolution,
-    }).then((data) => {
+      period: resolutionMinutes,
+      // timestamp: rangeStartDate,
+    };
+    if (firstDataRequest === false) {
+      params.timestamp = rangeStartDate;
+    }
+    fetch.get(QUERY.K, params).then((data) => {
       let processedData = data.map(d => ({
         time: d[0] * 1000,
         open: d[1],
@@ -259,6 +281,7 @@ export default class Datafeed {
         close: d[4],
         volume: d[5],
       }));
+      console.log(processedData);
       const noData = processedData.length === 0;
       // console.log(processedData.length, new Date(rangeStartDate * 1000), new Date(processedData[0].time), new Date(processedData[processedData.length - 1].time));
       if (firstDataRequest && processedData.length !== limit && !noData) {

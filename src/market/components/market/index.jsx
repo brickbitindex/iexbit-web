@@ -4,7 +4,6 @@ import autobind from 'autobind-decorator';
 import classnames from 'classnames';
 import { FormattedMessage } from 'react-intl';
 import wrapWithPanel from '../panel';
-import { SYMBOL_ICON } from '../../../assets';
 import ZeroFormattedNumber from '../common/zeroFormattedNumber';
 
 import './style.scss';
@@ -60,7 +59,7 @@ class Market extends Component {
     return (
       <div id="market" onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
         <div className="market-icon">
-          <img src={SYMBOL_ICON[pairSymbol]} alt={baseUnit} />
+          <img src={`/market_images/symbol_icon_${pairSymbol}.png`} alt={baseUnit} />
         </div>
         <div className="market-current tt" style={{ fontSize: fs, height: fs }}>{currentPrice}</div>
         <div className="market-info">
