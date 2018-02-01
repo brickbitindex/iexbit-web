@@ -27,7 +27,9 @@ class Header extends Component {
     return (
       <div id="header" className="flex-fixed">
         <div className="logo-container">
-          <a><img src="/logo.svg" alt="Cool.Bi" /></a>
+          <a href="/">
+            <img src="/logo.svg" alt="Bitrabbit" />
+          </a>
         </div>
         {prices.slice(0, 4).map((price, i) => (<Price key={i} data={price} />))}
         <div className="header-opts">
