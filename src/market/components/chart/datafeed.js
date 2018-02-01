@@ -10,7 +10,7 @@ const defaultConfig = {
   supports_time: true,
   exchanges: [],
   symbols_types: [],
-  supported_resolutions: ['1', '5', '15', '30', '60', '180', '360', '720', '1D', '3D'],
+  supported_resolutions: ['1', '5', '15', '30', '60', '120', '360', '720', '1D', '3D'],
 };
 
 // {"supports_search":false,"supports_group_request":false,"supports_marks":false,"supports_timescale_marks":false,"supports_time":true,"exchanges":[],"symbols_types":[]}
@@ -22,7 +22,7 @@ const resolutionToMinutes = {
   15: 15,
   30: 30,
   60: 60,
-  180: 180,
+  120: 120,
   360: 360,
   720: 720,
   '1D': 1440,
@@ -61,6 +61,7 @@ class DataPulseUpdater {
       this._requestsPending += 1;
 
       this._datafeed.getBars(subscriptionRecord.symbolInfo, resolution, datesRangeLeft, datesRangeRight, (bars) => {
+        console.log(bars);
         this._requestsPending -= 1;
         // means the subscription was cancelled while waiting for data
         if (!this._subscribers.hasOwnProperty(listenerGUID)) {
@@ -93,10 +94,11 @@ class DataPulseUpdater {
         }
 
         subscriptionRecord.lastBarTime = lastBar.time;
-
+        console.log(lastBar);
         for (let i = 0; i < subscribers.length; i += 1) {
           subscribers[i](lastBar);
         }
+        console.log('--------');
       }, () => {
         this._requestsPending -= 1;
       });
@@ -140,9 +142,10 @@ class DataPulseUpdater {
 
 
 export default class Datafeed {
-  constructor(symbolName, basicInfo, updateFrequency = 2 * 1000) {
+  constructor(symbolName, symbolDescription, basicInfo, updateFrequency = 2 * 1000) {
     this.updateFrequency = updateFrequency;
     this.symbolName = symbolName;
+    this.symbolDescription = symbolDescription;
     this.basicInfo = basicInfo;
     this._callbacks = {};
     this._configuration = null;
@@ -175,12 +178,12 @@ export default class Datafeed {
     return {
       name: this.symbolName,
       ticker: this.symbolName,
-      description: this.symbolName,
+      description: this.symbolDescription,
       type: 'bitcoin',
       session: '24x7',
       timezone: 'Asia/Shanghai',
-      'exchange-listed': 'Cool.bi',
-      'exchange-traded': 'Cool.bi',
+      'exchange-listed': 'Bitrabbit',
+      'exchange-traded': 'Bitrabbit',
       minmov: 1,
       pricescale: this.basicInfo.bid_config.pricescale,
       minmov2: 0,
@@ -258,16 +261,11 @@ export default class Datafeed {
     // target: {"time":1482969600000,"close":116.73,"open":116.45,"high":117.1095,"low":116.4,"volume":15039519}
 
     const resolutionMinutes = resolutionToMinutes[resolution];
-    let limit = (rangeEndDate - rangeStartDate) / (resolutionMinutes * 60);
-    if (limit > 200) limit = 200;
-    // console.log(rangeStartDate, rangeEndDate, limit, firstDataRequest);
-    // console.log(new Date(rangeStartDate * 1000));
-    // console.log(new Date(rangeEndDate * 1000));
     const params = {
       market: this.symbolName,
-      limit,
       period: resolutionMinutes,
-      // timestamp: rangeStartDate,
+      timestamp: rangeStartDate,
+      end: rangeEndDate,
     };
     if (firstDataRequest === false) {
       params.timestamp = rangeStartDate;
@@ -281,10 +279,22 @@ export default class Datafeed {
         close: d[4],
         volume: d[5],
       }));
-      console.log(processedData);
       const noData = processedData.length === 0;
       // console.log(processedData.length, new Date(rangeStartDate * 1000), new Date(processedData[0].time), new Date(processedData[processedData.length - 1].time));
-      if (firstDataRequest && processedData.length !== limit && !noData) {
+      // 数据少于1条补齐2条
+      if (processedData.length === 1) {
+        const zero = processedData[0];
+        processedData = [{
+          time: processedData[0].time - resolutionMinutes * 60 * 1000,
+          open: zero.open,
+          high: zero.open,
+          low: zero.open,
+          close: zero.open,
+          volume: 0,
+        }].concat(processedData);
+      }
+      // 补齐第一个数据
+      if (firstDataRequest && !noData) {
         const zero = processedData[0];
         processedData = [{
           time: this.getNearestBarTime(rangeStartDate, resolution) * 1000,
@@ -295,7 +305,6 @@ export default class Datafeed {
           volume: 0,
         }].concat(processedData);
       }
-      // console.log(processedData[0]);
       onDataCallback(processedData, { noData, nextTime: undefined });
     });
   }

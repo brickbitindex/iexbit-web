@@ -180,11 +180,15 @@ const model = {
       trades.sort((a, b) => b.date - a.date);
       const tradesLength = yield select(({ utils }) => utils.tradesLength);
       trades = trades.slice(0, tradesLength);
+      let currentPrice = 0;
+      if (trades.length > 0) {
+        currentPrice = trades[0].price;
+      }
       yield put({
         type: 'updateState',
         payload: {
           trades,
-          currentPrice: trades[0].price,
+          currentPrice,
         },
       });
     },
@@ -234,6 +238,22 @@ const model = {
         }
         return pair;
       });
+      if (!current) {
+        console.log('[market/updatePrice] no pair in price');
+        current = {
+          id: -1,
+          name: currentPair,
+          ticker: {
+            buy: '0.0',
+            high: '0.0',
+            last: '0.0',
+            low: '0.0',
+            open: '0.0',
+            sell: '0.0',
+            volume: '0.0',
+          },
+        };
+      }
       return {
         ...state,
         prices,
