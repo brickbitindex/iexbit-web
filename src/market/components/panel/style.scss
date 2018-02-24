@@ -2,13 +2,13 @@ $titleHeight: 32px;
 
 .cb-panel {
   width: 100%;
-  background: #1E2D39;
+  background: #181818;
   position: relative;
   animation: panelAnime 1s;
   perspective: 0px;
 
   .cb-panel-title {
-    background: #1A2631;
+    background: #151515;
     height: $titleHeight;
     line-height: $titleHeight;
     padding: 0 0 0 18px;

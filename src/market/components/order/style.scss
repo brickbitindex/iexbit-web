@@ -1,3 +1,4 @@
+@import '~rc-slider/assets/index.css';
 $itemHeight: 30px;
 
 .order {
@@ -43,7 +44,7 @@ $itemHeight: 30px;
     .order-amount-btn {
       display: block;
       width: 25%;
-      background: #2E4152;
+      background: #292A2E;
       text-align: center;
       border: #475B6D solid 1px;
       border-radius: 4px;
@@ -65,7 +66,7 @@ $itemHeight: 30px;
 .cb-panel.buy-panel {
   overflow: hidden;
   width: 275px;
-  margin-right: 3px;
+  margin-right: 2px;
 }
 .cb-panel.sell-panel {
   overflow: hidden;

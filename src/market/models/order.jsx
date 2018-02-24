@@ -20,11 +20,11 @@ function checkFormError(form) {
     error.type = true;
     result = true;
   }
-  if (!(price && price.length > 0 && numberReg.test(price))) {
+  if (!(price && price !== '' && numberReg.test(price))) {
     error.price = true;
     result = true;
   }
-  if (!(amount && amount.length > 0 && numberReg.test(amount))) {
+  if (!(amount && amount !== '' && numberReg.test(amount))) {
     error.amount = true;
     result = true;
   }

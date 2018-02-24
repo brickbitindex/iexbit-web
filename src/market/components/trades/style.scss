@@ -14,7 +14,7 @@
       cursor: pointer;
     }
     &:not(.thead):hover {
-      background: #2E4152;
+      background: #292A2E;
     }
  
     .trades-col {
@@ -38,6 +38,7 @@
 
 .cb-panel.trades-panel {
   width: 275px;
+  height: calc(100vh - 62px - 252px - 152px);
 
   .cb-panel-content {
     overflow: hidden;

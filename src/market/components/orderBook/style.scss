@@ -1,36 +1,38 @@
 #orderBook {
   display: flex;
-  flex-direction: column;
   height: 100%;
+  overflow: auto;
+  background: #181818;
+
+  .order-book-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+  }
 
   .order-book {
-    background: #1E2D39;
     box-sizing: content-box;
-    overflow: auto;
 
-    .order-book-bar {
-      right: 0;
-    }
     &.asks,
     &.bids {
       display: flex;
-      position: absolute;
+      flex-direction: column;
       width: 100%;
       left: 0;
-      height: calc(50% - 33px);
+      height: 100%;
     }
     &.asks {
-      flex-direction: column-reverse;
-      top: 0;
       .order-book-bar {
         background: #4E3342;
       }
     }
     &.bids {
-      flex-direction: column;
-      bottom: 0;
       .order-book-bar {
         background: #255547;
+      }
+      .order-book-bar {
+        right: 0;
       }
     }
 
@@ -46,7 +48,7 @@
         cursor: pointer;
       }
       &:not(.thead):hover {
-        background: #2E4152;
+        background: #292A2E;
       }
 
       .order-book-bar {
@@ -75,25 +77,14 @@
       }
     }
   }
-
-  .order-book-container {
-    position: relative;
-    .market-container {
-      height: 60px;
-      position: absolute;
-      left: 0;
-      width: 100%;
-      top: calc(50% - 30px);
-    }
-  }
 }
 
 .cb-panel.orderBook-panel {
-  width: 275px;
-  margin-right: 3px;
+  height: 100px;
+  margin-bottom: 2px;
   background: transparent;
 }
 
 .cb-panel.orderBook-panel.loading {
-  background: #1E2D39;
+  background: #181818;
 }

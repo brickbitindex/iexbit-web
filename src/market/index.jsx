@@ -48,17 +48,24 @@ class Index extends Component {
           <WS />
           <div id="square">
             <Header />
-            <div className="top flex-autofixed">
-              <Chart className="flex-autofixed" />
-              <OrderBook loading={loading.orderBook} className="flex-fixed">
-                <Market loading={loading.market} />
-              </OrderBook>
-              <Trades loading={loading.trades} className="flex-fixed" />
-            </div>
-            <div className="bottom flex-fixed">
-              <TabPanel loadings={loading} className="flex-autofixed the-tabs" />
-              <BuyOrder className="flex-fixed" loading={loading.order} />
-              <SellOrder className="flex-fixed" loading={loading.order} />
+            <div className="sq-b flex-autofixed">
+              <div className="sq-b-l flex-autofixed">
+                <div className="sq-b-l-t flex-autofixed">
+                  <Chart className="flex-autofixed" />
+                  <div className="sq-b-l-t-r flex-fixed">
+                    <Market loading={loading.market} className="flex-fixed" />
+                    <Trades loading={loading.trades} className="flex-autofixed" />
+                  </div>
+                </div>
+                <TabPanel loadings={loading} className="flex-fixed the-tabs" />
+              </div>
+              <div className="sq-b-r flex-fixed">
+                <OrderBook loading={loading.orderBook} className="flex-autofixed" />
+                <div className="sq-b-r-b flex-fixed">
+                  <BuyOrder className="flex-fixed" loading={loading.order} />
+                  <SellOrder className="flex-fixed" loading={loading.order} />
+                </div>
+              </div>
             </div>
           </div>
         </div>

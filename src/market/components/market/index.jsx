@@ -16,9 +16,13 @@ const fontSize = {
   5: 40,
   6: 40,
   7: 35,
-  8: 31,
-  9: 27,
-  10: 24,
+  8: 35,
+  9: 35,
+  10: 31,
+  11: 27,
+  12: 24,
+  13: 24,
+  14: 24,
 };
 
 let maxLength = 0;
@@ -50,6 +54,7 @@ class Market extends Component {
     const down = change < 0;
     const baseUnit = basicInfo.base_unit.code;
     const quoteUnit = basicInfo.quote_unit.code;
+    console.log(basicInfo);
 
     if (currentPrice.length > maxLength) {
       maxLength = currentPrice.length;
@@ -58,53 +63,37 @@ class Market extends Component {
 
     return (
       <div id="market" onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
-        <div className="market-icon">
-          <img src={`/market_images/symbol_icon_${pairSymbol}.png`} alt={baseUnit} />
+        <div className="market-row">
+          <div className="market-icon">
+            <img src={`/market_images/symbol_icon_${pairSymbol}.png`} alt={baseUnit} />
+          </div>
+          <div className="market-name">{baseUnit}/{quoteUnit}</div>
         </div>
-        <div className="market-current tt" style={{ fontSize: fs, height: fs }}>{currentPrice}</div>
-        <div className="market-info">
-          <div className="light-text">{quoteUnit.toUpperCase()}</div>
-          <div>
-            <span className={classnames(down ? 'red-text' : 'green-text')}>
-              {down ? '-' : '+'}{Math.abs(change * 100).toFixed(2)}%
-            </span>
+        <div className="market-row">
+          <div className="market-current tt" style={{ fontSize: fs, height: fs }}>{currentPrice}</div>
+          <div className="market-info">
+            <div className="light-text">{quoteUnit.toUpperCase()}</div>
+            <div>
+              <span className={classnames(down ? 'red-text' : 'green-text')}>
+                {down ? '-' : '+'}{Math.abs(change * 100).toFixed(2)}%
+              </span>
+            </div>
           </div>
         </div>
         <div className={classnames('market-detail pop-dialog a-left', { show: this.state.hover })}>
-          <div className="market-row">
+          <div className="market-detail-row">
             <div className="mt"><FormattedMessage id="market_low" /></div>
             <div className="mv tt"><ZeroFormattedNumber value={ticker.low} fixed={3} /> <span className="light-text">{quoteUnit}</span></div>
           </div>
-          <div className="market-row">
+          <div className="market-detail-row">
             <div className="mt"><FormattedMessage id="market_high" /></div>
             <div className="mv tt"><ZeroFormattedNumber value={ticker.high} fixed={3} /> <span className="light-text">{quoteUnit}</span></div>
           </div>
-          <div className="market-row">
+          <div className="market-detail-row">
             <div className="mt"><FormattedMessage id="market_vol" /></div>
             <div className="mv tt"><ZeroFormattedNumber value={ticker.volume} fixed={3} /> <span className="light-text">{baseUnit}</span></div>
           </div>
         </div>
-        {/* <div className="market-row">
-          <div className="market-col">
-            <div>{data.low} <span className="light-text">{quoteUnit}</span></div>
-            <div className="light-text"><FormattedMessage id="market_low" /></div>
-          </div>
-          <div className="market-col">
-            <div>{data.high} <span className="light-text">{quoteUnit}</span></div>
-            <div className="light-text"><FormattedMessage id="market_high" /></div>
-          </div>
-        </div>
-        <div className="market-row">
-          <div className="market-col">
-            <div>{data.volume} <span className="light-text">{baseUnit}</span></div>
-            <div className="light-text"><FormattedMessage id="market_vol" /></div>
-          </div>
-          <div className="market-col">
-            <div>
-            </div>
-            <div className="light-text"><FormattedMessage id="market_change" /></div>
-          </div>
-        </div> */}
       </div>
     );
   }

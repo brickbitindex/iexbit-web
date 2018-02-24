@@ -51,7 +51,7 @@ class Chart extends Component {
       // Regression Trend-related functionality is not implemented yet, so it's hidden for a while
       drawings_access: { type: 'black', tools: [{ name: 'Regression Trend' }] },
       // TODO: 禁用
-      disabled_features: ['use_localstorage_for_settings', 'header_symbol_search', 'header_interval_dialog_button', 'header_compare', 'header_undo_redo', 'header_fullscreen_button', 'header_saveload'],
+      disabled_features: ['use_localstorage_for_settings', 'header_symbol_search', 'header_interval_dialog_button', 'header_compare', 'header_undo_redo', 'header_fullscreen_button', 'header_saveload', 'left_toolbar'],
       // TODO: 禁用了
       // enabled_features: ["study_templates"],
       charts_storage_url: 'http://saveload.tradingview.com',
@@ -62,7 +62,7 @@ class Chart extends Component {
       timezone: 'Asia/Shanghai',
       overrides: objToForm(overrides),
       time_frames: [],
-      // toolbar_bg: '#1E2D39',
+      // toolbar_bg: '#181818',
     });
   }
   render() {

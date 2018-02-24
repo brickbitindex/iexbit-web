@@ -13,17 +13,19 @@
       margin-left: -12px;
     }
     &.active {
-      background: #253746 !important;
+      border-bottom: #F3CA82 solid 2px;
       color: #eee;
     }
     &:hover {
-      background: rgba(#253746, 0.5);
+      background: rgba(#F3CA82, 0.1);
     }
   }
 }
 
 .cb-panel.cb-panel-tab {
+  height: 250px;
+
   .cb-panel-title {
-    border-bottom: #253746 solid 1px;
+    border-bottom: rgba(#F3CA82, 0.25) solid 1px;
   }
 }

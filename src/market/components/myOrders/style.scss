@@ -9,7 +9,7 @@
     align-items: center;
 
     &:nth-child(odd) {
-      background: #253746;
+      background: #292A2E;
     }
 
     &.thead {
@@ -46,7 +46,7 @@
     }
 
     .tag {
-      color: #4D708C;
+      color: rgba(#F3CA82, 0.5);
 
       &.partial {
         color: #b7dfff;
