@@ -1,8 +1,14 @@
 #market {
-  display: flex;
-  align-items: center;
   height: 100%;
   position: relative;
+
+  .market-row {
+    display: flex;
+    align-items: center;
+  }
+  .market-row:first-child {
+    margin-bottom: 10px;
+  }
 
   .market-icon {
     width: 20%;
@@ -13,8 +19,11 @@
       height: 100%;
     }
   }
+  .market-name {
+    font-size: 18px;
+  }
   .market-current {
-    width: 55%;
+    width: 75%;
     height: 40px;
     font-size: 40px;
     text-align: right;
@@ -32,11 +41,17 @@
   }
 
   .market-detail {
+    top: 50%;
     right: calc(100% + 12px);
     z-index: 2;
     padding: 15px;
+    transform: translate(50px, -50%);
 
-    .market-row {
+    &.show {
+      transform: translate(0, -50%);
+    }
+
+    .market-detail-row {
       white-space: nowrap;
       margin-bottom: 12px;
 
@@ -54,5 +69,8 @@
 }
 
 .cb-panel.market-panel {
-  height: 100%;
+  height: 115px;
+  padding: 12px 0;
+  box-sizing: border-box;
+  margin-bottom: 2px;
 }

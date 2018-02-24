@@ -1,6 +1,6 @@
 const data = {
   paneProperties: {
-    background: '#1E2D39',
+    background: '#181818',
     gridProperties: {
       color: '#E6E6E6',
     },

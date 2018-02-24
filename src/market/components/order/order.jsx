@@ -4,10 +4,32 @@ import autobind from 'autobind-decorator';
 import classnames from 'classnames';
 import { FormattedMessage } from 'react-intl';
 import Select from 'react-select';
-
+import Slider from 'rc-slider';
+import Tooltip from 'rc-tooltip';
 import OrderInput from './input';
 import OrderButton from './button';
 import Mask from '../common/anonymousMask';
+
+
+// const createSliderWithTooltip = _Slider.createSliderWithTooltip;
+// const Slider = createSliderWithTooltip(_Slider);
+
+const Handle = Slider.Handle;
+
+const handle = (props) => {
+  const { value, dragging, index, ...restProps } = props;
+  return (
+    <Tooltip
+      prefixCls="rc-slider-tooltip"
+      overlay={`${value}%`}
+      visible={dragging}
+      placement="top"
+      key={index}
+    >
+      <Handle value={value} {...restProps} />
+    </Tooltip>
+  );
+};
 
 class Order extends Component {
   getBalance() {
@@ -29,6 +51,20 @@ class Order extends Component {
       locked: 0,
       key,
     };
+  }
+  getSliderValue() {
+    const balance = this.getBalance();
+    const amount = this.props.form.amount || 0;
+    const price = this.props.form.price || 0;
+    let percent = 0;
+    if (this.props.type === 'buy') {
+      if (price) {
+        percent = Math.round((amount * price) / balance.balance * 1000) / 10;
+      }
+    } else {
+      percent = Math.round(amount / balance.balance * 1000) / 10;
+    }
+    return percent;
   }
   @autobind
   handleSubmit() {
@@ -62,10 +98,15 @@ class Order extends Component {
       });
     }
   }
+  @autobind
+  handleSliderChange(e) {
+    this.handleQuickAmount(e / 100);
+  }
   render() {
     const { basicInfo, anonymous, form } = this.props;
     const error = form.error;
     const balance = this.getBalance();
+    const sliderValue = this.getSliderValue();
     return (
       <div className="order">
         <div className="order-balance">
@@ -103,6 +144,9 @@ class Order extends Component {
           />
         </div>
         <div className="order-row small">
+          <Slider step={0.1} value={sliderValue} handle={handle} onChange={this.handleSliderChange} />
+        </div>
+        {/* <div className="order-row small">
           <div className="order-lable">{''}</div>
           <div className="order-item order-amount-btns">
             <span className="order-amount-btn" onClick={this.handleQuickAmount.bind(this, 0.25)}>25%</span>
@@ -110,7 +154,7 @@ class Order extends Component {
             <span className="order-amount-btn" onClick={this.handleQuickAmount.bind(this, 0.75)}>75%</span>
             <span className="order-amount-btn" onClick={this.handleQuickAmount.bind(this, 1)}>100%</span>
           </div>
-        </div>
+        </div> */}
         <div className="order-row">
           <OrderButton className={this.props.type} onClick={this.handleSubmit}>
             <FormattedMessage id={`order_${this.props.type}`} />

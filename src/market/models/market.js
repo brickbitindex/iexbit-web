@@ -89,7 +89,7 @@ const model = {
         dispatch({ type: 'queryPrices' });
       }
 
-      setInterval(qp, 5000);
+      setInterval(qp, 30000);
       qp();
     },
   },

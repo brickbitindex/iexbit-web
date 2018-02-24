@@ -6,11 +6,11 @@
     padding: 0 12px;
 
     &:nth-child(odd) {
-      background: #253746;
+      background: #292A2E;
     }
 
     .message-time {
-      color: #4D708C;
+      color: rgba(#fff, 0.25);
       margin-right: 5px;
     }
 
@@ -20,7 +20,7 @@
 
     &.verbose {
       .message-message {
-        color: #4D708C;
+        color: rgba(#fff, 0.25);
       }
     }
   }

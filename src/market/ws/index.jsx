@@ -185,6 +185,7 @@ class IActionCable extends Component {
   // }
   // private
   handleAccount(data) {
+    console.log(data);
     this.checkLoading('balance');
     this.props.dispatch({
       type: 'account/updateBalance',

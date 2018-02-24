@@ -61,7 +61,6 @@ class DataPulseUpdater {
       this._requestsPending += 1;
 
       this._datafeed.getBars(subscriptionRecord.symbolInfo, resolution, datesRangeLeft, datesRangeRight, (bars) => {
-        console.log(bars);
         this._requestsPending -= 1;
         // means the subscription was cancelled while waiting for data
         if (!this._subscribers.hasOwnProperty(listenerGUID)) {
@@ -94,11 +93,9 @@ class DataPulseUpdater {
         }
 
         subscriptionRecord.lastBarTime = lastBar.time;
-        console.log(lastBar);
         for (let i = 0; i < subscribers.length; i += 1) {
           subscribers[i](lastBar);
         }
-        console.log('--------');
       }, () => {
         this._requestsPending -= 1;
       });
