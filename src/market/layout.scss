@@ -1,0 +1,75 @@
+$headerHeight: 60px;
+$tabPanelHeight: 250px;
+$borderWidth: 2px;
+
+$chartBesideHeight: $headerHeight + $tabPanelHeight + 2 * $borderWidth;
+
+$orderWidth: 275px;
+
+$tradeHeadHeight: 22px;
+
+$marketHeight: 52px + 2px + 2px;
+
+#header {
+  height: $headerHeight;
+}
+
+.cb-panel.cb-panel-tab,
+.cb-panel.buy-panel,
+.cb-panel.sell-panel {
+  height: $tabPanelHeight;
+}
+
+.cb-panel.chart-panel,
+.cb-panel.orderBook-panel,
+.cb-panel.trades-panel {
+  height: calc(100vh - #{$chartBesideHeight});
+}
+
+.cb-panel.buy-panel,
+.cb-panel.sell-panel,
+.cb-panel.orderBook-panel,
+.cb-panel.trades-panel {
+  width: $orderWidth;
+}
+
+#orderBook {
+  .order-book .order-book-row.thead {
+    height: $tradeHeadHeight;
+    line-height: $tradeHeadHeight;
+  }
+
+  .order-book-container {
+    height: calc(100% - #{$tradeHeadHeight});
+
+    &.mode-all {
+      .order-book.bids,
+      .order-book.asks {
+        height: calc(50% - #{$marketHeight / 2});
+      }
+    }
+
+    &.mode-buy {
+      .order-book.asks {
+        height: 0;
+      }
+      .order-book.bids {
+        height: calc(100% - #{$marketHeight});
+      }
+    }
+
+    &.mode-sell {
+      .order-book.bids {
+        height: 0;
+      }
+      .order-book.asks {
+        height: calc(100% - #{$marketHeight});
+      }
+    }
+  }
+
+
+  .cb-panel.market-panel {
+    height: $marketHeight;
+  }
+}

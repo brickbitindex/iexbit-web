@@ -8,34 +8,55 @@
 // <FormattedMessage id="hello" values={{ name: 'Sekai' }} />
 // <FormattedRelative value={Date.now()} />
 
-import zh from './i18n/zh.json';
+import QUERY, { fetch } from './querys';
 
+const changeLocale = locale => () => fetch.get(QUERY.I18N(locale));
 
 const model = {
   namespace: 'i18n',
   state: {
-    locale: 'zh',
-    messages: zh,
+    locale: '',
+    messages: {},
   },
   subscriptions: {
-    // keyboardWatcher({ dispatch }) {
-    //   key('⌘+up, ctrl+up', () => { dispatch({ type: 'add' }); });
-    // },
+    setup({ dispatch }) {
+      // 设置locale
+      dispatch({
+        type: 'updateState',
+        payload: {
+          locale: window.locale,
+          messages: window.i18n,
+        },
+      });
+    },
   },
   effects: {
-    // * add(action, { call, put }) {
-    //   yield call(delay, 1000);
-    //   yield put({ type: 'minus' });
-    // },
+    * changeLocale({ payload }, { call, select, put }) {
+      const origin = yield select(({ utils }) => utils.locale);
+      if (origin === payload) return;
+      const i18n = yield call(changeLocale(payload));
+      if (i18n) {
+        // 一些全局变量以及LocalStorage
+        window.locale = payload;
+        window.i18n = i18n;
+        localStorage.setItem('BRB_LOCAL', payload);
+        yield put({
+          type: 'updateState',
+          payload: {
+            messages: i18n,
+            locale: payload,
+          },
+        });
+      }
+    },
   },
   reducers: {
-    // updatePrice(state, { payload }) {
-    //   const prices = { ...state.prices, ...payload };
-    //   return {
-    //     ...state,
-    //     prices,
-    //   };
-    // },
+    updateState(state, { payload }) {
+      return {
+        ...state,
+        ...payload,
+      };
+    },
   },
 };
 

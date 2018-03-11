@@ -1,5 +1,5 @@
 /* eslint no-prototype-builtins: 0 */
-import Decimal from 'decimal.js-light';
+// import Decimal from 'decimal.js-light';
 import QUERY, { fetch } from './../../models/querys';
 
 const defaultConfig = {
@@ -139,7 +139,7 @@ class DataPulseUpdater {
 
 
 export default class Datafeed {
-  constructor(symbolName, symbolDescription, basicInfo, updateFrequency = 2 * 1000) {
+  constructor(symbolName, symbolDescription, basicInfo, updateFrequency = 6 * 1000) {
     this.updateFrequency = updateFrequency;
     this.symbolName = symbolName;
     this.symbolDescription = symbolDescription;

@@ -24,6 +24,11 @@ $titleHeight: 32px;
       font-size: 14px;
       width: 32px;
       text-align: center;
+      height: 100%;
+
+      i {
+        display: block;
+      }
     }
   }
   .cb-panel-content {

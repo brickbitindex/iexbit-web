@@ -31,10 +31,7 @@ class Chart extends Component {
     this.tvWidget = undefined;
   }
   componentDidMount() {
-    const TradingView = window.TradingView;
-    TradingView.onready(() => {
-      this.initWidget();
-    });
+    this.initWidget();
   }
   initWidget() {
     const TradingView = window.TradingView;

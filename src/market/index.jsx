@@ -21,13 +21,10 @@ import TabPanel from './components/tabPanel';
 
 import WS from './ws';
 
+import './layout.scss';
 import './g.scss';
 
 addLocaleData([...en, ...zh, ...ja, ...ko]);
-
-/* <MyOrders loading={loading.myOrders} />
-  <History loading={loading.history} />
-  <Balance loading={loading.balance} /> */
 
 class Index extends Component {
   componentDidMount() {
@@ -42,26 +39,26 @@ class Index extends Component {
   }
   render() {
     const { locale, messages, loading } = this.props;
+    const localePrefix = locale.split('-')[0];
     return (
-      <IntlProvider locale={locale} messages={messages}>
+      <IntlProvider locale={localePrefix} key={locale} messages={messages}>
         <div id="squareContainer" className="no-panel-anime">
           <WS />
           <div id="square">
             <Header />
             <div className="sq-b flex-autofixed">
               <div className="sq-b-l flex-autofixed">
-                <div className="sq-b-l-t flex-autofixed">
-                  <Chart className="flex-autofixed" />
-                  <div className="sq-b-l-t-r flex-fixed">
-                    <Market loading={loading.market} className="flex-fixed" />
-                    <Trades loading={loading.trades} className="flex-autofixed" />
-                  </div>
-                </div>
-                <TabPanel loadings={loading} className="flex-fixed the-tabs" />
+                <Chart />
+                <TabPanel loadings={loading} className="the-tabs" />
               </div>
               <div className="sq-b-r flex-fixed">
-                <OrderBook loading={loading.orderBook} className="flex-autofixed" />
-                <div className="sq-b-r-b flex-fixed">
+                <div className="sq-b-r-t flex-autofixed">
+                  <OrderBook loading={loading.orderBook}>
+                    <Market loading={loading.market} className="flex-fixed" />
+                  </OrderBook>
+                  <Trades loading={loading.trades} />
+                </div>
+                <div className="sq-b-r-b">
                   <BuyOrder className="flex-fixed" loading={loading.order} />
                   <SellOrder className="flex-fixed" loading={loading.order} />
                 </div>

@@ -1,4 +1,6 @@
 {
+  "header_dashborad": "用户中心",
+  "header_logout": "退出",
   "market_current": "最新价格",
   "market_low": "24H最低价",
   "market_high": "24H最高价",
@@ -23,6 +25,12 @@
   "orderbook_total": "总价",
   "orderbook_amount": "数量",
   "orderbook_price": "价格",
+  "orderbook_all": "买单卖单",
+  "orderbook_buy": "只看买单",
+  "orderbook_sell": "只看卖单",
+  "orderbook_deep": "选择合并深度",
+  "orderbook_deep_decimal": "{num}位小数",
+  "orderbook_deep_integer": "{num}",
   "balance": "我的资产",
   "myorder_type": "类型",
   "myorder_price": "价格",
@@ -43,5 +51,8 @@
   "messagecenter_order_bid_success": "下单成功，价格{price}{quote_unit}，买入{amount}{base_unit}",
   "messagecenter_order_bid_done": "成交，价格{price}{quote_unit}，买入{amount}{base_unit}",
   "messagecenter_order_ask_success": "下单成功，价格{price}{quote_unit}，卖出{amount}{base_unit}",
-  "messagecenter_order_ask_done": "成交，价格{price}{quote_unit}，卖出{amount}{base_unit}"
+  "messagecenter_order_ask_done": "成交，价格{price}{quote_unit}，卖出{amount}{base_unit}",
+  "anonymous_signin": "登录",
+  "anonymous_or": "或",
+  "anonymous_signup": "注册"
 }

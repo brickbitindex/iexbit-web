@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import autobind from 'autobind-decorator';
 import classnames from 'classnames';
-import { FormattedMessage } from 'react-intl';
+// import { FormattedMessage } from 'react-intl';
 import wrapWithPanel from '../panel';
-import ZeroFormattedNumber from '../common/zeroFormattedNumber';
+// import ZeroFormattedNumber from '../common/zeroFormattedNumber';
 
 import './style.scss';
 
@@ -28,33 +27,17 @@ const fontSize = {
 let maxLength = 0;
 let fs = 24;
 
+// icon: `/market_images/symbol_icon_${pairSymbol}.png`
+
 class Market extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      hover: false,
-    };
-  }
-  @autobind
-  handleMouseEnter() {
-    this.setState({
-      hover: true,
-    });
-  }
-  @autobind
-  handleMouseLeave() {
-    this.setState({
-      hover: false,
-    });
-  }
   render() {
-    const { data, pairSymbol, currentPrice, basicInfo } = this.props;
+    const { data, currentTrade, basicInfo } = this.props;
+    const currentPrice = currentTrade.price;
     const ticker = data.ticker;
     const change = (parseFloat(currentPrice) - ticker.open) / ticker.open;
     const down = change < 0;
-    const baseUnit = basicInfo.base_unit.code;
+    // const baseUnit = basicInfo.base_unit.code;
     const quoteUnit = basicInfo.quote_unit.code;
-    console.log(basicInfo);
 
     if (currentPrice.length > maxLength) {
       maxLength = currentPrice.length;
@@ -62,15 +45,9 @@ class Market extends Component {
     }
 
     return (
-      <div id="market" onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
+      <div id="market">
         <div className="market-row">
-          <div className="market-icon">
-            <img src={`/market_images/symbol_icon_${pairSymbol}.png`} alt={baseUnit} />
-          </div>
-          <div className="market-name">{baseUnit}/{quoteUnit}</div>
-        </div>
-        <div className="market-row">
-          <div className="market-current tt" style={{ fontSize: fs, height: fs }}>{currentPrice}</div>
+          <div className={classnames('market-current tt', currentTrade.type === 'buy' ? 'green-text' : 'red-text')} style={{ fontSize: fs, height: fs }}>{currentPrice}</div>
           <div className="market-info">
             <div className="light-text">{quoteUnit.toUpperCase()}</div>
             <div>
@@ -80,7 +57,7 @@ class Market extends Component {
             </div>
           </div>
         </div>
-        <div className={classnames('market-detail pop-dialog a-left', { show: this.state.hover })}>
+        {/* <div className={classnames('market-detail pop-dialog a-left', { show: this.state.hover })}>
           <div className="market-detail-row">
             <div className="mt"><FormattedMessage id="market_low" /></div>
             <div className="mv tt"><ZeroFormattedNumber value={ticker.low} fixed={3} /> <span className="light-text">{quoteUnit}</span></div>
@@ -93,17 +70,23 @@ class Market extends Component {
             <div className="mt"><FormattedMessage id="market_vol" /></div>
             <div className="mv tt"><ZeroFormattedNumber value={ticker.volume} fixed={3} /> <span className="light-text">{baseUnit}</span></div>
           </div>
-        </div>
+        </div> */}
       </div>
     );
   }
 }
 
 function mapStateToProps({ market }) {
+  let currentTrade = {
+    price: 0,
+    type: 'buy',
+  };
+  if (market.trades && market.trades.length > 0) {
+    currentTrade = market.trades[0];
+  }
   return {
     data: market.current,
-    pairSymbol: market.pairSymbol,
-    currentPrice: market.currentPrice,
+    currentTrade,
     basicInfo: market.currentBasicInfo,
   };
 }

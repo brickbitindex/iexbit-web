@@ -12,6 +12,7 @@ const QUERY = {
   DELETE_ORDER: (id, type) => `/markets/${marketId}/order_${type}s/${id}`,
   K: '/api/v2/k.json',
   QUERY_PRICES: '/api/v2/markets',
+  I18N: locale => `/i18n/market/${locale}.json`,
 };
 
 const $token = document.querySelector('meta[name=csrf-token]');
@@ -36,6 +37,7 @@ export const fetch = {
     const body = qs.stringify({
       utf8: '✓',
       ...data,
+      locale: window.locale,
     });
     return fetchlib(url, {
       headers: {
@@ -66,7 +68,10 @@ export const fetch = {
   get(url, data, options = {}) {
     let queryUrl = url;
     if (data) {
-      queryUrl += '?' + qs.stringify(data);
+      queryUrl += '?' + qs.stringify({
+        ...data,
+        locale: window.locale,
+      });
     }
     return fetchlib(queryUrl, {
       ...options,

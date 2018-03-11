@@ -1,14 +1,16 @@
 #orderBook {
-  display: flex;
   height: 100%;
-  overflow: auto;
   background: #181818;
 
   .order-book-container {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    width: 50%;
+
+    // &.mode-all {
+    //   .order-book.asks,
+    //   .order-book.bids {
+    //     overflow: hidden;
+    //   }
+    // }
   }
 
   .order-book {
@@ -17,33 +19,38 @@
     &.asks,
     &.bids {
       display: flex;
-      flex-direction: column;
       width: 100%;
       left: 0;
       height: 100%;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      transition: height ease 0.4s;
+
+      .order-book-bar {
+        right: 0;
+      }
     }
     &.asks {
+      flex-direction: column-reverse;
+
       .order-book-bar {
         background: #4E3342;
       }
     }
     &.bids {
+      flex-direction: column;
+
       .order-book-bar {
         background: #255547;
-      }
-      .order-book-bar {
-        right: 0;
       }
     }
 
     .order-book-row {
       display: flex;
       position: relative;
-  
-      &.thead {
-        height: 22px;
-        line-height: 22px;
-      }
+      height: 20px;
+      line-height: 20px;
+
       &:not(.thead) {
         cursor: pointer;
       }
@@ -81,8 +88,43 @@
 
 .cb-panel.orderBook-panel {
   height: 100px;
-  margin-bottom: 2px;
+  margin-right: 2px;
   background: transparent;
+
+  .slide-all {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    i {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+    }
+    .slide-buy {
+      transform: translate(-50%, -40%) rotate(-90deg) scale(0.75, 1);
+    }
+    .slide-sell {
+      transform: translate(-50%, -60%) rotate(90deg) scale(0.75, 1);
+    }
+  }
+  .slide-buy {
+    transform: rotate(-90deg);
+  }
+  .slide-sell {
+    transform: rotate(90deg);
+  }
+
+  .simple-btn.deep {
+    width: auto;
+    padding: 0 5px;
+
+    select {
+      border: none;
+      background: transparent;
+      color: #fff;
+    }
+  }
 }
 
 .cb-panel.orderBook-panel.loading {

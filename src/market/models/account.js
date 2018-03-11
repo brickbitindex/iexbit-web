@@ -11,15 +11,19 @@ const model = {
     balance: [],
     orders: [],
     anonymous: !window.gon.current_user,
+    currentUser: {},
   },
   subscriptions: {
-    // TODO:
-    // setup({ dispatch }) {
-    //   dispatch({
-    //     type: 'updateBalance',
-    //     payload: data.balance,
-    //   });
-    // },
+    setup({ dispatch }) {
+      if (window.gon.current_user) {
+        dispatch({
+          type: 'updateState',
+          payload: {
+            currentUser: window.gon.current_user,
+          },
+        });
+      }
+    },
   },
   effects: {
     * deleteOrder({ payload }, { call }) {
