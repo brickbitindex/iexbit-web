@@ -37,6 +37,7 @@ export const fetch = {
     const body = qs.stringify({
       utf8: '✓',
       ...data,
+      locale: window.locale,
     });
     return fetchlib(url, {
       headers: {
@@ -67,7 +68,10 @@ export const fetch = {
   get(url, data, options = {}) {
     let queryUrl = url;
     if (data) {
-      queryUrl += '?' + qs.stringify(data);
+      queryUrl += '?' + qs.stringify({
+        ...data,
+        locale: window.locale,
+      });
     }
     return fetchlib(queryUrl, {
       ...options,

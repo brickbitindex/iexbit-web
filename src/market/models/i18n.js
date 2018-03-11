@@ -8,7 +8,7 @@
 // <FormattedMessage id="hello" values={{ name: 'Sekai' }} />
 // <FormattedRelative value={Date.now()} />
 
-import QUERY from './querys';
+import QUERY, { fetch } from './querys';
 
 const changeLocale = locale => () => fetch.get(QUERY.I18N(locale));
 

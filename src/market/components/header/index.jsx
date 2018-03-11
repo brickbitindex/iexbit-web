@@ -22,6 +22,12 @@ class Header extends Component {
       showSearch: false,
     };
   }
+  handleChangeLocale(locale) {
+    this.props.dispatch({
+      type: 'i18n/changeLocale',
+      payload: locale,
+    });
+  }
   @autobind
   handleSearchBtnClick() {
     this.setState({
@@ -82,6 +88,11 @@ class Header extends Component {
           <Account />
           <span className="header-opts-btn simple-btn" id="localeSelector">
             <span>{localeMap[locale]}</span>
+            <div className="header-menu">
+              {Object.keys(localeMap).map((k, i) => (
+                <div className="menu-item" key={i} onClick={this.handleChangeLocale.bind(this, k)}>{localeMap[k]}</div>
+              ))}
+            </div>
           </span>
         </div>
         <Search show={this.state.showSearch} prices={prices} onCancel={this.handleSearchBtnClick} />
