@@ -64,6 +64,7 @@ class Order extends Component {
     } else {
       percent = Math.round(amount / balance.balance * 1000) / 10;
     }
+    if (isNaN(percent)) return 0;
     return percent;
   }
   @autobind

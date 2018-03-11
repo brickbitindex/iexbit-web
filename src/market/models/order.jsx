@@ -75,6 +75,10 @@ const model = {
       ask.price = payload;
       yield put({ type: 'updateAsk', ask });
     },
+    * updateAllPrice({ payload }, { put }) {
+      yield put({ type: 'updateBidPrice', payload });
+      yield put({ type: 'updateAskPrice', payload });
+    },
     * updateBidAmount({ payload }, { select, put }) {
       const originBid = yield select(({ order }) => order.bid);
       const bid = { ...originBid };

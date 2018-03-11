@@ -1,21 +1,30 @@
 .loading-container {
+  position: relative;
   width: 100%;
   text-align: center;
   height: 100%;
   padding: 20px 0;
   box-sizing: border-box;
 
-  img {
-    height: 30px;
-    animation: loadingAnime 1s infinite;
-  }
-}
+  .loading-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 40px;
+    width: 40px;
+    background-image: url('/loading.png');
+    background-position: 0 0;
+    background-size: 40px;
 
-@keyframes loadingAnime {
-  from {
-    transform: rotateY(0deg);
-  }
-  to {
-    transform: rotateY(360deg);
+    &.frame0 {
+      background-position: 0 0;
+    }
+    &.frame1 {
+      background-position: 0 -40px;
+    }
+    &.frame2 {
+      background-position: 0 -80px;
+    }
   }
 }

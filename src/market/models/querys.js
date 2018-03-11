@@ -12,6 +12,7 @@ const QUERY = {
   DELETE_ORDER: (id, type) => `/markets/${marketId}/order_${type}s/${id}`,
   K: '/api/v2/k.json',
   QUERY_PRICES: '/api/v2/markets',
+  I18N: locale => `/i18n/market/${locale}.json`,
 };
 
 const $token = document.querySelector('meta[name=csrf-token]');

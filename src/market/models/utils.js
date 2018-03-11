@@ -16,7 +16,6 @@ const model = {
     gon: window.gon,
     config: {},
     tradesLength: 0,
-    orderBookLength: 0,
   },
   subscriptions: {
     setup({ dispatch }) {
@@ -69,8 +68,7 @@ const model = {
     },
     * init(_, { put }) {
       const payload = {};
-      payload.tradesLength = parseInt(document.querySelector('.cb-panel.trades-panel .cb-panel-content').offsetHeight / 14 + 10, 10);
-      payload.orderBookLength = parseInt(document.querySelector('.cb-panel.orderBook-panel .cb-panel-content').offsetHeight / 14 + 10, 10);
+      payload.tradesLength = parseInt(document.querySelector('.cb-panel.trades-panel .cb-panel-content').offsetHeight / 20 + 10, 10);
       yield put({
         type: 'updateState',
         payload,

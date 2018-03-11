@@ -1,0 +1,18 @@
+#account {
+  position: relative;
+  display: inline-block;
+
+  &:hover {
+    .header-menu {
+      display: block;
+    }
+  }
+
+  &.anonymous {
+    a {
+      cursor: pointer;
+      color: #F3CA82;
+      margin: 0 4px;
+    }
+  }
+}

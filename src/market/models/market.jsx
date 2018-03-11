@@ -11,7 +11,9 @@
  *   fix: 5,
  * }]
  */
+import React from 'react';
 import Decimal from 'decimal.js-light';
+import { FormattedMessage } from 'react-intl';
 import QUERY, { fetch } from './querys';
 import toast from '../components/common/toast';
 
@@ -22,6 +24,31 @@ const queryPrices = () => fetch.get(QUERY.QUERY_PRICES).catch(err => err);
 function getDecimalFixed(decimal) {
   if (new Decimal('1').lte(decimal)) return 0;
   return decimal.log().abs().toNumber();
+}
+
+// {
+//   text: '8位小数',
+//   mask: '0.00000001'
+// }
+function getDeepSelect(fixed) {
+  const ret = [];
+  for (let i = 0; i < 5; i += 1) {
+    const currentFixed = fixed - i;
+    const step = Math.pow(10, -currentFixed);
+    if (currentFixed <= 0) {
+      // 整数
+      ret.push({
+        text: <FormattedMessage id="orderbook_deep_integer" values={{ num: step }} />,
+        step,
+      });
+    } else {
+      ret.push({
+        text: <FormattedMessage id="orderbook_deep_decimal" values={{ num: currentFixed }} />,
+        step,
+      });
+    }
+  }
+  return ret;
 }
 
 function initCurrentBasicInfo() {
@@ -48,6 +75,8 @@ function initCurrentBasicInfo() {
   currentBasicInfo.bid_config.pricescale = parseInt(new Decimal('1').div(currentBasicInfo.bid_config.price_minmov).toString(), 10);
   currentBasicInfo.bid_config.price_fixed = getDecimalFixed(currentBasicInfo.bid_config.price_minmov);
   currentBasicInfo.bid_config.amount_fixed = getDecimalFixed(currentBasicInfo.bid_config.min_amount);
+  // 深度选项
+  currentBasicInfo.deepSelectOptions = getDeepSelect(currentBasicInfo.ask_config.price_fixed);
   return currentBasicInfo;
 }
 
@@ -59,7 +88,6 @@ const model = {
     pairSymbol: '',
     prices: [],
     current: {},
-    currentPrice: '',
     currentBasicInfo: undefined,
     trades: [],
     orderBook: {
@@ -178,47 +206,40 @@ const model = {
       });
       trades = Object.keys(tradesObj).map(k => tradesObj[k]);
       trades.sort((a, b) => b.date - a.date);
-      const tradesLength = yield select(({ utils }) => utils.tradesLength);
-      trades = trades.slice(0, tradesLength);
-      let currentPrice = 0;
-      if (trades.length > 0) {
-        currentPrice = trades[0].price;
-      }
       yield put({
         type: 'updateState',
         payload: {
           trades,
-          currentPrice,
         },
       });
     },
-    * updateOrderBook({ payload }, { select, put }) {
+    * updateOrderBook({ payload }, { put }) {
       // 处理数据
       // 结构
       // ['price', 'amount', 'total', deep]
-      let deep = 0;
-      let max = 0;
-      const orderBookLength = yield select(({ utils }) => utils.orderBookLength);
-      const asks = payload.asks.slice(0, orderBookLength).map((row) => {
-        const amount = parseFloat(row[1]);
-        deep += amount;
-        return row.concat([(parseFloat(row[0] * amount)), deep]);
-      });
-      max = deep;
-      deep = 0;
-      const bids = payload.bids.slice(0, orderBookLength).map((row) => {
-        const amount = parseFloat(row[1]);
-        deep += amount;
-        return row.concat([(parseFloat(row[0] * amount)), deep]);
-      });
-      if (deep > max) max = deep;
+      // let deep = 0;
+      // let max = 0;
+      // const asks = payload.asks.map((row) => {
+      //   const amount = parseFloat(row[1]);
+      //   deep += amount;
+      //   return row.concat([(parseFloat(row[0] * amount)), deep]);
+      // });
+      // max = deep;
+      // deep = 0;
+      // const bids = payload.bids.map((row) => {
+      //   const amount = parseFloat(row[1]);
+      //   deep += amount;
+      //   return row.concat([(parseFloat(row[0] * amount)), deep]);
+      // });
+      // if (deep > max) max = deep;
+      const asks = payload.asks;
+      const bids = payload.bids;
       yield put({
         type: 'updateState',
         payload: {
           orderBook: {
             asks,
             bids,
-            max,
           },
         },
       });

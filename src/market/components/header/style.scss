@@ -7,51 +7,88 @@ $headerPadding: 22px;
   margin-bottom: 2px;
   display: flex;
   align-items: center;
+  font-size: 14px;
 
   .logo-container {
-    width: 250px;
+    width: 175px;
     margin-right: 1px;
     padding-left: $headerPadding;
     height: $logoHeight;
-    flex-shrink: 0;
-    flex-grow: 0;
+    box-sizing: border-box;
 
     img {
       height: $logoHeight;
     }
   }
 
-  .header-price {
-    height: 36px;
-    max-width: 200px;
-    flex-shrink: 1;
-    flex-grow: 1;
-    padding: 12px;
+  .market-name {
+    font-weight: 500;
 
-    &>div {
-      line-height: 20px;
+    .t1 {
+      color: #f3ca81;
+      font-size: 22px;
+      font-weight: 400;
     }
+    .t2 {
+      color: #887450;
+      font-size: 18px;
+    }
+  }
 
-    .highlight {
-      background: #F3CA82;
-      color: rgba(#000, 0.65);
+  .market-info {
+    .mt {
+      color: #f3ca81;
+      margin-bottom: 4px;
     }
   }
 
   .header-opts {
-    flex-shrink: 1;
-    flex-grow: 1;
     text-align: right;
     padding-right: $headerPadding;
+
+    & > * {
+      vertical-align: middle;
+    }
   }
 
-  .header-search {
+  .header-opts-btn {
     display: inline-block;
     padding: 5px 8px;
     border-radius: 5px;
 
-    i {
+    & > i {
       font-size: 24px;
+    }
+  }
+
+  .header-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #F3CA82;
+    color: #181818;
+    box-shadow: #000 4px 2px 5px 0;
+    z-index: 10;
+    border-radius: 3px;
+    overflow: hidden;
+
+    .t1 {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .menu-item {
+      padding: 8px 12px;
+
+      &:hover {
+        background: #fff;
+        color: #181818;
+      }
+
+      i {
+        margin-left: 5px;
+      }
     }
   }
 }
@@ -67,6 +104,7 @@ $headerPadding: 22px;
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  font-size: 12px;
 
   .search-area {
     width: 660px;
@@ -105,8 +143,22 @@ $headerPadding: 22px;
     overflow: auto;
 
     .header-price {
+      height: 36px;
+      max-width: 200px;
+      flex-shrink: 1;
+      flex-grow: 1;
+      padding: 12px;
       display: inline-block;
       width: 160px;
+  
+      &>div {
+        line-height: 20px;
+      }
+  
+      .highlight {
+        background: #F3CA82;
+        color: rgba(#000, 0.65);
+      }
 
       .header-price-name {
         color: rbga(#fff, 0.65);

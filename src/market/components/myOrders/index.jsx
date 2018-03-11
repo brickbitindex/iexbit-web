@@ -3,7 +3,7 @@ import { connect } from 'dva';
 // import moment from 'moment';
 // import autobind from 'autobind-decorator';
 import classnames from 'classnames';
-import { injectIntl, FormattedMessage, FormattedTime, FormattedDate, FormattedNumber } from 'react-intl';
+import { injectIntl, FormattedMessage, FormattedTime, FormattedDate } from 'react-intl';
 import ZeroFormattedNumber from '../common/zeroFormattedNumber';
 
 import Mask from '../common/anonymousMask';

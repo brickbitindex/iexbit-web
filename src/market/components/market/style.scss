@@ -9,19 +9,6 @@
   .market-row:first-child {
     margin-bottom: 10px;
   }
-
-  .market-icon {
-    width: 20%;
-    height: 40px;
-    text-align: center;
-
-    img {
-      height: 100%;
-    }
-  }
-  .market-name {
-    font-size: 18px;
-  }
   .market-current {
     width: 75%;
     height: 40px;
@@ -64,13 +51,17 @@
         margin-bottom: 0;
       }
     }
-
   }
 }
 
 .cb-panel.market-panel {
-  height: 115px;
   padding: 12px 0;
   box-sizing: border-box;
-  margin-bottom: 2px;
+  border: #232323 solid 2px;
+  border-left-width: 0;
+  border-right-width: 0;
+
+  .loading-container {
+    padding: 0;
+  }
 }
