@@ -171,6 +171,10 @@ $headerPadding: 22px;
 #localeSelector {
   position: relative;
 
+  .header-menu {
+    text-align: center;
+  }
+
   &:hover {
     .header-menu {
       display: block;

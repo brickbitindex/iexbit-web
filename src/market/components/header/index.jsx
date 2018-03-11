@@ -11,6 +11,7 @@ import logoImg from '../../../assets/images/logo_all.svg';
 import './style.scss';
 
 const localeMap = {
+  en: 'English',
   'zh-CN': '简体中文',
   'zh-TW': '繁體中文',
 };

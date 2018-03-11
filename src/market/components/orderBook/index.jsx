@@ -95,7 +95,7 @@ function mapStateToProps({ market }) {
 }
 
 export default wrapWithPanel(connect(mapStateToProps)(OrderBook), {
-  title: <FormattedMessage id="orderbook" />,
+  title: <span />,
   className: 'orderBook-panel',
 }, {
   mode: 'all',
