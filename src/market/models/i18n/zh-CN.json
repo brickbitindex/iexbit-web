@@ -1,6 +1,11 @@
 {
   "header_dashborad": "用户中心",
   "header_logout": "退出",
+  "header_assets": "我的资产",
+  "header_menu_markets": "交易市场",
+  "header_menu_history": "历史记录",
+  "header_menu_articles": "公告中心",
+  "header_menu_help": "帮助中心",
   "market_current": "最新价格",
   "market_low": "24H最低价",
   "market_high": "24H最高价",

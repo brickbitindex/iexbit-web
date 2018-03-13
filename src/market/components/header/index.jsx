@@ -56,6 +56,9 @@ class Header extends Component {
         <div className="market-name flex-autofixed">
           <span className="t1">{baseUnit}</span>
           <span className="t2">&nbsp;/&nbsp;{quoteUnit}</span>
+          <span className="header-opts-btn simple-btn search-btn" onClick={this.handleSearchBtnClick}>
+            <i className="icon anticon icon-search1" />
+          </span>
         </div>
         {ticker && [(
           <div key="0" className="market-info flex-autofixed">
@@ -83,9 +86,7 @@ class Header extends Component {
           </div>
         )]}
         <div className="header-opts flex-fixed">
-          <span className="header-opts-btn simple-btn" onClick={this.handleSearchBtnClick}>
-            <i className="icon anticon icon-search1" />
-          </span>
+          <span className="header-opts-btn simple-btn"><a target="_blank" href="/dashboard/#/assets" rel="noopener noreferrer"><FormattedMessage id="header_assets" /></a></span>
           <Account />
           <span className="header-opts-btn simple-btn" id="localeSelector">
             <span>{localeMap[locale]}</span>
@@ -102,7 +103,7 @@ class Header extends Component {
   }
 }
 
-function mapStateToProps({ market, i18n }) {
+function mapStateToProps({ market, i18n, account }) {
   let currentTrade = {
     price: 0,
     type: 'buy',
@@ -111,6 +112,7 @@ function mapStateToProps({ market, i18n }) {
     currentTrade = market.trades[0];
   }
   return {
+    anonymous: account.anonymous,
     currentTrade,
     prices: market.prices,
     current: market.current,

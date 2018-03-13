@@ -1,6 +1,11 @@
 {
   "header_dashborad": "帳號中心",
   "header_logout": "登出",
+  "header_assets": "我的資產",
+  "header_menu_markets": "交易市場",
+  "header_menu_history": "歷史記錄",
+  "header_menu_articles": "最新消息",
+  "header_menu_help": "常見問題",
   "market_current": "最新價格",
   "market_low": "24H最低價",
   "market_high": "24H最高價",
