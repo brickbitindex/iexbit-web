@@ -5,9 +5,9 @@ import classnames from 'classnames';
 import { FormattedMessage } from 'react-intl';
 import Select from 'react-select';
 import Slider from 'rc-slider';
-import Tooltip from 'rc-tooltip';
 import OrderInput from './input';
 import OrderButton from './button';
+import Tooltip from '../common/tooltip';
 import Mask from '../common/anonymousMask';
 
 
@@ -18,17 +18,14 @@ const Handle = Slider.Handle;
 
 const handle = (props) => {
   const { value, dragging, index, ...restProps } = props;
-  return (
-    <Tooltip
-      prefixCls="rc-slider-tooltip"
-      overlay={`${value}%`}
-      visible={dragging}
-      placement="top"
-      key={index}
-    >
-      <Handle value={value} {...restProps} />
-    </Tooltip>
-  );
+  if (dragging) {
+    return (
+      <Handle value={value} {...restProps} >
+        <Tooltip text={`${value}%`} key={index} />
+      </Handle>
+    );
+  }
+  return <Handle value={value} {...restProps} />;
 };
 
 class Order extends Component {

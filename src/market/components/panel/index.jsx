@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
 import autobind from 'autobind-decorator';
-import Tooltip from 'rc-tooltip';
 import { connect } from 'dva';
+import Tooltip from '../common/tooltip';
 import Loading from '../loading';
 
 import './style.scss';
@@ -69,20 +69,18 @@ export default function wrapWithPanel(C, defaultState, defaultProps = {}, opts =
                 if (opt.active) {
                   active = opt.active(this.state);
                 }
-                const span = <span key={opt.key} className={classnames('simple-btn', { active }, opt.className)} onClick={() => opt.onClick(componentProps, this.setChildProps)}>{icon}</span>;
-                if (opt.tooltip) {
-                  return (
-                    <Tooltip
-                      prefixCls="rc-slider-tooltip"
-                      overlay={opt.tooltip}
-                      placement="top"
-                      key={opt.key}
-                    >
-                      {span}
-                    </Tooltip>
-                  );
-                }
-                return span;
+                return (
+                  <span
+                    key={opt.key}
+                    className={classnames('simple-btn', { active, 'tooltip-container': !!opt.tooltip }, opt.className)}
+                    onClick={() => opt.onClick(componentProps, this.setChildProps)}
+                  >
+                    {icon}
+                    {opt.tooltip && (
+                      <Tooltip text={opt.tooltip} key={opt.key} />
+                    )}
+                  </span>
+                );
               })}
             </div>
           )}
