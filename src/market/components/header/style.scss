@@ -59,6 +59,15 @@ $headerPadding: 22px;
     & > i {
       font-size: 24px;
     }
+
+    a {
+      text-decoration: none;
+      color: #fff;
+    }
+  }
+
+  .search-btn {
+    margin-left: 12px;
   }
 
   .header-menu {
