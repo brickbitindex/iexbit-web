@@ -30,16 +30,16 @@ class Account extends Component {
                 <div>{currentUser.email}</div>
               </div>
               <div className="menu-item" onClick={() => window.open('/dashboard/#/markets')}>
-                <FormattedMessage id="menu_markets" />
+                <FormattedMessage id="header_menu_markets" />
               </div>
               <div className="menu-item" onClick={() => window.open('/dashboard/#/history')}>
-                <FormattedMessage id="menu_history" />
+                <FormattedMessage id="header_menu_history" />
               </div>
               <div className="menu-item" onClick={() => window.open('https://support.bitrabbit.com')}>
-                <FormattedMessage id="menu_articles" />
+                <FormattedMessage id="header_menu_articles" />
               </div>
               <div className="menu-item" onClick={() => window.open('https://support.bitrabbit.com/hc/zh-cn/requests/new')}>
-                <FormattedMessage id="menu_help" />
+                <FormattedMessage id="header_menu_help" />
               </div>
               <div className="menu-item" onClick={() => window.location = '/signout'}>
                 <FormattedMessage id="header_logout" /><i className="icon anticon icon-logout" />

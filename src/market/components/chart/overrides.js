@@ -1,5 +1,7 @@
 const data = {
   paneProperties: {
+    // topMargin: 50,
+    bottomMargin: 30,
     background: '#181818',
     gridProperties: {
       color: '#E6E6E6',
@@ -145,7 +147,7 @@ const data = {
       linestyle: 0,
       linewidth: 1,
       priceSource: 'close',
-      transparency: 50,
+      transparency: 100,
     },
     priceAxisProperties: {
       autoScale: true,
