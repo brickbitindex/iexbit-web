@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import moment from 'moment';
+import Decimal from 'decimal.js-light';
 // import autobind from 'autobind-decorator';
 import classnames from 'classnames';
 import { FormattedMessage } from 'react-intl';
@@ -11,10 +12,15 @@ import './style.scss';
 
 class Trades extends Component {
   handlePriceClick(row) {
-    const type = row.type === 'buy' ? 'order/updateBidPrice' : 'order/updateAskPrice';
+    const step = this.props.basicInfo.deepSelectOptions[0].step;
+    let payload = row.price;
+    if (step < 1) {
+      const times = new Decimal(1).div(step).toString();
+      payload = parseFloat(payload).toFixed(times.length - 1);
+    }
     this.props.dispatch({
-      type,
-      payload: row.price,
+      type: 'order/updateAllPrice',
+      payload,
     });
   }
   render() {

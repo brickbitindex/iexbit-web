@@ -4,7 +4,6 @@
 import Decimal from 'decimal.js-light';
 
 export default function combineDeep(trades, step) {
-  const times = 1 / step;
   let deep = 0;
   const timedTrades = [];
   let pointer = -1;
@@ -12,7 +11,7 @@ export default function combineDeep(trades, step) {
     const trade = trades[i];
     const timedTrade = timedTrades[pointer];
     // 0.00015 -> 4位 -> 0.00015 * 10000 -> 1.5 -> 1
-    const amount = new Decimal(trade[0]).times(times).toString().split('.')[0];
+    const amount = new Decimal(trade[0]).div(step).toString().split('.')[0];
     if (timedTrade && timedTrade[0] === amount) {
       timedTrade[1] = timedTrade[1].add(new Decimal(trade[1]));
     } else {
@@ -27,7 +26,7 @@ export default function combineDeep(trades, step) {
     const amount = row[1].toString();
     const amountFloat = parseFloat(amount);
     deep += amountFloat;
-    const price = new Decimal(row[0]).div(times).toString();
+    const price = new Decimal(row[0]).times(step).toString();
     return [
       price,
       amount,

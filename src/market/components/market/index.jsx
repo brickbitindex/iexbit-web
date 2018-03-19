@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import classnames from 'classnames';
 // import { FormattedMessage } from 'react-intl';
 import wrapWithPanel from '../panel';
-// import ZeroFormattedNumber from '../common/zeroFormattedNumber';
+import ZeroFormattedNumber from '../common/zeroFormattedNumber';
 
 import './style.scss';
 
@@ -47,7 +47,9 @@ class Market extends Component {
     return (
       <div id="market">
         <div className="market-row">
-          <div className={classnames('market-current tt', currentTrade.type === 'buy' ? 'green-text' : 'red-text')} style={{ fontSize: fs, height: fs }}>{currentPrice}</div>
+          <div className={classnames('market-current tt', currentTrade.type === 'buy' ? 'green-text' : 'red-text')} style={{ fontSize: fs, height: fs }}>
+            <ZeroFormattedNumber value={currentPrice} fixed={basicInfo.ask_config.price_fixed} />
+          </div>
           <div className="market-info">
             <div className="light-text">{quoteUnit.toUpperCase()}</div>
             <div>
