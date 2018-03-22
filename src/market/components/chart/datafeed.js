@@ -183,12 +183,12 @@ export default class Datafeed {
       'exchange-traded': 'Bitrabbit',
       minmov: 1,
       pricescale: this.basicInfo.bid_config.pricescale,
+      volume_precision: this.basicInfo.bid_config.amount_fixed,
       minmov2: 0,
       has_intraday: true,
       has_empty_bars: true,
       // supported_resolutions: ['1', '5', '15', '30', '60', '180', '1D', '1W', '1M'],
       data_status: 'streaming',
-      volume_precision: 3,
     };
   }
   getNearestBarTime(time, resolution) {
