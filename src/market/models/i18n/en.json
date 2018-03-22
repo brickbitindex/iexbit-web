@@ -59,5 +59,9 @@
   "messagecenter_order_ask_done": "Filled，price{price}{quote_unit}，sell{amount}{base_unit}",
   "anonymous_signin": "Sign in",
   "anonymous_or": "Or",
-  "anonymous_signup": "Sign up"
+  "anonymous_signup": "Sign up",
+  "tv_minute": "{num}min",
+  "tv_hour": "{num}hour",
+  "tv_daily": "1D",
+  "tv_weekly": "1W"
 }

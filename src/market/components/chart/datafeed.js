@@ -188,6 +188,7 @@ export default class Datafeed {
       has_empty_bars: true,
       // supported_resolutions: ['1', '5', '15', '30', '60', '180', '1D', '1W', '1M'],
       data_status: 'streaming',
+      volume_precision: 3,
     };
   }
   getNearestBarTime(time, resolution) {
@@ -270,11 +271,11 @@ export default class Datafeed {
     fetch.get(QUERY.K, params).then((data) => {
       let processedData = data.map(d => ({
         time: d[0] * 1000,
-        open: d[1],
-        high: d[2],
-        low: d[3],
-        close: d[4],
-        volume: d[5],
+        open: +d[1],
+        high: +d[2],
+        low: +d[3],
+        close: +d[4],
+        volume: +d[5],
       }));
       const noData = processedData.length === 0;
       // console.log(processedData.length, new Date(rangeStartDate * 1000), new Date(processedData[0].time), new Date(processedData[processedData.length - 1].time));
