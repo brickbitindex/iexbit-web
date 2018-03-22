@@ -32,7 +32,7 @@ function getDecimalFixed(decimal) {
 // }
 function getDeepSelect(fixed) {
   const ret = [];
-  for (let i = 0; i < 5; i += 1) {
+  for (let i = 0; i < 4; i += 1) {
     const currentFixed = fixed - i;
     const step = Math.pow(10, -currentFixed);
     if (currentFixed <= 0) {

@@ -25,6 +25,70 @@ function objToForm(inData, prefix = '') {
   return ret;
 }
 
+const $ = window.$;
+
+function chartReady(widget, messages) {
+  // TODO:
+  console.log(messages);
+  const buttonArr = [{
+    value: '1',
+    text: '1min',
+  }, {
+    value: '5',
+    text: '5min',
+  }, {
+    value: '15',
+    text: '15min',
+  }, {
+    value: '30',
+    text: '30min',
+  }, {
+    value: '60',
+    text: '1hour',
+  }, {
+    value: '120',
+    text: '2hour',
+  }, {
+    value: '240',
+    text: '4hour',
+  }, {
+    value: '360',
+    text: '6hour',
+  }, {
+    value: '720',
+    text: '12hour',
+  }, {
+    value: '1D',
+    text: '日线',
+  }, {
+    value: '1W',
+    text: '周线',
+  }];
+
+  let btn = {};
+
+  const handleClick = (e, value) => {
+    widget.chart().setResolution(value);
+    $(e.target).addClass('select')
+      .closest('div.space-single')
+      .siblings('div.space-single')
+      .find('div.button')
+      .removeClass('select');
+  };
+
+  buttonArr.forEach((v) => {
+    btn = widget.createButton().on('click', (e) => {
+      handleClick(e, v.value);
+    });
+    btn[0].innerHTML = v.text;
+    btn[0].title = v.text;
+    $(btn[0]).addClass('resolution-btn');
+    if (v.value === '15') {
+      $(btn[0]).addClass('select');
+    }
+  });
+}
+
 class Chart extends Component {
   constructor(props) {
     super(props);
@@ -37,20 +101,47 @@ class Chart extends Component {
     const TradingView = window.TradingView;
     const symbol = this.props.symbol;
     const pair = this.props.pair;
+    const messages = this.props.messages;
     this.tvWidget = new TradingView.widget({
       symbol: 'Bitrabbit' + symbol,
       interval: '15',
       container_id: 'chart',
       // BEWARE: no trailing slash is expected in feed URL
       datafeed: new Datefeed(symbol, pair, this.props.basicInfo),
-      library_path: '/tv/',
+      library_path: '/assets/tv/',
       locale: 'zh',
       // Regression Trend-related functionality is not implemented yet, so it's hidden for a while
       drawings_access: { type: 'black', tools: [{ name: 'Regression Trend' }] },
       // TODO: 禁用
-      disabled_features: ['use_localstorage_for_settings', 'header_symbol_search', 'header_interval_dialog_button', 'header_compare', 'header_undo_redo', 'header_fullscreen_button', 'header_saveload', 'left_toolbar'],
+      // disabled_features: [
+      //   'use_localstorage_for_settings',
+      //   'header_symbol_search',
+      //   'header_interval_dialog_button',
+      //   'header_compare',
+      //   'header_undo_redo',
+      //   'header_fullscreen_button',
+      //   'header_saveload',
+      //   'left_toolbar',
+      // ],
+      disabled_features: [
+        'header_symbol_search',
+        'use_localstorage_for_settings',
+        'symbol_search_hot_key',
+        'header_chart_type',
+        'header_compare',
+        'header_undo_redo',
+        'header_screenshot',
+        'header_saveload',
+        'timeframes_toolbar',
+        'context_menus',
+        'left_toolbar',
+        'header_indicators', // 图表指标
+        // 'header_settings', // 设置
+        'header_resolutions',  // 时间下拉框
+        // 'header_fullscreen_button' //全屏按钮
+      ],
       // TODO: 禁用了
-      // enabled_features: ["study_templates"],
+      enabled_features: ['study_templates'],
       charts_storage_url: 'http://saveload.tradingview.com',
       charts_storage_api_version: '1.1',
       client_id: 'tradingview.com',
@@ -58,8 +149,12 @@ class Chart extends Component {
       autosize: true,
       timezone: 'Asia/Shanghai',
       overrides: objToForm(overrides),
+      // overrides: {},
       time_frames: [],
       // toolbar_bg: '#181818',
+    });
+    this.tvWidget.onChartReady(() => {
+      chartReady(this.tvWidget, messages);
     });
   }
   render() {
@@ -69,11 +164,12 @@ class Chart extends Component {
   }
 }
 
-function mapStateToProps({ market }) {
+function mapStateToProps({ market, i18n }) {
   return {
     symbol: market.pairSymbol,
     pair: market.pair,
     basicInfo: market.currentBasicInfo,
+    messages: i18n.messages,
   };
 }
 

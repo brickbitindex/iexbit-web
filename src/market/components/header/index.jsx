@@ -36,7 +36,7 @@ class Header extends Component {
     });
   }
   render() {
-    const { prices, current, basicInfo, currentTrade, locale } = this.props;
+    const { prices, current, basicInfo, currentTrade, locale, anonymous } = this.props;
     const currentPrice = currentTrade.price;
     const ticker = current.ticker;
     let change = 0;
@@ -86,7 +86,11 @@ class Header extends Component {
           </div>
         )]}
         <div className="header-opts flex-fixed">
-          <span className="header-opts-btn simple-btn"><a target="_blank" href="/dashboard/#/assets" rel="noopener noreferrer"><FormattedMessage id="header_assets" /></a></span>
+          {!anonymous && (
+            <span className="header-opts-btn simple-btn">
+              <a target="_blank" href="/dashboard/#/assets" rel="noopener noreferrer"><FormattedMessage id="header_assets" /></a>
+            </span>
+          )}
           <Account />
           <span className="header-opts-btn simple-btn" id="localeSelector">
             <span>{localeMap[locale]}</span>

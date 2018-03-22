@@ -8,6 +8,14 @@ const typeOptions = [
 
 const numberReg = /^\d+(\.\d+)?$/;
 
+function getDecimalCount(d) {
+  let nums = d.toString();
+  if (nums.length === 0) return 0;
+  nums = nums.split('.');
+  if (nums.length === 1) return 0;
+  return nums[1].length;
+}
+
 function checkFormError(form) {
   const { type, price, amount } = form;
   const error = {
@@ -63,17 +71,27 @@ const model = {
   effects: {
     * updateBidPrice({ payload }, { select, put }) {
       const originBid = yield select(({ order }) => order.bid);
+      const fixed = yield select(({ market }) => market.currentBasicInfo.bid_config.price_fixed);
       const bid = { ...originBid };
-      bid.error.price = !(numberReg.test(payload));
-      bid.price = payload;
-      yield put({ type: 'updateBid', bid });
+      if (fixed < getDecimalCount(payload)) {
+        yield put({ type: 'updateBid', bid });
+      } else {
+        bid.error.price = !(numberReg.test(payload));
+        bid.price = payload;
+        yield put({ type: 'updateBid', bid });
+      }
     },
     * updateAskPrice({ payload }, { select, put }) {
       const originAsk = yield select(({ order }) => order.ask);
+      const fixed = yield select(({ market }) => market.currentBasicInfo.ask_config.price_fixed);
       const ask = { ...originAsk };
-      ask.error.price = !(numberReg.test(payload));
-      ask.price = payload;
-      yield put({ type: 'updateAsk', ask });
+      if (fixed < getDecimalCount(payload)) {
+        yield put({ type: 'updateAsk', ask });
+      } else {
+        ask.error.price = !(numberReg.test(payload));
+        ask.price = payload;
+        yield put({ type: 'updateAsk', ask });
+      }
     },
     * updateAllPrice({ payload }, { put }) {
       yield put({ type: 'updateBidPrice', payload });
@@ -81,17 +99,27 @@ const model = {
     },
     * updateBidAmount({ payload }, { select, put }) {
       const originBid = yield select(({ order }) => order.bid);
+      const fixed = yield select(({ market }) => market.currentBasicInfo.bid_config.amount_fixed);
       const bid = { ...originBid };
-      bid.error.amount = !(numberReg.test(payload));
-      bid.amount = payload;
-      yield put({ type: 'updateBid', bid });
+      if (fixed < getDecimalCount(payload)) {
+        yield put({ type: 'updateBid', bid });
+      } else {
+        bid.error.amount = !(numberReg.test(payload));
+        bid.amount = payload;
+        yield put({ type: 'updateBid', bid });
+      }
     },
     * updateAskAmount({ payload }, { select, put }) {
       const originAsk = yield select(({ order }) => order.ask);
+      const fixed = yield select(({ market }) => market.currentBasicInfo.ask_config.amount_fixed);
       const ask = { ...originAsk };
-      ask.error.amount = !(numberReg.test(payload));
-      ask.amount = payload;
-      yield put({ type: 'updateAsk', ask });
+      if (fixed < getDecimalCount(payload)) {
+        yield put({ type: 'updateAsk', ask });
+      } else {
+        ask.error.amount = !(numberReg.test(payload));
+        ask.amount = payload;
+        yield put({ type: 'updateAsk', ask });
+      }
     },
     * updateBidType({ payload }, { select, put }) {
       const originBid = yield select(({ order }) => order.bid);

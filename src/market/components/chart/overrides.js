@@ -102,16 +102,16 @@ const data = {
     },
     // 这里是蜡烛图的颜色
     hollowCandleStyle: {
-      upColor: '#255547',
-      downColor: '#4E3342',
+      upColor: '#3DE777',
+      downColor: '#F04D64',
       drawWick: true,
       drawBorder: true,
       borderColor: '#C400CB',
-      borderUpColor: '#255547',
-      borderDownColor: '#4E3342',
+      borderUpColor: '#3DE777',
+      borderDownColor: '#F04D64',
       wickColor: 'rgba( 115, 115, 117, 1)',
-      wickUpColor: '#255547',
-      wickDownColor: '#4E3342',
+      wickUpColor: '#3DE777',
+      wickDownColor: '#F04D64',
     },
     haStyle: {
       upColor: 'rgba( 107, 165, 131, 1)',

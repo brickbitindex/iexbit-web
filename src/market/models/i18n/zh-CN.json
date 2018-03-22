@@ -59,5 +59,9 @@
   "messagecenter_order_ask_done": "成交，价格{price}{quote_unit}，卖出{amount}{base_unit}",
   "anonymous_signin": "登录",
   "anonymous_or": "或",
-  "anonymous_signup": "注册"
+  "anonymous_signup": "注册",
+  "tv_minute": "{num}分",
+  "tv_hour": "{num}小时",
+  "tv_daily": "日线",
+  "tv_weekly": "周线"
 }

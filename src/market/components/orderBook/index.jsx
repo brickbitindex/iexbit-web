@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'dva';
 // import moment from 'moment';
 // import autobind from 'autobind-decorator';
+import Decimal from 'decimal.js-light';
 import classnames from 'classnames';
 import { FormattedMessage } from 'react-intl';
 import wrapWithPanel from '../panel';
@@ -21,15 +22,29 @@ class OrderBook extends Component {
     return ret;
   }
   handleAskPriceClick(price) {
+    const deep = this.props.deep;
+    const step = this.props.basicInfo.deepSelectOptions[deep].step;
+    let payload = price;
+    if (step < 1) {
+      const times = new Decimal(1).div(step).toString();
+      payload = parseFloat(price).toFixed(times.length - 1);
+    }
     this.props.dispatch({
       type: 'order/updateAllPrice',
-      payload: price,
+      payload,
     });
   }
   handleBidPriceClick(price) {
+    const deep = this.props.deep;
+    const step = this.props.basicInfo.deepSelectOptions[deep].step;
+    let payload = price;
+    if (step < 1) {
+      const times = new Decimal(1).div(step).toString();
+      payload = parseFloat(price).toFixed(times.length - 1);
+    }
     this.props.dispatch({
       type: 'order/updateAllPrice',
-      payload: price,
+      payload,
     });
   }
   render() {
