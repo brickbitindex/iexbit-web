@@ -83,7 +83,7 @@ export default class Search extends Component {
   }
   @autobind
   handleMaskClick(e) {
-    if (e.target === this.$dom) {
+    if (e.target === this.$dom || e.target === this.$close) {
       this.props.onCancel();
     }
   }
@@ -107,7 +107,7 @@ export default class Search extends Component {
     return (
       <div id="search" style={{ display: show ? 'flex' : 'none' }} onClick={this.handleMaskClick} ref={e => this.$dom = e}>
         <div className="search-area">
-          <i className="icon anticon icon-close" />
+          <i className="icon anticon icon-close" ref={e => this.$close = e} />
           <div className="search-input">
             <input type="text" ref={e => this.$input = e} onChange={this.handleInputChange} value={this.state.filter} />
           </div>

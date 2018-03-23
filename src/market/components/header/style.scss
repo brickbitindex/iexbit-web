@@ -25,7 +25,7 @@ $headerPadding: 22px;
     font-weight: 500;
 
     .t1 {
-      color: #f3ca81;
+      color: #f3ca82;
       font-size: 22px;
       font-weight: 400;
     }
@@ -37,7 +37,7 @@ $headerPadding: 22px;
 
   .market-info {
     .mt {
-      color: #f3ca81;
+      color: #f3ca82;
       margin-bottom: 4px;
     }
   }
@@ -123,7 +123,16 @@ $headerPadding: 22px;
     position: relative;
 
     .icon-close {
-      font-size: 16px;
+      font-size: 20px;
+      position: absolute;
+      right: 0;
+      top: 0;
+      cursor: pointer;
+      z-index: 10;
+
+      &:hover {
+        color: #F3CA82;
+      }
     }
   }
 
