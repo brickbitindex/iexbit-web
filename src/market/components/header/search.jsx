@@ -11,16 +11,8 @@ function reducePrices(data) {
     if (!ret[names[1]]) {
       ret[names[1]] = [];
     }
-    const ticker = node.ticker;
-    const last = parseFloat(ticker.last);
-    const open = parseFloat(ticker.open);
-    const change = open === 0 ? 0 : (last - open) / open;
-    const down = change < 0;
     ret[names[1]].push({
       ...node,
-      change,
-      down,
-      ...ticker,
       currency: names[0],
     });
   });
