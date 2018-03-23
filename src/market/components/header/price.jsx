@@ -34,7 +34,6 @@ export default function Price(props) {
       </div>
       <div className="header-price-current">
         <span>{ticker.last} {/* price.quote_unit.toUpperCase() */}</span>
-        <span>&nbsp;</span>
         <span className={classnames(down ? 'red-text' : 'green-text')}>
           ({down ? '-' : '+'}{Math.abs(change * 100).toFixed(2)}%)
         </span>
