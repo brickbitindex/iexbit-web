@@ -6,6 +6,7 @@
   "header_menu_history": "History",
   "header_menu_articles": "Announcements",
   "header_menu_help": "Help",
+  "markets_tab": "{name} Market",
   "market_current": "Last price",
   "market_low": "24H low",
   "market_high": "24H high",
