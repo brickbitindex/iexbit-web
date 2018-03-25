@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { getDecimalCount } from '../lib/utils';
 
 const typeOptions = [
   { value: 'limit', label: <FormattedMessage id="order_type_limit" /> },
@@ -7,14 +8,6 @@ const typeOptions = [
 ];
 
 const numberReg = /^\d+(\.\d+)?$/;
-
-function getDecimalCount(d) {
-  let nums = d.toString();
-  if (nums.length === 0) return 0;
-  nums = nums.split('.');
-  if (nums.length === 1) return 0;
-  return nums[1].length;
-}
 
 function checkFormError(form) {
   const { type, price, amount } = form;

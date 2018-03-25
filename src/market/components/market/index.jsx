@@ -33,9 +33,8 @@ class Market extends Component {
   render() {
     const { data, currentTrade, basicInfo } = this.props;
     const currentPrice = currentTrade.price;
-    const ticker = data.ticker;
-    const change = (parseFloat(currentPrice) - ticker.open) / ticker.open;
-    const down = change < 0;
+    const change = data.change;
+    const down = data.down;
     // const baseUnit = basicInfo.base_unit.code;
     const quoteUnit = basicInfo.quote_unit.code;
 

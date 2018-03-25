@@ -22,21 +22,17 @@ function highlight(name, highlightReg) {
 export default function Price(props) {
   const price = props.data;
   const highlightReg = props.highlightReg;
-  const ticker = price.ticker;
-  const last = parseFloat(ticker.last);
-  const open = parseFloat(ticker.open);
-  const change = open === 0 ? 0 : (last - open) / open;
-  const down = change < 0;
+  const down = price.down;
+  const name = price.name;
   return (
-    <div className="header-price simple-btn" onClick={goto.bind(null, price.name)}>
+    <div className="header-price simple-btn" onClick={goto.bind(null, name)}>
       <div className="header-price-name">
-        {highlightReg ? highlight(price.name, highlightReg) : price.name}
+        {highlightReg ? highlight(name, highlightReg) : name}
       </div>
       <div className="header-price-current">
-        <span>{ticker.last} {/* price.quote_unit.toUpperCase() */}</span>
-        <span>&nbsp;</span>
+        <span>{price.last} {/* price.quote_unit.toUpperCase() */}</span>
         <span className={classnames(down ? 'red-text' : 'green-text')}>
-          ({down ? '-' : '+'}{Math.abs(change * 100).toFixed(2)}%)
+          ({down ? '-' : '+'}{Math.abs(price.change * 100).toFixed(2)}%)
         </span>
       </div>
     </div>

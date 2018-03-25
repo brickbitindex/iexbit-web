@@ -16,10 +16,12 @@ import Decimal from 'decimal.js-light';
 import { FormattedMessage } from 'react-intl';
 import QUERY, { fetch } from './querys';
 import toast from '../components/common/toast';
+import { getDecimalCount } from '../lib/utils';
 
 const addBidOrder = data => fetch.post(QUERY.ADD_BID_ORDER, data).catch(err => err);
 const addAskOrder = data => fetch.post(QUERY.ADD_ASK_ORDER, data).catch(err => err);
 const queryPrices = () => fetch.get(QUERY.QUERY_PRICES).catch(err => err);
+
 
 function getDecimalFixed(decimal) {
   if (new Decimal('1').lte(decimal)) return 0;
@@ -87,7 +89,7 @@ const model = {
     pair: '',
     pairSymbol: '',
     prices: [],
-    current: {},
+    current: undefined,
     currentBasicInfo: undefined,
     trades: [],
     orderBook: {
@@ -181,9 +183,31 @@ const model = {
           },
         });
       }
+      let prices = [];
+      if (data && data.length > 0) {
+        prices = data.map((price) => {
+          const ticker = price.ticker;
+          const last = parseFloat(ticker.last);
+          const open = parseFloat(ticker.open);
+          const change = open === 0 ? 0 : (last - open) / open;
+          const down = change < 0;
+          const fixed = getDecimalCount(price.bid_config.price_minmov);
+          const _ret = {
+            id: price.id,
+            name: price.name,
+            ...ticker,
+            change,
+            down,
+          };
+          ['buy', 'high', 'last', 'low', 'open', 'sell'].forEach((key) => {
+            _ret[key] = parseFloat(_ret[key]).toFixed(fixed);
+          });
+          return _ret;
+        });
+      }
       yield put({
         type: 'updatePrices',
-        payload: data,
+        payload: prices,
       });
     },
     * updateTrades({ payload }, { select, put }) {
@@ -252,32 +276,29 @@ const model = {
       // {"btccny":{"name":"BTC/CNY","base_unit":"btc","quote_unit":"cny","low":"11214.0","high":"57000.0","last":"11214.0","open":19000,"volume":"131.1168","sell":"12002.0","buy":"11213.0","at":1513409205}}
       const currentPair = state.pair;
       let current;
-      const prices = Object.keys(payload).map((key) => {
-        const pair = payload[key];
-        if (pair.name === currentPair) {
-          current = pair;
-        }
-        return pair;
-      });
+      const find = payload.filter(price => price.name === currentPair);
+      if (find.length) {
+        current = find[0];
+      }
       if (!current) {
         console.log('[market/updatePrice] no pair in price');
         current = {
           id: -1,
           name: currentPair,
-          ticker: {
-            buy: '0.0',
-            high: '0.0',
-            last: '0.0',
-            low: '0.0',
-            open: '0.0',
-            sell: '0.0',
-            volume: '0.0',
-          },
+          buy: '0.0',
+          high: '0.0',
+          last: '0.0',
+          low: '0.0',
+          open: '0.0',
+          sell: '0.0',
+          volume: '0.0',
+          change: 0,
+          down: false,
         };
       }
       return {
         ...state,
-        prices,
+        prices: payload,
         current,
       };
     },

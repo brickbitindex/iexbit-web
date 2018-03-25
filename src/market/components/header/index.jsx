@@ -36,14 +36,7 @@ class Header extends Component {
     });
   }
   render() {
-    const { prices, current, basicInfo, currentTrade, locale, anonymous } = this.props;
-    const currentPrice = currentTrade.price;
-    const ticker = current.ticker;
-    let change = 0;
-    if (ticker) {
-      change = (parseFloat(currentPrice) - ticker.open) / ticker.open;
-    }
-    const down = change < 0;
+    const { prices, current, basicInfo, locale, anonymous } = this.props;
     const baseUnit = basicInfo.base_unit.code;
     const quoteUnit = basicInfo.quote_unit.code;
     return (
@@ -60,29 +53,29 @@ class Header extends Component {
             <i className="icon anticon icon-search1" />
           </span>
         </div>
-        {ticker && [(
+        {current && [(
           <div key="0" className="market-info flex-autofixed">
             <div className="mt"><FormattedMessage id="market_change" /></div>
             <div className="mv tt">
-              <span className={classnames(down ? 'red-text' : 'green-text')}>
-                {down ? '-' : '+'}{Math.abs(change * 100).toFixed(2)}%
+              <span className={classnames(current.down ? 'red-text' : 'green-text')}>
+                {current.down ? '-' : '+'}{Math.abs(current.change * 100).toFixed(2)}%
               </span>
             </div>
           </div>
         ), (
           <div key="1" className="market-info flex-autofixed">
             <div className="mt"><FormattedMessage id="market_low" /></div>
-            <div className="mv tt"><ZeroFormattedNumber value={ticker.low} fixed={3} /> <span className="light-text">{quoteUnit}</span></div>
+            <div className="mv tt"><ZeroFormattedNumber value={current.low} fixed={3} /> <span className="light-text">{quoteUnit}</span></div>
           </div>
         ), (
           <div key="2" className="market-info flex-autofixed">
             <div className="mt"><FormattedMessage id="market_high" /></div>
-            <div className="mv tt"><ZeroFormattedNumber value={ticker.high} fixed={3} /> <span className="light-text">{quoteUnit}</span></div>
+            <div className="mv tt"><ZeroFormattedNumber value={current.high} fixed={3} /> <span className="light-text">{quoteUnit}</span></div>
           </div>
         ), (
           <div key="3" className="market-info flex-autofixed">
             <div className="mt"><FormattedMessage id="market_vol" /></div>
-            <div className="mv tt"><ZeroFormattedNumber value={ticker.volume} fixed={3} /> <span className="light-text">{baseUnit}</span></div>
+            <div className="mv tt"><ZeroFormattedNumber value={current.volume} fixed={3} /> <span className="light-text">{baseUnit}</span></div>
           </div>
         )]}
         <div className="header-opts flex-fixed">
