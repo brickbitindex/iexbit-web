@@ -1,0 +1,147 @@
+/* 1b262d => 181818 */
+
+html, body {
+  background-color:#181818 !important;
+  color: #999;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+html,
+body,
+#footer-chart-panel,
+.chart-controls-bar {
+  background-color:#181818 !important;
+}
+
+.chart-container {
+  border: none !important;
+  border-top: 1px solid #c9cbcd;
+  background: transparent !important;
+}
+
+.chart-loading-screen {
+  background-color: #181818 !important;
+}
+
+.tv-side-toolbar,
+.header-chart-panel-sizer {
+  border: none !important;
+  background: #151515;
+}
+
+.header-chart-panel .group {
+  margin: 1px 0;
+}
+
+.header-chart-panel .button {
+  background: transparent;
+  border: #292A2E solid 1px;
+  outline: none;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+.header-chart-panel-content .space-single .button.select,
+.header-chart-panel-content .space-single .button.select:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #d2d2d2;
+}
+
+.header-chart-panel-content .space-single .button.resolution-btn {
+  border: none;
+  margin-top: 3px;
+  padding: 5px;
+}
+
+/* TODO: active */
+.header-chart-panel .button::before {
+  display: none !important;
+}
+
+.header-chart-panel .button:hover {
+  background: #292A2E !important;
+  border-color: #292A2E;
+}
+
+.favored-list-container span {
+  color: #5f5f62;
+  border-color: #292A2E;
+  background: #292A2E !important;
+}
+.favored-list-container .quick span.apply-common-tooltip {
+  border-radius: 4px 0 0 4px;
+}
+.favored-list-container span.submenu.apply-common-tooltip {
+  border-radius: 0 4px 4px 0;
+}
+
+.chart-style-popup .item svg, .chart-style-widget svg,
+.button.properties svg,
+.button.indicators svg {
+  fill: #5f5f62;
+}
+
+.favored-list-container span.apply-common-tooltip::before {
+  display: none !important;
+}
+
+.favored-list-container.active span.submenu, .favored-list-container span.submenu.active {
+  background: #5f5f62!important;
+  border-color: #292A2E;
+  color: #c4c4c4;
+}
+
+.tv-close-panel {
+  background-color: #292A2E;
+  border: none;
+}
+
+/* sidebar */
+.drawing-favorites-toolbar .tools-group .button, .feature-no-touch .tv-side-toolbar .tools-group .button:active, .feature-no-touch .tv-side-toolbar .tools-group .button:hover, .feature-touch .tv-side-toolbar .tools-group .button:active, .properties-toolbar .tools-group .button, .tv-side-toolbar .tools-group .button.active, .tv-side-toolbar .tools-group .button.selected {
+  border-color: #292A2E;
+  background: #292A2E !important;
+}
+
+.tv-side-toolbar .tools-group .button.selected .main {
+  background: #292A2E !important;
+}
+
+.drawing-favorites-toolbar .tools-group .button.active, .feature-no-touch .drawing-favorites-toolbar .tools-group .button:active, .feature-no-touch .properties-toolbar .tools-group .button:active, .feature-no-touch .tv-side-toolbar .tools-group .button:active .side, .feature-no-touch .tv-side-toolbar .tools-group .button:not(.subgroup):active, .feature-touch .drawing-favorites-toolbar .tools-group .button:active, .feature-touch .properties-toolbar .tools-group .button:active, .feature-touch .tv-side-toolbar .tools-group .button:active .side, .feature-touch .tv-side-toolbar .tools-group .button:not(.subgroup):active, .properties-toolbar .tools-group .button.active, .tv-side-toolbar .tools-group .button.active .side, .tv-side-toolbar .tools-group .button.selected .main, .tv-side-toolbar .tools-group .button:not(.subgroup).active, .tv-side-toolbar .tools-group .button:not(.subgroup).selected {
+  background-color: #5f5f62;
+}
+
+/* menu */
+.charts-popup-list {
+  background: #292A2E;
+  border: #292A2E solid 1px;
+  outline: none;
+  border-radius: 4px;
+}
+
+.charts-popup-list .item.active,
+.charts-popup-list .item.active,
+.feature-no-touch .charts-popup-list .item:hover {
+  background-color: #5f5f62;
+  color: #aaa;
+}
+
+.charts-popup-list .separator {
+  border-color: #292A2E;
+}
+
+.charts-popup-list .item span {
+  color: #c4c4c4;
+}
+
+.drawings-popup-list.iconed .item svg, .drawings-popup-list .item svg {
+  fill: #c4c4c4;
+}
+
+#loading-indicator {
+  background: #181818;
+}
+
+.feature-no-touch .chart-controls-bar-buttons a:not(.disabled):hover {
+  background-color: #292A2E;
+  color: #c4c4c4;
+}

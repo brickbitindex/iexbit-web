@@ -27,9 +27,9 @@ function objToForm(inData, prefix = '') {
 
 const $ = window.$;
 
-function chartReady(widget, messages) {
+function chartReady(widget /* , messages*/) {
   // TODO:
-  console.log(messages);
+  // console.log(messages);
   const buttonArr = [{
     value: '1',
     text: '1min',
@@ -108,7 +108,7 @@ class Chart extends Component {
       container_id: 'chart',
       // BEWARE: no trailing slash is expected in feed URL
       datafeed: new Datefeed(symbol, pair, this.props.basicInfo),
-      library_path: '/assets/tv/',
+      library_path: '/tv/',
       locale: 'zh',
       // Regression Trend-related functionality is not implemented yet, so it's hidden for a while
       drawings_access: { type: 'black', tools: [{ name: 'Regression Trend' }] },

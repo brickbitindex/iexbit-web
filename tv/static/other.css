@@ -1,0 +1,8 @@
+.header-chart-panel-content .space-single {
+  float: left;
+}
+
+.header-chart-panel-content .space-single.header-group-properties,
+.header-chart-panel-content .space-single.header-group-fullscreen {
+  float: none;
+}
