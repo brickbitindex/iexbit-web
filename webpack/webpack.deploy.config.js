@@ -28,15 +28,14 @@ var config = {
   context: path.join(__dirname, '..', '/src'),
   entry,
   output: {
-    path: path.join(__dirname, '..', '/dist'),
-    // publicPath: '//assets.isekai.me/',
-    filename: '[name].bundle.js',
+    path: path.join(__dirname, '..', '/dist/assets'),
+    filename: '[name].[chunkhash:8].js',
+    publicPath: 'https://assets.bitrabbit.com/market/'
   },
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production'),
-      __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true')), // judge if dev environment.
-      __PRERELEASE__: JSON.stringify(JSON.parse(process.env.BUILD_PRERELEASE || 'false')) // judge if secret environment.
+      __DEV__: process.env.NODE_ENV !== 'production', // judge if dev environment.
     }),
     new uglifyJsPlugin({
       compress: {
@@ -49,8 +48,8 @@ var config = {
       minSizeReduce: 1.5,
       moveToParents: true
     }),
-    new CommonsChunkPlugin('vendors', 'vendors.js', Infinity),
-    new ExtractTextPlugin("[name].css"),
+    // new CommonsChunkPlugin('vendors', 'vendors.[chunkhash:8].js', Infinity),
+    new ExtractTextPlugin("[name].[chunkhash:8].css"),
     new webpack.optimize.DedupePlugin(),
     new WebpackShellPlugin({
       onBuildExit: [
@@ -92,7 +91,7 @@ var config = {
       },
       {
         test: /\.html$/,
-        loader: "html"
+        loader: "html?minimize=false&minifyJS=false&attrs[]=img:src"
       },
     ]
   },

@@ -4,11 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <%= csrf_meta_tags %>
+  <%= action_cable_meta_tag %>
   <title>Market</title>
   <script src="https://assets.bitrabbit.com/g/jquery/3.3.1/jquery.min.js"></script>
   <link href="https://assets.bitrabbit.com/g/normalize/7.0.0/normalize.min.css" rel="stylesheet">
+  <script src="/tv/charting_library.min.js"></script>
 </head>
-<body>
+<body data-market="<%= current_market %>">
   <div id="main"></div>
 </body>
 </html>

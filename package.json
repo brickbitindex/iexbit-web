@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "DEBUG=leancloud* webpack-dev-server --port 8111 --progress --colors --display-error-details --inline --hot --content-base test/build --config webpack/webpack.dev.config.js",
-    "deploy": "NODE_ENV=production webpack -p --display-error-details --config webpack/webpack.deploy.config.js"
+    "deploy": "NODE_ENV=production webpack --progress -p --display-error-details --config webpack/webpack.deploy.config.js",
+    "release": "scp dist/assets/* deploy@35.194.159.171:~/market/"
   },
   "repository": {
     "type": "git",

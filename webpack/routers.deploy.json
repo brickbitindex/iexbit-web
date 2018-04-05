@@ -1,19 +1,13 @@
 {
-  "index": "market2.html",
   "routers": [{
-    "name": "market2",
+    "name": "market",
     "entry": "./entries/market",
-    "template": "./templates/market.html",
-    "filename": "market2.html"
+    "template": "./templates/market.deploy.html",
+    "filename": "market.html"
   }, {
-    "name": "signin",
-    "entry": "./entries/signin",
-    "template": "./templates/signin.html",
-    "filename": "signin.html"
-  }, {
-    "name": "home",
-    "entry": "./entries/home",
-    "template": "./templates/home.html",
-    "filename": "home.html"
+    "name": "market",
+    "entry": "./entries/market",
+    "template": "./templates/market.deploy.private.html",
+    "filename": "market.private.html"
   }]
 }
