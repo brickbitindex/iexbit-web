@@ -90,6 +90,10 @@ function chartReady(widget /* , messages*/) {
 }
 
 class Chart extends Component {
+  constructor(props) {
+    super(props);
+    this.tvWidget = undefined;
+  }
   componentDidMount() {
     this.initWidget();
   }
@@ -98,7 +102,7 @@ class Chart extends Component {
     const symbol = this.props.symbol;
     const pair = this.props.pair;
     const messages = this.props.messages;
-    const tvWidget = new TradingView.widget({
+    this.tvWidget = new TradingView.widget({
       symbol: 'Bitrabbit' + symbol,
       interval: '15',
       container_id: 'chart',
@@ -161,8 +165,8 @@ class Chart extends Component {
       time_frames: [],
       // toolbar_bg: '#181818',
     });
-    tvWidget.onChartReady(() => {
-      chartReady(tvWidget, messages);
+    this.tvWidget.onChartReady(() => {
+      chartReady(this.tvWidget, messages);
     });
   }
   render() {
