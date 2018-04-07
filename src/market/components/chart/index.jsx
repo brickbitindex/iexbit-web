@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-// import autobind from 'autobind-decorator';
+import autobind from 'autobind-decorator';
 // import classnames from 'classnames';
 // import { FormattedMessage } from 'react-intl';
 import wrapWithPanel from '../panel';
@@ -27,68 +27,6 @@ function objToForm(inData, prefix = '') {
 
 const $ = window.$;
 
-function chartReady(widget /* , messages*/) {
-  // TODO:
-  // console.log(messages);
-  const buttonArr = [{
-    value: '1',
-    text: '1min',
-  }, {
-    value: '5',
-    text: '5min',
-  }, {
-    value: '15',
-    text: '15min',
-  }, {
-    value: '30',
-    text: '30min',
-  }, {
-    value: '60',
-    text: '1hour',
-  }, {
-    value: '120',
-    text: '2hour',
-  }, {
-    value: '240',
-    text: '4hour',
-  }, {
-    value: '360',
-    text: '6hour',
-  }, {
-    value: '720',
-    text: '12hour',
-  }, {
-    value: '1D',
-    text: '日线',
-  }, {
-    value: '1W',
-    text: '周线',
-  }];
-
-  let btn = {};
-
-  const handleClick = (e, value) => {
-    widget.chart().setResolution(value);
-    $(e.target).addClass('select')
-      .closest('div.space-single')
-      .siblings('div.space-single')
-      .find('div.button')
-      .removeClass('select');
-  };
-
-  buttonArr.forEach((v) => {
-    btn = widget.createButton().on('click', (e) => {
-      handleClick(e, v.value);
-    });
-    btn[0].innerHTML = v.text;
-    btn[0].title = v.text;
-    $(btn[0]).addClass('resolution-btn');
-    if (v.value === '15') {
-      $(btn[0]).addClass('select');
-    }
-  });
-}
-
 class Chart extends Component {
   constructor(props) {
     super(props);
@@ -97,17 +35,77 @@ class Chart extends Component {
   componentDidMount() {
     this.initWidget();
   }
+  @autobind
+  chartReady(/* messages*/) {
+    // TODO:
+    // console.log(messages);
+    const buttonArr = [{
+      value: '1',
+      text: '1min',
+    }, {
+      value: '5',
+      text: '5min',
+    }, {
+      value: '15',
+      text: '15min',
+    }, {
+      value: '30',
+      text: '30min',
+    }, {
+      value: '60',
+      text: '1hour',
+    }, {
+      value: '120',
+      text: '2hour',
+    }, {
+      value: '240',
+      text: '4hour',
+    }, {
+      value: '360',
+      text: '6hour',
+    }, {
+      value: '720',
+      text: '12hour',
+    }, {
+      value: '1D',
+      text: '日线',
+    }, {
+      value: '1W',
+      text: '周线',
+    }];
+
+    let btn = {};
+
+    const handleClick = (e, value) => {
+      this.tvWidget.chart().setResolution(value);
+      $(e.target).addClass('select')
+        .closest('div.space-single')
+        .siblings('div.space-single')
+        .find('div.button')
+        .removeClass('select');
+    };
+    buttonArr.forEach((v) => {
+      btn = this.tvWidget.createButton().on('click', (e) => {
+        handleClick(e, v.value);
+      });
+      btn[0].innerHTML = v.text;
+      btn[0].title = v.text;
+      $(btn[0]).addClass('resolution-btn');
+      if (v.value === '15') {
+        $(btn[0]).addClass('select');
+      }
+    });
+  }
   initWidget() {
     const TradingView = window.TradingView;
     const symbol = this.props.symbol;
     const pair = this.props.pair;
-    const messages = this.props.messages;
     this.tvWidget = new TradingView.widget({
       symbol: 'Bitrabbit' + symbol,
       interval: '15',
       container_id: 'chart',
       // BEWARE: no trailing slash is expected in feed URL
-      datafeed: new Datefeed(symbol, pair, this.props.basicInfo),
+      datafeed: new Datefeed(symbol, pair, this.props.basicInfo, this.chartReady),
       library_path: '/tv/',
       locale: 'zh',
       // Regression Trend-related functionality is not implemented yet, so it's hidden for a while
@@ -164,9 +162,6 @@ class Chart extends Component {
       // overrides: {},
       time_frames: [],
       // toolbar_bg: '#181818',
-    });
-    this.tvWidget.onChartReady(() => {
-      chartReady(this.tvWidget, messages);
     });
   }
   render() {

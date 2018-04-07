@@ -139,7 +139,7 @@ class DataPulseUpdater {
 
 
 export default class Datafeed {
-  constructor(symbolName, symbolDescription, basicInfo, updateFrequency = 6 * 1000) {
+  constructor(symbolName, symbolDescription, basicInfo, initCallback = () => {}, updateFrequency = 6 * 1000) {
     this.updateFrequency = updateFrequency;
     this.symbolName = symbolName;
     this.symbolDescription = symbolDescription;
@@ -147,6 +147,7 @@ export default class Datafeed {
     this._callbacks = {};
     this._configuration = null;
     this._initializationFinished = false;
+    this._initCallback = initCallback;
 
     this._barsPulseUpdater = new DataPulseUpdater(this, updateFrequency);
 
@@ -258,6 +259,9 @@ export default class Datafeed {
     // source: [时间戳，开盘价，最高价，最低价，收盘价，交易量]
     // target: {"time":1482969600000,"close":116.73,"open":116.45,"high":117.1095,"low":116.4,"volume":15039519}
 
+    if (firstDataRequest) {
+      this._initCallback();
+    }
     const resolutionMinutes = resolutionToMinutes[resolution];
     const params = {
       market: this.symbolName,
