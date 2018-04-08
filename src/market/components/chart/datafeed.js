@@ -267,7 +267,7 @@ export default class Datafeed {
       market: this.symbolName,
       period: resolutionMinutes,
       timestamp: rangeStartDate,
-      end: rangeEndDate,
+      end: rangeEndDate + resolutionMinutes * 60,
     };
     if (firstDataRequest === false) {
       params.timestamp = rangeStartDate;
