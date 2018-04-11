@@ -39,7 +39,11 @@ class Market extends Component {
     const quoteUnit = basicInfo.quote_unit.code;
 
     if (currentPrice.length > maxLength) {
-      maxLength = currentPrice.length;
+      if (basicInfo.ask_config.price_fixed === 0) {
+        maxLength = currentPrice.length;
+      } else {
+        maxLength = currentPrice.split('.')[0].length + 1 + basicInfo.ask_config.price_fixed;
+      }
       fs = fontSize[maxLength];
     }
 
