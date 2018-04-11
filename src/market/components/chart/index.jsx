@@ -31,12 +31,15 @@ class Chart extends Component {
   constructor(props) {
     super(props);
     this.tvWidget = undefined;
+    this.inited = false;
   }
   componentDidMount() {
     this.initWidget();
   }
   @autobind
   chartReady(/* messages*/) {
+    if (this.inited) return;
+    this.inited = true;
     // TODO:
     // console.log(messages);
     const buttonArr = [{

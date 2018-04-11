@@ -13,7 +13,9 @@ import './style.scss';
 
 class OrderBook extends Component {
   getMax(asks, bids) {
-    return Math.max(bids[bids.length - 1][3], asks[asks.length - 1][3]);
+    const bidsMax = bids.length === 0 ? 0 : bids[bids.length - 1][3];
+    const asksMax = asks.length === 0 ? 0 : asks[asks.length - 1][3];
+    return Math.max(bidsMax, asksMax);
   }
   processDeepData(trades) {
     const deep = this.props.deep;
