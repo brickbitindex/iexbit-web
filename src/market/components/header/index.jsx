@@ -39,6 +39,7 @@ class Header extends Component {
     const { prices, current, basicInfo, locale, anonymous } = this.props;
     const baseUnit = basicInfo.base_unit.code;
     const quoteUnit = basicInfo.quote_unit.code;
+    console.log(current);
     return (
       <div id="header" className="flex-fixed">
         <div className="logo-container flex-fixed">
@@ -65,17 +66,17 @@ class Header extends Component {
         ), (
           <div key="1" className="market-info flex-autofixed">
             <div className="mt"><FormattedMessage id="market_low" /></div>
-            <div className="mv tt"><ZeroFormattedNumber value={current.low} fixed={3} /> <span className="light-text">{quoteUnit}</span></div>
+            <div className="mv tt"><ZeroFormattedNumber value={current.low} /> <span className="light-text">{quoteUnit}</span></div>
           </div>
         ), (
           <div key="2" className="market-info flex-autofixed">
             <div className="mt"><FormattedMessage id="market_high" /></div>
-            <div className="mv tt"><ZeroFormattedNumber value={current.high} fixed={3} /> <span className="light-text">{quoteUnit}</span></div>
+            <div className="mv tt"><ZeroFormattedNumber value={current.high} /> <span className="light-text">{quoteUnit}</span></div>
           </div>
         ), (
           <div key="3" className="market-info flex-autofixed">
             <div className="mt"><FormattedMessage id="market_vol" /></div>
-            <div className="mv tt"><ZeroFormattedNumber value={current.volume} fixed={3} /> <span className="light-text">{baseUnit}</span></div>
+            <div className="mv tt"><ZeroFormattedNumber value={current.volume} /> <span className="light-text">{baseUnit}</span></div>
           </div>
         )]}
         <div className="header-opts flex-fixed">
