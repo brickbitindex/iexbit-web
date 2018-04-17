@@ -22,7 +22,6 @@ const model = {
     * deleteOrder({ payload }, { call }) {
       const id = payload.id;
       const response = yield call(deleteOrder, id);
-      console.log(response);
     },
   },
   reducers: {

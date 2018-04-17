@@ -192,6 +192,7 @@ const model = {
           const change = open === 0 ? 0 : (last - open) / open;
           const down = change < 0;
           const fixed = getDecimalCount(price.bid_config.price_minmov);
+          const volumeFixed = getDecimalCount(price.bid_config.min_amount);
           const _ret = {
             id: price.id,
             name: price.name,
@@ -202,6 +203,7 @@ const model = {
           ['buy', 'high', 'last', 'low', 'open', 'sell'].forEach((key) => {
             _ret[key] = parseFloat(_ret[key]).toFixed(fixed);
           });
+          _ret.volume = parseFloat(_ret.volume).toFixed(volumeFixed);
           return _ret;
         });
       }
