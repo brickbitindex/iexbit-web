@@ -39,7 +39,6 @@ class Header extends Component {
     const { prices, current, basicInfo, locale, anonymous } = this.props;
     const baseUnit = basicInfo.base_unit.code;
     const quoteUnit = basicInfo.quote_unit.code;
-    console.log(current);
     return (
       <div id="header" className="flex-fixed">
         <div className="logo-container flex-fixed">
