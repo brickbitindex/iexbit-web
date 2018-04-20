@@ -10,7 +10,10 @@
 
 import QUERY, { fetch } from './querys';
 
-const changeLocale = locale => () => fetch.get(QUERY.I18N(locale));
+const changeLocale = locale => () => fetch.get(QUERY.I18N(locale), undefined, {
+  headers: undefined,
+  credentials: undefined,
+});
 
 const model = {
   namespace: 'i18n',

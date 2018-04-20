@@ -36,6 +36,7 @@ var config = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production'),
       __DEV__: process.env.NODE_ENV !== 'production', // judge if dev environment.
+      __ENV__: JSON.stringify('prod'),
     }),
     new uglifyJsPlugin({
       compress: {

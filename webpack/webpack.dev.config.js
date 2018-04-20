@@ -31,7 +31,8 @@ var config = {
   plugins: [
     new webpack.DefinePlugin({
       __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || 'true')), // judge if dev environment.
-      __PRERELEASE__: JSON.stringify(JSON.parse(process.env.BUILD_PRERELEASE || 'false')) // judge if secret environment.
+      __PRERELEASE__: JSON.stringify(JSON.parse(process.env.BUILD_PRERELEASE || 'false')), // judge if secret environment.
+      __ENV__: JSON.stringify('staging'),
     }),
     new ExtractTextPlugin("[name].css"),
   ].concat(plugins),
