@@ -90,10 +90,6 @@ var config = {
   },
   resolve: {
     extensions: ['', '.js', '.json', '.jsx'],
-    alias: {
-      'react': 'preact-compat',
-      'react-dom': 'preact-compat',
-    }
   },
   devtool: 'eval-source-map',
   devServer: {

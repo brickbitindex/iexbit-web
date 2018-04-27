@@ -69,12 +69,11 @@
     "jquery": "^3.2.1",
     "keymaster": "^1.6.2",
     "moment": "^2.19.4",
-    "preact": "^8.2.6",
-    "preact-compat": "^3.17.0",
     "qs": "^6.5.1",
     "rc-slider": "^8.6.0",
     "rc-tooltip": "^3.7.0",
-    "react": "^16.2.0",
+    "react": "^15.0.0",
+    "react-dom": "^15.0.0",
     "react-intl": "^2.4.0",
     "react-select": "^1.1.0"
   }
