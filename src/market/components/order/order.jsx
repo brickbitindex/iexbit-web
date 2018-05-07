@@ -34,12 +34,16 @@ class Order extends Component {
     const key = type === 'buy' ? basicInfo.quote_unit.code : basicInfo.base_unit.code;
     const { balance } = this.props;
     const keyBalance = balance.filter(b => b.currency_code === key);
+    const balanceText = keyBalance[0].balance;
+    const lockedText = keyBalance[0].locked;
     if (keyBalance.length > 0) {
-      const balancep = parseFloat(keyBalance[0].balance);
-      const locked = parseFloat(keyBalance[0].locked);
+      const balancep = parseFloat(balanceText);
+      const locked = parseFloat(lockedText);
       return {
         balance: balancep,
+        balanceText,
         locked,
+        lockedText,
         key,
       };
     }
@@ -109,7 +113,7 @@ class Order extends Component {
       <div className="order">
         <div className="order-balance">
           <div className="flex-fixed">{balance.key}<FormattedMessage id="order_balance" /></div>
-          <div className="order-balance-value flex-autofixed">{balance.balance.toFixed(2)}</div>
+          <div className="order-balance-value flex-autofixed">{balance.balanceText}</div>
         </div>
         <div className="order-row">
           <div className="order-lable"><FormattedMessage id="order_type" /></div>
