@@ -139,7 +139,7 @@ class DataPulseUpdater {
 
 
 export default class Datafeed {
-  constructor(symbolName, symbolDescription, basicInfo, initCallback = () => {}, updateFrequency = 6 * 1000) {
+  constructor(symbolName, symbolDescription, basicInfo, initCallback = () => {}, updateFrequency = 45 * 1000) {
     this.updateFrequency = updateFrequency;
     this.symbolName = symbolName;
     this.symbolDescription = symbolDescription;
