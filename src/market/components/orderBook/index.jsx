@@ -4,7 +4,7 @@ import { connect } from 'dva';
 // import autobind from 'autobind-decorator';
 import Decimal from 'decimal.js-light';
 import classnames from 'classnames';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import wrapWithPanel from '../panel';
 import ZeroFormattedNumber from '../common/zeroFormattedNumber';
 import combineDeep from './deep';
@@ -111,6 +111,11 @@ function mapStateToProps({ market }) {
   };
 }
 
+const DeepOption = injectIntl(({ i, deepSelect, intl }) => (
+  <option value={i.toString()} key={i}>{deepSelect.text(intl)}</option>
+));
+
+
 export default wrapWithPanel(connect(mapStateToProps)(OrderBook), {
   title: <span />,
   className: 'orderBook-panel',
@@ -158,7 +163,7 @@ export default wrapWithPanel(connect(mapStateToProps)(OrderBook), {
     return (
       <select value={props.deep} onChange={e => setChildProps({ deep: e.target.value })} >
         {store.market.currentBasicInfo.deepSelectOptions.map((o, i) => (
-          <option value={i.toString()}>{o.text}</option>
+          <DeepOption i={i} key={i} deepSelect={o} />
         ))}
       </select>
     );

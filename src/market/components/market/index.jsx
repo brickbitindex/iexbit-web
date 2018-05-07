@@ -90,7 +90,7 @@ function mapStateToProps({ market }) {
     currentTrade = market.trades[0];
   }
   return {
-    data: market.current,
+    data: market.current || {},
     currentTrade,
     basicInfo: market.currentBasicInfo,
   };
