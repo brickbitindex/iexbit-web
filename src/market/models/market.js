@@ -11,12 +11,10 @@
  *   fix: 5,
  * }]
  */
-import React from 'react';
 import Decimal from 'decimal.js-light';
-import { FormattedMessage } from 'react-intl';
 import QUERY, { fetch } from './querys';
 import toast from '../components/common/toast';
-import { getDecimalCount } from '../lib/utils';
+import { getDecimalCount, formatMessage } from '../lib/utils';
 
 const addBidOrder = data => fetch.post(QUERY.ADD_BID_ORDER, data).catch(err => err);
 const addAskOrder = data => fetch.post(QUERY.ADD_ASK_ORDER, data).catch(err => err);
@@ -40,12 +38,12 @@ function getDeepSelect(fixed) {
     if (currentFixed <= 0) {
       // 整数
       ret.push({
-        text: <FormattedMessage id="orderbook_deep_integer" values={{ num: step }} />,
+        text: intl => formatMessage({ intl, id: 'orderbook_deep_integer', values: { num: step } }),
         step,
       });
     } else {
       ret.push({
-        text: <FormattedMessage id="orderbook_deep_decimal" values={{ num: currentFixed }} />,
+        text: intl => formatMessage({ intl, id: 'orderbook_deep_decimal', values: { num: currentFixed } }),
         step,
       });
     }
