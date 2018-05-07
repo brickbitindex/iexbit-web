@@ -1,8 +1,10 @@
 $headerHeight: 60px;
-$tabPanelHeight: 250px;
+$tabPanelHeight: 200px;
+$orderPanelHeight: 250px;
 $borderWidth: 2px;
 
 $chartBesideHeight: $headerHeight + $tabPanelHeight + 2 * $borderWidth;
+$orderBesideHeight: $headerHeight + $orderPanelHeight + 2 * $borderWidth;
 
 $orderWidth: 275px;
 
@@ -14,16 +16,21 @@ $marketHeight: 52px + 2px + 2px;
   height: $headerHeight;
 }
 
-.cb-panel.cb-panel-tab,
-.cb-panel.buy-panel,
-.cb-panel.sell-panel {
+.cb-panel.cb-panel-tab {
   height: $tabPanelHeight;
 }
 
-.cb-panel.chart-panel,
+.cb-panel.buy-panel,
+.cb-panel.sell-panel {
+  height: $orderPanelHeight;
+}
+
+.cb-panel.chart-panel {
+  height: calc(100vh - #{$chartBesideHeight});
+}
 .cb-panel.orderBook-panel,
 .cb-panel.trades-panel {
-  height: calc(100vh - #{$chartBesideHeight});
+  height: calc(100vh - #{$orderBesideHeight});
 }
 
 .cb-panel.buy-panel,
