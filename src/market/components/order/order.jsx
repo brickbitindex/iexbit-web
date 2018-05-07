@@ -34,9 +34,9 @@ class Order extends Component {
     const key = type === 'buy' ? basicInfo.quote_unit.code : basicInfo.base_unit.code;
     const { balance } = this.props;
     const keyBalance = balance.filter(b => b.currency_code === key);
-    const balanceText = keyBalance[0].balance;
-    const lockedText = keyBalance[0].locked;
     if (keyBalance.length > 0) {
+      const balanceText = keyBalance[0].balance;
+      const lockedText = keyBalance[0].locked;
       const balancep = parseFloat(balanceText);
       const locked = parseFloat(lockedText);
       return {
@@ -49,7 +49,9 @@ class Order extends Component {
     }
     return {
       balance: 0,
+      balanceText: '0',
       locked: 0,
+      lockedText: '0',
       key,
     };
   }
