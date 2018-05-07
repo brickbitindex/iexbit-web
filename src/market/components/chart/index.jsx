@@ -71,10 +71,10 @@ class Chart extends Component {
       text: '12hour',
     }, {
       value: '1D',
-      text: '日线',
+      text: 'Day',
     }, {
       value: '1W',
-      text: '周线',
+      text: 'Week',
     }];
 
     let btn = {};
@@ -98,6 +98,10 @@ class Chart extends Component {
         $(btn[0]).addClass('select');
       }
     });
+
+    const $h = $('head', $('#chart iframe').contents());
+    $h.append("<script>window.clickLegend = function() { $('.pane-legend-minbtn').click() }</script>");
+    $('#chart iframe')[0].contentWindow.clickLegend();
   }
   initWidget() {
     const TradingView = window.TradingView;
@@ -114,16 +118,6 @@ class Chart extends Component {
       // Regression Trend-related functionality is not implemented yet, so it's hidden for a while
       drawings_access: { type: 'black', tools: [{ name: 'Regression Trend' }] },
       // TODO: 禁用
-      // disabled_features: [
-      //   'use_localstorage_for_settings',
-      //   'header_symbol_search',
-      //   'header_interval_dialog_button',
-      //   'header_compare',
-      //   'header_undo_redo',
-      //   'header_fullscreen_button',
-      //   'header_saveload',
-      //   'left_toolbar',
-      // ],
       disabled_features: [
         'header_symbol_search',
         'use_localstorage_for_settings',
@@ -136,13 +130,14 @@ class Chart extends Component {
         'timeframes_toolbar',
         'context_menus',
         'left_toolbar',
-        'header_indicators', // 图表指标
-        // 'header_settings', // 设置
+        // 'header_indicators', // 图表指标
+        'header_settings', // 设置
         'header_resolutions',  // 时间下拉框
         // 'header_fullscreen_button' //全屏按钮
+        'format_button_in_legend', // 顶端标题里study的设置按钮
       ],
-      // TODO: 禁用了
-      enabled_features: ['study_templates'],
+      // TODO: 启用了
+      enabled_features: ['dont_show_boolean_study_arguments'],
       charts_storage_url: 'http://saveload.tradingview.com',
       charts_storage_api_version: '1.1',
       client_id: 'tradingview.com',
