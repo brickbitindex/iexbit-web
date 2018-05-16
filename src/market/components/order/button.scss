@@ -5,6 +5,7 @@
   &.buy {
     background: #2b7452;
     color: #3DE777;
+    cursor: pointer;
     
     &:disabled {
       background: #295245;
@@ -13,6 +14,7 @@
   &.sell {
     background: #8b2e46;
     color: #F74D64;
+    cursor: pointer;
 
     &:disabled {
       background: #613746;

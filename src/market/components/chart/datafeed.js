@@ -10,7 +10,7 @@ const defaultConfig = {
   supports_time: true,
   exchanges: [],
   symbols_types: [],
-  supported_resolutions: ['1', '5', '15', '30', '60', '120', '360', '720', '1D', '3D'],
+  supported_resolutions: ['1', '5', '15', '30', '60', '120', '240', '360', '720', '1D', '3D'],
 };
 
 // {"supports_search":false,"supports_group_request":false,"supports_marks":false,"supports_timescale_marks":false,"supports_time":true,"exchanges":[],"symbols_types":[]}
@@ -23,6 +23,7 @@ const resolutionToMinutes = {
   30: 30,
   60: 60,
   120: 120,
+  240: 240,
   360: 360,
   720: 720,
   '1D': 1440,
