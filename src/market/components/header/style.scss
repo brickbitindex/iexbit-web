@@ -29,15 +29,27 @@ $headerPadding: 22px;
     background-color: #252529;
     border-radius: 20px;
     margin-right: 5%;
+    display: flex;
+    justify-content: space-between;
 
-    .t1 {
-      color: #f3ca82;
-      font-size: 22px;
-      font-weight: 400;
+    .header-opt-trades {
+      display: inline-block;
+      line-height: 1.5;
+
+      .t1 {
+        color: #f3ca82;
+        font-size: 22px;
+        font-weight: 400;
+      }
+      .t2 {
+        color: #887450;
+        font-size: 18px;
+      }
     }
-    .t2 {
-      color: #887450;
-      font-size: 18px;
+
+    .search-btn {
+      display: inline-block;
+      // line-height: 1.5;
     }
   }
 
