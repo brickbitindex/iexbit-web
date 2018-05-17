@@ -99,8 +99,9 @@ export default class Search extends Component {
     return (
       <div id="search" style={{ display: show ? 'flex' : 'none' }} onClick={this.handleMaskClick} ref={e => this.$dom = e}>
         <div className="search-area">
-          <i className="icon anticon icon-close" ref={e => this.$close = e} />
           <div className="search-input">
+            <i className="close" ref={e => this.$close = e} />
+            <i className="icon anticon icon-search1" />
             <input type="text" ref={e => this.$input = e} onChange={this.handleInputChange} value={this.state.filter} />
           </div>
           <div className="search-result">

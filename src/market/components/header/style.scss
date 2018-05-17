@@ -23,15 +23,33 @@ $headerPadding: 22px;
 
   .market-name {
     font-weight: 500;
+    padding: 0 20px;
+    max-width: 180px;
+    border: 1px solid #2d2d2f;
+    background-color: #252529;
+    border-radius: 20px;
+    margin-right: 5%;
+    display: flex;
+    justify-content: space-between;
 
-    .t1 {
-      color: #f3ca82;
-      font-size: 22px;
-      font-weight: 400;
+    .header-opt-trades {
+      display: inline-block;
+      line-height: 1.5;
+
+      .t1 {
+        color: #f3ca82;
+        font-size: 22px;
+        font-weight: 400;
+      }
+      .t2 {
+        color: #887450;
+        font-size: 18px;
+      }
     }
-    .t2 {
-      color: #887450;
-      font-size: 18px;
+
+    .search-btn {
+      display: inline-block;
+      // line-height: 1.5;
     }
   }
 
@@ -122,40 +140,59 @@ $headerPadding: 22px;
     background: rgba(0, 0, 0, 0.75);
     position: relative;
 
-    .icon-close {
-      font-size: 20px;
-      position: absolute;
-      right: 0;
-      top: 0;
-      cursor: pointer;
-      z-index: 10;
-
-      &:hover {
-        color: #F3CA82;
-      }
-    }
   }
-
+  
   .search-input {
     width: 100%;
     position: relative;
-    padding-top: 16px;
+    padding-top: 80px;
     text-align: center;
-    height: 32px;
+    height: 40px;
+    
+    .close {
+      background-image: url('../../../assets/images/close.svg');
+      font-size: 20px;
+      position: absolute;
+      right: 80px;
+      top: 80px;
+      cursor: pointer;
+      z-index: 10;
   
+      &:hover {
+        color: #F3CA82;
+      }
+  
+      &::before {
+        content: ' ';
+        display: block;
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    .icon-search1 {
+      position: absolute;
+      left: 135px;
+      top: 80px;
+      font-size: 20px;
+      padding: 10px;
+      cursor: pointer;
+    }
+
     input {
       width: 60%;
       height: 100%;
-      padding: 0 10px;
+      padding-left: 40px;
       margin: 0;
       box-sizing: border-box;
       background: rgba(243, 202, 130, 0.2);
-      border: #F3CA82 solid 1px;
+      border: #252529 solid 1px;
+      background-color: #181818;
       outline: none;
-      border-radius: 4px;
+      border-radius: 20px;
       color: #fff;
       font-size: 20px;
-      text-align: center;
+      text-align: left;
     }
   }
 
@@ -196,7 +233,8 @@ $headerPadding: 22px;
   }
 
   .search-result-tabs-bar {
-    border-bottom: 1px solid #54585A;
+    // border-bottom: 1px solid #54585A;
+    border: none;
     margin: 0 0 16px 0;
     outline: none;
     text-align: center;

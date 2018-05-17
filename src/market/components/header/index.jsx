@@ -47,8 +47,10 @@ class Header extends Component {
           </a>
         </div>
         <div className="market-name flex-autofixed">
-          <span className="t1">{baseUnit}</span>
-          <span className="t2">&nbsp;/&nbsp;{quoteUnit}</span>
+          <span className="header-opt-trades">
+            <span className="t1">{baseUnit}</span>
+            <span className="t2">&nbsp;/&nbsp;{quoteUnit}</span>
+          </span>
           <span className="header-opts-btn simple-btn search-btn" onClick={this.handleSearchBtnClick}>
             <i className="icon anticon icon-search1" />
           </span>
