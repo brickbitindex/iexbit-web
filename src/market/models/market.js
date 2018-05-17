@@ -230,6 +230,7 @@ const model = {
       });
       trades = Object.keys(tradesObj).map(k => tradesObj[k]);
       trades.sort((a, b) => b.date - a.date);
+      trades = trades.slice(0, 100);
       yield put({
         type: 'updateState',
         payload: {
