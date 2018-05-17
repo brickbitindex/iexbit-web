@@ -23,7 +23,7 @@ $headerPadding: 22px;
 
   .market-name {
     font-weight: 500;
-    padding: 0 20px;
+    padding: 0 8px 0 20px;
     max-width: 180px;
     border: 1px solid #2d2d2f;
     background-color: #252529;
@@ -31,10 +31,20 @@ $headerPadding: 22px;
     margin-right: 5%;
     display: flex;
     justify-content: space-between;
+    cursor: pointer;
+
+    &:hover {
+      border-color: #f3ca82;
+
+      .search-btn {
+        color: #f3ca82;
+      }
+    }
 
     .header-opt-trades {
       display: inline-block;
-      line-height: 1.5;
+      line-height: 24px;
+      padding: 5px 0;
 
       .t1 {
         color: #f3ca82;
