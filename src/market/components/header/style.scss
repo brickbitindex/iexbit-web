@@ -31,6 +31,7 @@ $headerPadding: 22px;
     margin-right: 5%;
     display: flex;
     justify-content: space-between;
+    transition: border .5s;
     cursor: pointer;
 
     &:hover {
@@ -59,7 +60,6 @@ $headerPadding: 22px;
 
     .search-btn {
       display: inline-block;
-      // line-height: 1.5;
     }
   }
 
@@ -81,6 +81,7 @@ $headerPadding: 22px;
 
   .header-opts-btn {
     display: inline-block;
+    transition: color .5s;
     padding: 5px 8px;
     border-radius: 5px;
 
