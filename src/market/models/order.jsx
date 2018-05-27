@@ -147,6 +147,13 @@ const model = {
             },
           },
         });
+        const bid = { ...originBid };
+        bid.amount = undefined;
+        bid.price = undefined;
+        yield put({
+          type: 'updateBid',
+          bid,
+        });
       }
     },
     * submitAskOrder(_, { select, put }) {
@@ -167,6 +174,13 @@ const model = {
               amount: originAsk.amount,
             },
           },
+        });
+        const ask = { ...originAsk };
+        ask.amount = undefined;
+        ask.price = undefined;
+        yield put({
+          type: 'updateAsk',
+          ask,
         });
       }
     },
