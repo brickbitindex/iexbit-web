@@ -94,6 +94,7 @@ const model = {
       asks: [],
       bids: [],
     },
+    quoteUnitUsdtPrice: 1,
   },
   subscriptions: {
     // TODO:
@@ -208,6 +209,18 @@ const model = {
       yield put({
         type: 'updatePrices',
         payload: prices,
+      });
+      const quoteUnit = yield select(({ market }) => market.currentBasicInfo.quote_unit.code);
+      if (quoteUnit === 'USDT') return;
+      let quoteUnitUsdtPrice = prices.filter(p => p.name === quoteUnit + '/USDT')[0];
+      if (quoteUnitUsdtPrice) {
+        quoteUnitUsdtPrice = quoteUnitUsdtPrice.last_usdt;
+      }
+      yield put({
+        type: 'updateState',
+        payload: {
+          quoteUnitUsdtPrice,
+        },
       });
     },
     * updateTrades({ payload }, { select, put }) {
