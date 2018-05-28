@@ -2,7 +2,7 @@
 $itemHeight: 30px;
 
 .order {
-  padding: 16px 24px;
+  padding: 6px 24px;
 
   .order-row {
     display: flex;
@@ -24,6 +24,16 @@ $itemHeight: 30px;
 
     &.small {
       height: auto;
+    }
+
+    &-trade {
+      display: flex;
+      margin-bottom: 6px;
+      opacity: .5;
+
+      .order-label {
+        margin-right: 8px;
+      }
     }
   }
 
