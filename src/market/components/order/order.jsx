@@ -5,12 +5,13 @@ import classnames from 'classnames';
 import { FormattedMessage } from 'react-intl';
 import Select from 'react-select';
 import Slider from 'rc-slider';
+import Decimal from 'decimal.js-light';
 import OrderInput from './input';
 import OrderButton from './button';
 import Tooltip from '../common/tooltip';
 import Mask from '../common/anonymousMask';
 
-
+Decimal.config({ toExpNeg: -16 });
 // const createSliderWithTooltip = _Slider.createSliderWithTooltip;
 // const Slider = createSliderWithTooltip(_Slider);
 
@@ -111,6 +112,7 @@ class Order extends Component {
     const error = form.error;
     const balance = this.getBalance();
     const sliderValue = this.getSliderValue();
+    const marketValue = form.price && form.amount ? new Decimal(parseFloat(form.price * form.amount)).toString() : undefined;
     return (
       <div className="order">
         <div className="order-balance">
@@ -147,6 +149,14 @@ class Order extends Component {
             suffix={basicInfo.base_unit.code}
           />
         </div>
+        <div className="order-row-trade">
+          <div className="order-label">
+            <FormattedMessage id="order_budget_sell" />
+          </div>
+          {marketValue && <span className="order-item tt">
+            {marketValue} {balance.key}
+          </span>}
+        </div>
         <div className="order-row small">
           <Slider step={0.1} value={sliderValue} handle={handle} onChange={this.handleSliderChange} />
         </div>
@@ -162,7 +172,7 @@ class Order extends Component {
         <div className="order-row">
           <OrderButton className={this.props.type} onClick={this.handleSubmit}>
             <FormattedMessage id={`order_${this.props.type}`} />
-            <span>{basicInfo.base_unit.code}</span>
+            <span> {basicInfo.base_unit.code}</span>
           </OrderButton>
         </div>
         {anonymous && (
