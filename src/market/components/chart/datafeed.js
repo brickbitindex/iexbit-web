@@ -103,6 +103,16 @@ class DataPulseUpdater {
     });
   }
 
+  updateLast(lastBar) {
+    Object.keys(this._subscribers).forEach((listenerGUID) => {
+      const subscriptionRecord = this._subscribers[listenerGUID];
+      const subscribers = subscriptionRecord.listeners;
+      for (let i = 0; i < subscribers.length; i += 1) {
+        subscribers[i](lastBar);
+      }
+    });
+  }
+
   unsubscribeDataListener(listenerGUID) {
     // this._datafeed._logMessage('Unsubscribing ' + listenerGUID);
     delete this._subscribers[listenerGUID];
@@ -149,12 +159,21 @@ export default class Datafeed {
     this._configuration = null;
     this._initializationFinished = false;
     this._initCallback = initCallback;
+    this._lastPriceFix = NaN;
+    this._lastData = null;
 
     this._barsPulseUpdater = new DataPulseUpdater(this, updateFrequency);
 
-    this._ddd = true;
-
     this._initialize();
+  }
+  updateLast(last) {
+    this._lastPriceFix = last;
+    if (this._lastData) {
+      this._barsPulseUpdater.updateLast({
+        ...this._lastData,
+        close: +this._lastPriceFix,
+      });
+    }
   }
   // private APIS
   on(event, callback) {
@@ -216,9 +235,7 @@ export default class Datafeed {
   _initialize() {
     // get config
     // TODO:
-    setTimeout(() => {
-      this._setupWithConfiguration(defaultConfig);
-    }, 1000);
+    this._setupWithConfiguration(defaultConfig);
   }
   _setupWithConfiguration(config) {
     this._configuration = config;
@@ -248,9 +265,7 @@ export default class Datafeed {
 
     // get symbol
     // TODO:
-    setTimeout(() => {
-      onSymbolResolvedCallback(this.getSymbol());
-    }, 1000);
+    onSymbolResolvedCallback(this.getSymbol());
   }
 
   getBars(symbolInfo, resolution, rangeStartDate, rangeEndDate, onDataCallback, onErrorCallback, firstDataRequest) {
@@ -264,11 +279,12 @@ export default class Datafeed {
       this._initCallback();
     }
     const resolutionMinutes = resolutionToMinutes[resolution];
+    const end = rangeEndDate + resolutionMinutes * 60;
     const params = {
       market: this.symbolName,
       period: resolutionMinutes,
       timestamp: rangeStartDate,
-      end: rangeEndDate + resolutionMinutes * 60,
+      end,
     };
     if (firstDataRequest === false) {
       params.timestamp = rangeStartDate;
@@ -308,6 +324,14 @@ export default class Datafeed {
           volume: 0,
         }].concat(processedData);
       }
+
+      // 请求时，将最后一项的last设置为盘口
+      const last = processedData[processedData.length - 1];
+      if (new Date().getTime() - last.time < resolutionMinutes * 60 * 1000) {
+        last.close = +this._lastPriceFix;
+        this._lastData = last;
+      }
+
       onDataCallback(processedData, { noData, nextTime: undefined });
     });
   }

@@ -107,12 +107,19 @@ class Chart extends Component {
     const TradingView = window.TradingView;
     const symbol = this.props.symbol;
     const pair = this.props.pair;
+    const datafeed = new Datefeed(symbol, pair, this.props.basicInfo, this.chartReady);
+    this.props.dispatch({
+      type: 'market/updateState',
+      payload: {
+        datafeed,
+      },
+    });
     this.tvWidget = new TradingView.widget({
       symbol: 'Bitrabbit' + symbol,
       interval: '15',
       container_id: 'chart',
       // BEWARE: no trailing slash is expected in feed URL
-      datafeed: new Datefeed(symbol, pair, this.props.basicInfo, this.chartReady),
+      datafeed,
       library_path: '/tv/',
       locale: 'zh',
       // Regression Trend-related functionality is not implemented yet, so it's hidden for a while
