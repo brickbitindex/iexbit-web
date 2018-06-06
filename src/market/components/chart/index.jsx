@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import autobind from 'autobind-decorator';
-// import classnames from 'classnames';
+import classnames from 'classnames';
 import { FormattedMessage } from 'react-intl';
 import wrapWithPanel from '../panel';
 import Datefeed from './datafeed';
@@ -101,6 +101,13 @@ class Chart extends Component {
       loading: true,
       resolution: '15',
       chartType: 9,
+      studies: {
+        ma7: null,
+        ma25: null,
+        ma99: null,
+        rsi: null,
+        macd: null,
+      },
     };
   }
   componentDidMount() {
@@ -166,6 +173,10 @@ class Chart extends Component {
     this.setState({
       loading: false,
     });
+
+    // 设置指标学习
+    this.handleTriggerStudy('ma7');
+    this.handleTriggerStudy('ma25');
   }
   initWidget() {
     const TradingView = window.TradingView;
@@ -258,8 +269,46 @@ class Chart extends Component {
       chartType: value,
     });
   }
+  handleTriggerStudy(name) {
+    const studies = this.state.studies;
+    if (studies[name]) {
+      // 取消
+      this.tvWidget.chart().removeEntity(studies[name]);
+      studies[name] = null;
+    } else {
+      let entry = null;
+      // 添加
+      switch (name) {
+        case 'ma7':
+          entry = this.tvWidget.chart().createStudy('Moving Average', true, false, [7], null, { 'Plot.color': '#9562c2' });
+          break;
+        case 'ma25':
+          entry = this.tvWidget.chart().createStudy('Moving Average', true, false, [25], null, { 'Plot.color': '#85abd3' });
+          break;
+        case 'ma99':
+          entry = this.tvWidget.chart().createStudy('Moving Average', true, false, [99]);
+          break;
+        case 'rsi':
+          entry = this.tvWidget.chart().createStudy('Relative Strength Index', false, false, [14]);
+          break;
+        case 'macd':
+          entry = this.tvWidget.chart().createStudy('MACD', false, false, [12, 16, 'close', 9]);
+          break;
+        case 'bb':
+          entry = this.tvWidget.chart().createStudy('Bollinger Bands', true, false, [20, 2]);
+          break;
+
+        default:
+          break;
+      }
+      studies[name] = entry;
+    }
+    this.setState({
+      studies: { ...studies },
+    });
+  }
   render() {
-    const { loading, resolution, chartType } = this.state;
+    const { loading, resolution, chartType, studies } = this.state;
     const { messages } = this.props;
     return (
       <div className="chart-container">
@@ -273,6 +322,7 @@ class Chart extends Component {
               </select>
               <Tooltip text={<FormattedMessage id="tv_type" />} />
             </span>
+            <span className="divider" />
             <span className="simple-btn tooltip-container with-select">
               <select value={resolution} onChange={this.handleChangeResolution}>
                 {buttonArr.map((b => (
@@ -281,10 +331,16 @@ class Chart extends Component {
               </select>
               <Tooltip text={<FormattedMessage id="tv_select_resolution" />} />
             </span>
+            <span className="divider" />
             <span className="simple-btn tooltip-container fullscreen" onClick={this.handleFullScreen}>
               <i className="icon anticon icon-arrowsalt" />
               <Tooltip text={<FormattedMessage id="tv_fullscreen" />} />
             </span>
+            <span className={classnames('simple-btn text', { active: studies.ma7 })} onClick={this.handleTriggerStudy.bind(this, 'ma7')}>MA(7)</span>
+            <span className={classnames('simple-btn text', { active: studies.ma25 })} onClick={this.handleTriggerStudy.bind(this, 'ma25')}>MA(25)</span>
+            <span className={classnames('simple-btn text', { active: studies.rsi })} onClick={this.handleTriggerStudy.bind(this, 'rsi')}>RSI</span>
+            <span className={classnames('simple-btn text', { active: studies.macd })} onClick={this.handleTriggerStudy.bind(this, 'macd')}>MACD</span>
+            <span className={classnames('simple-btn text', { active: studies.bb })} onClick={this.handleTriggerStudy.bind(this, 'bb')}>BB</span>
           </div>
         )}
         <div id="chart" />

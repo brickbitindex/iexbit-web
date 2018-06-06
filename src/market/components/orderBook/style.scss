@@ -102,10 +102,10 @@
       left: 50%;
     }
     .slide-buy {
-      transform: translate(-50%, -40%) rotate(-90deg) scale(0.75, 1);
+      transform: translate(-50%, -35%) rotate(-90deg) scale(0.75, 1);
     }
     .slide-sell {
-      transform: translate(-50%, -60%) rotate(90deg) scale(0.75, 1);
+      transform: translate(-50%, -65%) rotate(90deg) scale(0.75, 1);
     }
   }
   .slide-buy {
@@ -115,6 +115,10 @@
     transform: rotate(90deg);
   }
 
+  .simple-btn {
+    margin-left: 2px;
+  }
+
   .simple-btn.deep {
     width: auto;
     padding: 0 5px;
@@ -122,7 +126,6 @@
     select {
       border: none;
       background: transparent;
-      color: #fff;
     }
   }
 }

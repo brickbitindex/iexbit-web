@@ -10,8 +10,26 @@
     font-size: 14px;
     padding-left: 0;
 
+    .divider {
+      margin: 9px 4px 0;
+      height: 1em;
+      width: 1px;
+      font-size: 14px;
+      box-sizing: border-box;
+      padding: 0;
+      background: rgba(255, 255, 255, 0.2);
+      float: left;
+    }
+
     .simple-btn {
       float: left;
+      font-size: 12px;
+      margin-right: 2px;
+    }
+
+    .simple-btn.text {
+      width: auto;
+      padding: 0 5px;
     }
 
     .simple-btn.with-select {
@@ -21,12 +39,12 @@
       select {
         border: none;
         background: transparent;
-        color: #fff;
       }
     }
 
     .simple-btn.fullscreen {
       float: right;
+      margin-right: 0;
     }
   }
 }
