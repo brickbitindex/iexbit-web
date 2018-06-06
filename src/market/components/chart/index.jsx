@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'dva';
 import autobind from 'autobind-decorator';
 // import classnames from 'classnames';
-// import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import wrapWithPanel from '../panel';
 import Datefeed from './datafeed';
 import overrides from './overrides';
+import Tooltip from '../common/tooltip';
 
 import './style.scss';
 
@@ -27,11 +28,80 @@ function objToForm(inData, prefix = '') {
 
 const $ = window.$;
 
+const buttonArr = [{
+  value: '1',
+  text: '1min',
+}, {
+  value: '5',
+  text: '5min',
+}, {
+  value: '15',
+  text: '15min',
+}, {
+  value: '30',
+  text: '30min',
+}, {
+  value: '60',
+  text: '1hour',
+}, {
+  value: '120',
+  text: '2hour',
+}, {
+  value: '240',
+  text: '4hour',
+}, {
+  value: '360',
+  text: '6hour',
+}, {
+  value: '720',
+  text: '12hour',
+}, {
+  value: '1D',
+  text: 'Day',
+}, {
+  value: '1W',
+  text: 'Week',
+}];
+
+const lang = {
+  en: 'en',
+  'zh-CN': 'zh',
+  'zh-TW': 'zh_TW',
+};
+
+const chartTypes = [{
+  value: 0,
+  text: 'bars',
+}, {
+  value: 1,
+  text: 'candles',
+}, {
+  value: 9,
+  text: 'hollow_candles',
+}, {
+  value: 8,
+  text: 'heiken_ashi',
+}, {
+  value: 2,
+  text: 'line',
+}, {
+  value: 3,
+  text: 'area',
+}, {
+  value: 10,
+  text: 'baseline',
+}];
+
 class Chart extends Component {
   constructor(props) {
     super(props);
     this.tvWidget = undefined;
     this.inited = false;
+    this.state = {
+      loading: true,
+      resolution: '15',
+      chartType: 9,
+    };
   }
   componentDidMount() {
     this.initWidget();
@@ -42,66 +112,60 @@ class Chart extends Component {
     this.inited = true;
     // TODO:
     // console.log(messages);
-    const buttonArr = [{
-      value: '1',
-      text: '1min',
-    }, {
-      value: '5',
-      text: '5min',
-    }, {
-      value: '15',
-      text: '15min',
-    }, {
-      value: '30',
-      text: '30min',
-    }, {
-      value: '60',
-      text: '1hour',
-    }, {
-      value: '120',
-      text: '2hour',
-    }, {
-      value: '240',
-      text: '4hour',
-    }, {
-      value: '360',
-      text: '6hour',
-    }, {
-      value: '720',
-      text: '12hour',
-    }, {
-      value: '1D',
-      text: 'Day',
-    }, {
-      value: '1W',
-      text: 'Week',
-    }];
 
-    let btn = {};
+    // let btn = {};
 
-    const handleClick = (e, value) => {
-      this.tvWidget.chart().setResolution(value);
-      $(e.target).addClass('select')
-        .closest('div.space-single')
-        .siblings('div.space-single')
-        .find('div.button')
-        .removeClass('select');
-    };
-    buttonArr.forEach((v) => {
-      btn = this.tvWidget.createButton().on('click', (e) => {
-        handleClick(e, v.value);
-      });
-      btn[0].innerHTML = v.text;
-      btn[0].title = v.text;
-      $(btn[0]).addClass('resolution-btn');
-      if (v.value === '15') {
-        $(btn[0]).addClass('select');
-      }
-    });
+    // const handleClick = (e, value) => {
+    //   this.tvWidget.chart().setResolution(value);
+    //   $(e.target).addClass('select')
+    //     .closest('div.space-single')
+    //     .siblings('div.space-single')
+    //     .find('div.button')
+    //     .removeClass('select');
+    // };
+    // buttonArr.forEach((v) => {
+    //   btn = this.tvWidget.createButton().on('click', (e) => {
+    //     handleClick(e, v.value);
+    //   });
+    //   btn[0].innerHTML = v.text;
+    //   btn[0].title = v.text;
+    //   $(btn[0]).addClass('resolution-btn');
+    //   if (v.value === '15') {
+    //     $(btn[0]).addClass('select');
+    //   }
+    // });
 
     const $h = $('head', $('#chart iframe').contents());
-    $h.append("<script>window.clickLegend = function() { $('.pane-legend-minbtn').click() }</script>");
-    $('#chart iframe')[0].contentWindow.clickLegend();
+    const $w = $('#chart iframe')[0].contentWindow;
+    // 默认隐藏顶部文字
+    $h.append(`
+      <script>
+        window.clickLegend = function() {
+          $('.pane-legend-minbtn').click();
+        }
+      </script>
+    `);
+    $w.clickLegend();
+    // 默认收起顶部栏
+    $h.append(`
+    <script>
+      window.hideTopToolbar = function() {
+        $('.tv-close-panel.top').click().css('display', 'none');
+      }
+    </script>
+    `);
+    $w.hideTopToolbar();
+    // 设置全屏函数
+    $h.append(`
+    <script>
+      window.triggerFullscreen = function() {
+        $('.button.fullscreen').click();
+      }
+    </script>
+    `);
+    this.setState({
+      loading: false,
+    });
   }
   initWidget() {
     const TradingView = window.TradingView;
@@ -121,7 +185,7 @@ class Chart extends Component {
       // BEWARE: no trailing slash is expected in feed URL
       datafeed,
       library_path: '/tv/',
-      locale: 'zh',
+      locale: lang[this.props.locale],
       // Regression Trend-related functionality is not implemented yet, so it's hidden for a while
       drawings_access: { type: 'black', tools: [{ name: 'Regression Trend' }] },
       // TODO: 禁用
@@ -129,7 +193,7 @@ class Chart extends Component {
         'header_symbol_search',
         'use_localstorage_for_settings',
         'symbol_search_hot_key',
-        'header_chart_type',
+        // 'header_chart_type',
         'header_compare',
         'header_undo_redo',
         'header_screenshot',
@@ -137,14 +201,18 @@ class Chart extends Component {
         'timeframes_toolbar',
         'context_menus',
         'left_toolbar',
-        // 'header_indicators', // 图表指标
+        'header_indicators', // 图表指标
         'header_settings', // 设置
-        'header_resolutions',  // 时间下拉框
+        // 'header_resolutions',  // 时间下拉框
         // 'header_fullscreen_button' //全屏按钮
-        'format_button_in_legend', // 顶端标题里study的设置按钮
+        // 'format_button_in_legend', // 顶端标题里study的设置按钮
+        'volume_force_overlay', // 交易量分离
       ],
       // TODO: 启用了
-      enabled_features: ['dont_show_boolean_study_arguments'],
+      enabled_features: [
+        'dont_show_boolean_study_arguments',
+        'hide_last_na_study_output',
+      ],
       charts_storage_url: 'http://saveload.tradingview.com',
       charts_storage_api_version: '1.1',
       client_id: 'tradingview.com',
@@ -169,9 +237,58 @@ class Chart extends Component {
       // toolbar_bg: '#181818',
     });
   }
+  @autobind
+  handleFullScreen() {
+    const $w = $('#chart iframe')[0].contentWindow;
+    $w.triggerFullscreen();
+  }
+  @autobind
+  handleChangeResolution(e) {
+    const value = e.target.value;
+    this.tvWidget.chart().setResolution(value);
+    this.setState({
+      resolution: value,
+    });
+  }
+  @autobind
+  handleChangeChartType(e) {
+    const value = parseInt(e.target.value, 10);
+    this.tvWidget.chart().setChartType(value);
+    this.setState({
+      chartType: value,
+    });
+  }
   render() {
+    const { loading, resolution, chartType } = this.state;
+    const { messages } = this.props;
     return (
-      <div id="chart" />
+      <div className="chart-container">
+        {!loading && (
+          <div className="cb-panel-title chart-toolbar">
+            <span className="simple-btn tooltip-container with-select">
+              <select value={chartType} onChange={this.handleChangeChartType}>
+                {chartTypes.map((b => (
+                  <option value={b.value} key={b.value}>{messages['tv_type_' + b.text]}</option>
+                )))}
+              </select>
+              <Tooltip text={<FormattedMessage id="tv_type" />} />
+            </span>
+            <span className="simple-btn tooltip-container with-select">
+              <select value={resolution} onChange={this.handleChangeResolution}>
+                {buttonArr.map((b => (
+                  <option value={b.value} key={b.value}>{b.text}</option>
+                )))}
+              </select>
+              <Tooltip text={<FormattedMessage id="tv_select_resolution" />} />
+            </span>
+            <span className="simple-btn tooltip-container fullscreen" onClick={this.handleFullScreen}>
+              <i className="icon anticon icon-arrowsalt" />
+              <Tooltip text={<FormattedMessage id="tv_fullscreen" />} />
+            </span>
+          </div>
+        )}
+        <div id="chart" />
+      </div>
     );
   }
 }
@@ -182,6 +299,7 @@ function mapStateToProps({ market, i18n }) {
     pair: market.pair,
     basicInfo: market.currentBasicInfo,
     messages: i18n.messages,
+    locale: i18n.locale,
   };
 }
 

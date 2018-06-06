@@ -36,11 +36,15 @@
     color: #181818;
     text-align: left;
     text-decoration: none;
-    background-color: hsla(38,82%,73%,.65);
+    background-color: hsla(38,82%,73%,.9);
     border-radius: 4px;
     box-shadow: 0 2px 8px rgba(0,0,0,.15);
     min-height: 32px;
     white-space: nowrap;
+  }
+
+  &.topLeft .tooltip-inner {
+    transform: translate(30%, 0);
   }
 }
 

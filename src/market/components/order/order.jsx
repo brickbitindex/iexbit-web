@@ -151,7 +151,7 @@ class Order extends Component {
         </div>
         <div className="order-row-trade">
           <div className="order-label">
-            <FormattedMessage id="order_budget_sell" />
+            <FormattedMessage id="order_budget" />
           </div>
           {marketValue && <span className="order-item tt">
             {marketValue} {balance.key}

@@ -1,5 +1,34 @@
 #chart {
+  padding-top: 32px;
+  height: calc(100% - 32px);
+}
+
+.chart-container {
   height: 100%;
+
+  .chart-toolbar {
+    font-size: 14px;
+    padding-left: 0;
+
+    .simple-btn {
+      float: left;
+    }
+
+    .simple-btn.with-select {
+      width: auto;
+      padding: 0 5px;
+  
+      select {
+        border: none;
+        background: transparent;
+        color: #fff;
+      }
+    }
+
+    .simple-btn.fullscreen {
+      float: right;
+    }
+  }
 }
 
 .cb-panel.chart-panel {
