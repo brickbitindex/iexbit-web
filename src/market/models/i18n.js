@@ -15,16 +15,11 @@ const changeLocale = locale => () => fetch.get(QUERY.I18N(locale), undefined, {
   credentials: undefined,
 });
 
-const valueSigns = {
-  'zh-CN': '￥',
-};
-
 const model = {
   namespace: 'i18n',
   state: {
     locale: '',
     messages: {},
-    valueSign: '$ ',
   },
   subscriptions: {
     setup({ dispatch }) {
@@ -34,7 +29,6 @@ const model = {
         payload: {
           locale: window.locale,
           messages: window.i18n,
-          valueSign: valueSigns[window.locale] || '$ ',
         },
       });
     },
@@ -54,7 +48,6 @@ const model = {
           payload: {
             messages: i18n,
             locale: payload,
-            valueSign: valueSigns[payload] || '$ ',
           },
         });
       }

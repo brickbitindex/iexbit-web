@@ -5,6 +5,7 @@ import classnames from 'classnames';
 // import { FormattedMessage } from 'react-intl';
 import wrapWithPanel from '../panel';
 import ZeroFormattedNumber from '../common/zeroFormattedNumber';
+import SimpleSelect from '../common/simpleSelect';
 
 import './style.scss';
 
@@ -82,15 +83,13 @@ class Market extends Component {
               <ZeroFormattedNumber value={currentPrice} fixed={basicInfo.ask_config.price_fixed} />
             </div>
             <div className="market-value tt light-text">≈ {value}
-              {/* {valueSign} */}
-              <select
-                placeholder=""
+              <SimpleSelect
                 defaultValue={defaultChecked}
                 onChange={val => this.handleChangeUnit(val)}
               >
                 <option value="usdt">USDT</option>
                 <option value="cny">CNY</option>
-              </select>
+              </SimpleSelect>
             </div>
           </div>
           <div>
@@ -131,7 +130,6 @@ function mapStateToProps({ market, i18n }) {
     data: market.current || {},
     currentTrade,
     basicInfo: market.currentBasicInfo,
-    valueSign: i18n.valueSign,
     locale: i18n.locale,
     quoteUnitUsdtPrice: market.quoteUnitUsdtPrice,
   };

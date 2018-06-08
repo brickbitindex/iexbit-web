@@ -1,0 +1,26 @@
+.simple-select {
+  position: relative;
+
+  select {
+    color: inherit;
+    appearance: none;
+    outline: none;
+    border: none;
+    background: transparent;
+    padding-right: 15px;
+
+    option {
+      background: rgba($color: #F3CA82, $alpha: 0.5);
+    }
+  }
+  &::after {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(0, -50%);
+    font-family: "anticon" !important;
+    content: "\e61d";
+    pointer-events: none;
+    font-size: 12px;
+  }
+}

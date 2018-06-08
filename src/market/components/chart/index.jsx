@@ -7,6 +7,7 @@ import wrapWithPanel from '../panel';
 import Datefeed from './datafeed';
 import overrides from './overrides';
 import Tooltip from '../common/tooltip';
+import SimpleSelect from '../common/simpleSelect';
 
 import './style.scss';
 
@@ -315,20 +316,20 @@ class Chart extends Component {
         {!loading && (
           <div className="cb-panel-title chart-toolbar">
             <span className="simple-btn tooltip-container with-select">
-              <select value={chartType} onChange={this.handleChangeChartType}>
+              <SimpleSelect value={chartType} onChange={this.handleChangeChartType}>
                 {chartTypes.map((b => (
                   <option value={b.value} key={b.value}>{messages['tv_type_' + b.text]}</option>
                 )))}
-              </select>
+              </SimpleSelect>
               <Tooltip text={<FormattedMessage id="tv_type" />} />
             </span>
             <span className="divider" />
             <span className="simple-btn tooltip-container with-select">
-              <select value={resolution} onChange={this.handleChangeResolution}>
+              <SimpleSelect value={resolution} onChange={this.handleChangeResolution}>
                 {buttonArr.map((b => (
                   <option value={b.value} key={b.value}>{b.text}</option>
                 )))}
-              </select>
+              </SimpleSelect>
               <Tooltip text={<FormattedMessage id="tv_select_resolution" />} />
             </span>
             <span className="divider" />
