@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'dva';
 import autobind from 'autobind-decorator';
 import classnames from 'classnames';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, FormattedNumber } from 'react-intl';
 import Select from 'react-select';
 import Slider from 'rc-slider';
 import Decimal from 'decimal.js-light';
@@ -117,7 +117,7 @@ class Order extends Component {
       <div className="order">
         <div className="order-balance">
           <div className="flex-fixed">{balance.key}<FormattedMessage id="order_balance" /></div>
-          <div className="order-balance-value flex-autofixed">{balance.balanceText}</div>
+          <div className="order-balance-value flex-autofixed"><FormattedNumber value={balance.balanceText} maximumFractionDigits={8} /></div>
         </div>
         <div className="order-row">
           <div className="order-lable"><FormattedMessage id="order_type" /></div>
@@ -151,7 +151,7 @@ class Order extends Component {
         </div>
         <div className="order-row-trade">
           <div className="order-label">
-            <FormattedMessage id="order_budget_sell" />
+            <FormattedMessage id="order_budget" />
           </div>
           {marketValue && <span className="order-item tt">
             {marketValue} {balance.key}

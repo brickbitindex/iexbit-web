@@ -1,7 +1,7 @@
 const data = {
   paneProperties: {
     // topMargin: 50,
-    bottomMargin: 25,
+    bottomMargin: 0,
     background: '#181818',
     gridProperties: {
       color: '#E6E6E6',

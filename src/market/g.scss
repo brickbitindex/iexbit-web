@@ -49,7 +49,12 @@ body,
 
 body {
   background: #232323;
-  color: #eee;
+  color: #ddd;
+}
+
+a,
+select {
+  color: #ddd;
 }
 
 tt,
@@ -75,7 +80,12 @@ code,
 
   &:hover,
   &.active {
-    background: rgba($color: #fff, $alpha: 0.2);
+    background: rgba($color: #fff, $alpha: 0.1);
+  }
+
+  select {
+    appearance: none;
+    outline: none;
   }
 }
 

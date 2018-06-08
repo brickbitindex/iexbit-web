@@ -95,6 +95,7 @@ const model = {
       bids: [],
     },
     quoteUnitUsdtPrice: 1,
+    datafeed: null,
   },
   subscriptions: {
     // TODO:
@@ -244,6 +245,14 @@ const model = {
       trades = Object.keys(tradesObj).map(k => tradesObj[k]);
       trades.sort((a, b) => b.date - a.date);
       trades = trades.slice(0, 100);
+      if (trades[0]) {
+        yield put({
+          type: 'updateDatafeedLast',
+          payload: {
+            last: trades[0].price,
+          },
+        });
+      }
       yield put({
         type: 'updateState',
         payload: {
@@ -281,6 +290,12 @@ const model = {
           },
         },
       });
+    },
+    * updateDatafeedLast({ payload }, { select }) {
+      const datafeed = yield select(({ market }) => market.datafeed);
+      if (datafeed) {
+        datafeed.updateLast(payload.last);
+      }
     },
   },
   reducers: {

@@ -28,8 +28,6 @@ function render() {
   });
 }
 
-render();
-
 if (!global.Intl) {
   require.ensure([
     'intl',
