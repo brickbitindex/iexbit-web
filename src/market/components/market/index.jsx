@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
+// import Select from 'react-select';
 import classnames from 'classnames';
 // import { FormattedMessage } from 'react-intl';
 import wrapWithPanel from '../panel';
@@ -30,16 +31,33 @@ let fs = 22;
 // icon: `/market_images/symbol_icon_${pairSymbol}.png`
 
 class Market extends Component {
+  constructor(props) {
+    super(props);
+    if (props.locale === 'zh-CN') {
+      this.state = {
+        defaultChecked: 'cny',
+      };
+    } else {
+      this.state = {
+        defaultChecked: 'usdt',
+      };
+    }
+  }
   getValue() {
-    const { currentTrade, locale, quoteUnitUsdtPrice } = this.props;
+    const { currentTrade, quoteUnitUsdtPrice } = this.props;
+    const { defaultChecked } = this.state;
     const currentPrice = currentTrade.price;
-    if (locale !== 'zh-CN' && quoteUnitUsdtPrice === 1) return currentPrice;
+    if (defaultChecked === 'usdt' && quoteUnitUsdtPrice === 1) return currentPrice;
     const value = quoteUnitUsdtPrice * parseFloat(currentPrice);
-    if (locale === 'zh-CN') return (value * 6.3).toFixed(3);
+    if (defaultChecked === 'cny') return (value * 6.3).toFixed(3);
     return value.toFixed(3);
   }
+  handleChangeUnit(e) {
+    this.setState({ defaultChecked: e.target.value });
+  }
   render() {
-    const { data, currentTrade, basicInfo, valueSign } = this.props;
+    const { data, currentTrade, basicInfo } = this.props;
+    const { defaultChecked } = this.state;
     const currentPrice = currentTrade.price;
     const change = data.change;
     const down = data.down;
@@ -63,7 +81,17 @@ class Market extends Component {
             <div className={classnames(currentTrade.type === 'buy' ? 'green-text' : 'red-text')} style={{ fontSize: fs, height: fs }}>
               <ZeroFormattedNumber value={currentPrice} fixed={basicInfo.ask_config.price_fixed} />
             </div>
-            <div className="market-value tt light-text">≈ {valueSign}{value}</div>
+            <div className="market-value tt light-text">≈ {value}
+              {/* {valueSign} */}
+              <select
+                placeholder=""
+                defaultValue={defaultChecked}
+                onChange={val => this.handleChangeUnit(val)}
+              >
+                <option value="usdt">USDT</option>
+                <option value="cny">CNY</option>
+              </select>
+            </div>
           </div>
           <div>
             <div className="market-info light-text" style={{ height: fs, lineHeight: fs + 'px' }}>
