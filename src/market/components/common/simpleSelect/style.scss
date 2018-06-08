@@ -9,6 +9,10 @@
     background: transparent;
     padding-right: 15px;
 
+    &::-moz-focus-inner {
+      border: 0;
+    }
+
     option {
       color: #151515;
       background: rgba($color: #F3CA82, $alpha: 0.5);
