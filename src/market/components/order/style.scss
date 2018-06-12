@@ -10,6 +10,17 @@ $itemHeight: 30px;
     width: 100%;
     margin-bottom: 10px;
 
+    .ant-select-selection {
+      background-color: #292a2e;
+      color: #fff;
+      border: 1px solid #292a2e;
+      font-size: 12px;
+    }
+
+    .ant-select-arrow {
+      color: #fff;
+    }
+
     &:last-child {
       margin-bottom: 0px;
     }
