@@ -10,10 +10,19 @@ $itemHeight: 30px;
     width: 100%;
     margin-bottom: 10px;
 
+    .ant-slider {
+      margin: 0 6px;
+
+      .ant-slider-handle {
+        height: 12px;
+        width: 12px;
+      }
+    }
+
     .ant-select-selection {
       background-color: #292a2e;
       color: #fff;
-      border: 1px solid #292a2e;
+      border: 1px solid #292A2E;
       font-size: 12px;
     }
 
