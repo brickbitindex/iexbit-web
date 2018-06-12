@@ -8,6 +8,7 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import wrapWithPanel from '../panel';
 import ZeroFormattedNumber from '../common/zeroFormattedNumber';
 import combineDeep from './deep';
+import SimpleSelect from '../common/simpleSelect';
 
 import './style.scss';
 
@@ -161,11 +162,11 @@ export default wrapWithPanel(connect(mapStateToProps)(OrderBook), {
   key: 'deep',
   icon(props, store, setChildProps) {
     return (
-      <select value={props.deep} onChange={e => setChildProps({ deep: e.target.value })} >
+      <SimpleSelect value={props.deep} onChange={e => setChildProps({ deep: e.target.value })}>
         {store.market.currentBasicInfo.deepSelectOptions.map((o, i) => (
           <DeepOption i={i} key={i} deepSelect={o} />
         ))}
-      </select>
+      </SimpleSelect>
     );
   },
   tooltip: <FormattedMessage id="orderbook_deep" />,
