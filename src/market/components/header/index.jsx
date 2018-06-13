@@ -5,6 +5,7 @@ import { connect } from 'dva-no-router';
 import classnames from 'classnames';
 import Search from './search';
 import Account from './account';
+import { Dropdown, Menu } from '../../lib/antd';
 import ZeroFormattedNumber from '../common/zeroFormattedNumber';
 import logoImg from '../../../assets/images/logo_all.svg';
 
@@ -23,10 +24,11 @@ class Header extends Component {
       showSearch: false,
     };
   }
+  @autobind
   handleChangeLocale(locale) {
     this.props.dispatch({
       type: 'i18n/changeLocale',
-      payload: locale,
+      payload: locale.key,
     });
   }
   @autobind
@@ -39,6 +41,16 @@ class Header extends Component {
     const { prices, current, basicInfo, locale, anonymous } = this.props;
     const baseUnit = basicInfo.base_unit.code;
     const quoteUnit = basicInfo.quote_unit.code;
+
+    const menu = (<Menu onClick={this.handleChangeLocale} className="header-menu">
+      {
+        Object.keys(localeMap).map(k => (
+          <Menu.Item className="menu-item" key={k}>
+            <a >{localeMap[k]}</a>
+          </Menu.Item>
+        ))
+      }
+    </Menu>);
     return (
       <div id="header" className="flex-fixed">
         <div className="logo-container flex-fixed">
@@ -88,12 +100,15 @@ class Header extends Component {
           )}
           <Account />
           <span className="header-opts-btn simple-btn" id="localeSelector">
-            <span>{localeMap[locale]}</span>
+            {/* <span className="header-locale">{localeMap[locale]}</span>
             <div className="header-menu">
               {Object.keys(localeMap).map((k, i) => (
                 <div className="menu-item" key={i} onClick={this.handleChangeLocale.bind(this, k)}>{localeMap[k]}</div>
               ))}
-            </div>
+            </div> */}
+            <Dropdown overlay={menu}>
+              <a className="header-locale">{localeMap[locale]}</a>
+            </Dropdown>
           </span>
         </div>
         <Search show={this.state.showSearch} prices={prices} onCancel={this.handleSearchBtnClick} />
