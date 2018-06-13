@@ -110,7 +110,7 @@ class Order extends Component {
     this.handleQuickAmount(e / 100);
   }
   render() {
-    const { basicInfo, anonymous, form, type } = this.props;
+    const { basicInfo, anonymous, form } = this.props;
     const error = form.error;
     const balance = this.getBalance();
     const sliderValue = this.getSliderValue();
@@ -152,7 +152,7 @@ class Order extends Component {
         </div>
         <div className="order-row-trade">
           <div className="order-label">
-            <FormattedMessage id={`order_budget${type === 'sell' ? '_get' : ''}`} />
+            <FormattedMessage id="order_budget" />
           </div>
           {marketValue && <span className="order-item tt">
             {marketValue} {basicInfo.quote_unit.code}
