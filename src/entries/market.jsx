@@ -1,9 +1,9 @@
 import dva from 'dva-no-router';
 import React from 'react';
 
+import '../market/lib/antd/index.less';
 import Index, { models } from '../market';
 import QUERY, { fetch } from '../market/models/querys';
-
 
 const locale = localStorage.getItem('BRB_LOCAL') || 'zh-CN';
 window.locale = locale;
