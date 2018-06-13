@@ -82,7 +82,7 @@ export default class Search extends Component {
   @autobind
   handleInputChange(e) {
     this.setState({
-      filter: e.target.value,
+      filter: e.target.value.toUpperCase(),
     });
   }
   render() {
