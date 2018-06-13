@@ -45,9 +45,7 @@ class Header extends Component {
     const menu = (<Menu onClick={this.handleChangeLocale} className="header-menu">
       {
         Object.keys(localeMap).map(k => (
-          <Menu.Item className="menu-item" key={k}>
-            <a >{localeMap[k]}</a>
-          </Menu.Item>
+          <Menu.Item className="menu-item" key={k}>{localeMap[k]}</Menu.Item>
         ))
       }
     </Menu>);
@@ -99,17 +97,11 @@ class Header extends Component {
             </span>
           )}
           <Account />
-          <span className="header-opts-btn simple-btn" id="localeSelector">
-            {/* <span className="header-locale">{localeMap[locale]}</span>
-            <div className="header-menu">
-              {Object.keys(localeMap).map((k, i) => (
-                <div className="menu-item" key={i} onClick={this.handleChangeLocale.bind(this, k)}>{localeMap[k]}</div>
-              ))}
-            </div> */}
-            <Dropdown overlay={menu}>
+          <Dropdown overlay={menu} placement="bottomRight">
+            <span className="header-opts-btn simple-btn" id="localeSelector">
               <a className="header-locale">{localeMap[locale]}</a>
-            </Dropdown>
-          </span>
+            </span>
+          </Dropdown>
         </div>
         <Search show={this.state.showSearch} prices={prices} onCancel={this.handleSearchBtnClick} />
       </div>
