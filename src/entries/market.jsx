@@ -3,7 +3,7 @@ import React from 'react';
 
 import Index, { models } from '../market';
 import QUERY, { fetch } from '../market/models/querys';
-
+import '../market/lib/antd/index.less';
 
 const locale = localStorage.getItem('BRB_LOCAL') || 'zh-CN';
 window.locale = locale;

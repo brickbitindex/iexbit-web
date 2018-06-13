@@ -1,0 +1,113 @@
+@import '~antd/lib/style/index.less';
+
+@import '~antd/lib/button/style/index.less';
+@import '~antd/lib/message/style/index.less';
+@import '~antd/lib/slider/style/index.less';
+// @import '~antd/lib/menu/style/index.less';
+// @import '~antd/lib/breadcrumb/style/index.less';
+@import '~antd/lib/tooltip/style/index.less';
+// @import '~antd/lib/alert/style/index.less';
+@import '~antd/lib/form/style/index.less';
+@import '~antd/lib/input/style/index.less';
+@import '~antd/lib/select/style/index.less';
+// @import '~antd/lib/steps/style/index.less';
+// @import '~antd/lib/upload/style/index.less';
+// @import '~antd/lib/table/style/index.less';
+// @import '~antd/lib/divider/style/index.less';
+// @import '~antd/lib/pagination/style/index.less';
+// @import '~antd/lib/radio/style/index.less';
+// @import '~antd/lib/modal/style/index.less';
+// @import '~antd/lib/tabs/style/index.less';
+// @import '~antd/lib/dropdown/style/index.less';
+// @import '~antd/lib/badge/style/index.less';
+// @import '~antd/lib/spin/style/index.less';
+// @import '~antd/lib/switch/style/index.less';
+
+a:hover {
+  border: 1px solid #F3CA82;
+  color: #F3CA82;
+}
+
+@primary-color: #F3CA82;
+// @body-background: #353535;
+// @component-background: @primary-color;
+@text-color: fade(#fff, 85%);
+@text-color-secondary: fade(#fff, 55%);
+@heading-color: #fff;
+@disabled-color: fade(@primary-color, 25%);
+
+// Select
+
+.ant-select {
+  color: #181818;
+}
+.ant-select-open .ant-select-selection,
+.ant-select-focused .ant-select-selection,
+.ant-select-selection:focus,
+.ant-select-selection:active {
+  border-color: @primary-color;
+  box-shadow: 0;
+}
+.ant-select-dropdown-menu-item,
+.ant-select-dropdown-menu-item-selected,
+.ant-select-dropdown-menu-item-selected:hover {
+  color: #181818;
+}
+.ant-select-dropdown-menu-item:hover,
+.ant-select-dropdown-menu-item-selected,
+.ant-select-dropdown-menu-item-active {
+  background-color: @primary-color;
+}
+
+
+// Input
+// ---
+@input-placeholder-color: fade(#000, 25%);
+@input-color: #181818;
+@input-border-color: fade(#000, 25%);
+// @input-addon-bg: @background-color-light;
+// @input-hover-border-color: @primary-color;
+// @input-disabled-bg: @disabled-bg;
+
+.ant-input:focus,
+.ant-input:hover {
+  border-color: @primary-color;
+  box-shadow: 0;
+}
+
+// Buttons
+// ---
+@btn-primary-color: #181818;
+
+@btn-default-color: @primary-color;
+@btn-default-bg: transparent;
+@btn-default-border: @primary-color;
+@btn-default-hover-color: #ffe5b0;
+
+.ant-btn {
+  border: none;
+  color: #F3CA82;
+
+  &:hover,
+  &:focus,
+  &:active,
+  &.active {
+    color: #ffe5b0;
+    border: none;
+  }
+}
+
+.ant-message-notice {
+  color: #181818;
+}
+
+// Slider
+.ant-slider-handle {
+  border: none;
+  background-color: #f3ca82;
+
+  &:focus {
+    border: none;
+    box-shadow: none;
+  }
+}
