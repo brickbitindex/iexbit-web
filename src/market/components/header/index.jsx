@@ -95,7 +95,7 @@ class Header extends Component {
         <div className="header-opts flex-fixed">
           {!anonymous && (
             <span className="header-opts-btn simple-btn">
-              <a target="_blank" href="/dashboard/#/assets" rel="noopener noreferrer"><FormattedMessage id="header_assets" /></a>
+              <a target="_blank" className="header-assets" href="/dashboard/#/assets" rel="noopener noreferrer"><FormattedMessage id="header_assets" /></a>
             </span>
           )}
           <Account />
