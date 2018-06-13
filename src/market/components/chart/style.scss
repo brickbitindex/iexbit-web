@@ -1,12 +1,11 @@
 #chart {
-  padding-top: 32px;
-  height: calc(100% - 32px);
+  height: 100%;
 }
 
 .chart-container {
   height: 100%;
 
-  .chart-toolbar {
+  .cb-panel-title {
     font-size: 14px;
     padding-left: 0;
 
