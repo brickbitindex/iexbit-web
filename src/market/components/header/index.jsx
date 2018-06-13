@@ -5,7 +5,7 @@ import { connect } from 'dva-no-router';
 import classnames from 'classnames';
 import Search from './search';
 import Account from './account';
-import { Dropdown, Menu } from '../../lib/antd';
+import { Dropdown, Menu, Icon } from '../../lib/antd';
 import ZeroFormattedNumber from '../common/zeroFormattedNumber';
 import logoImg from '../../../assets/images/logo_all.svg';
 
@@ -62,7 +62,7 @@ class Header extends Component {
             <span className="t2">&nbsp;/&nbsp;{quoteUnit}</span>
           </span>
           <span className="header-opts-btn search-btn">
-            <i className="icon anticon icon-search1" />
+            <Icon type="search" />
           </span>
         </div>
         {current && [(

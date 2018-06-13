@@ -67,7 +67,7 @@ class Account extends Component {
           </span>
         ) : (
           <Dropdown className="header-opts-btn simple-btn" overlay={menu}>
-            <i className="icon anticon icon-user" />
+            <i className="anticon anticon-user" />
           </Dropdown>
         )}
       </div>
