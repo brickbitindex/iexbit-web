@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import classnames from 'classnames';
 import autobind from 'autobind-decorator';
 import { connect } from 'dva';
-// import Tooltip from '../common/tooltip';
-import { Tooltip } from '../../lib/antd';
 import Loading from '../loading';
 
 import './style.scss';
@@ -12,20 +10,18 @@ const panelDefaultState = {
   title: undefined,
   show: true,
   loading: false,
+  titleContent: undefined,
 };
 
 function mapStateToProps(data) {
   return { data };
 }
 
-export default function wrapWithPanel(C, defaultState, defaultProps = {}, opts = []) {
+export default function wrapWithPanel(C, defaultState) {
   const state = {
     ...panelDefaultState,
     ...defaultState,
-    ...defaultProps,
   };
-
-  opts.reverse();
 
   class WrappedPanelComponent extends Component {
     constructor(props) {
@@ -42,16 +38,18 @@ export default function wrapWithPanel(C, defaultState, defaultProps = {}, opts =
         show: !this.state.show,
       });
     }
+    @autobind
+    handleTitleContentChange(titleContent) {
+      this.setState({
+        titleContent,
+      });
+    }
     render() {
-      const { title, show, slideable } = this.state;
+      const { title, show, slideable, titleContent } = this.state;
       const innerClassName = this.state.className;
       const { loading } = this.props;
       const outerClassName = this.props.className;
 
-      const componentProps = {};
-      Object.keys(defaultProps).forEach((k) => {
-        componentProps[k] = this.state[k];
-      });
 
       return (
         <div className={classnames('cb-panel', innerClassName, outerClassName, { loading, 'no-title': !title })}>
@@ -61,37 +59,14 @@ export default function wrapWithPanel(C, defaultState, defaultProps = {}, opts =
               {slideable && (
                 <span className="simple-btn" onClick={this.handleSlideClick}><i className={classnames('icon', 'anticon', `icon-${show ? 'down' : 'up'}`)} /></span>
               )}
-              {opts.map((opt) => {
-                let icon = opt.icon;
-                if (typeof icon === 'function') {
-                  icon = icon(componentProps, this.props.data, this.setChildProps);
-                }
-                let active = false;
-                if (opt.active) {
-                  active = opt.active(this.state);
-                }
-                const content = (
-                  <span
-                    key={opt.key}
-                    className={classnames('simple-btn', { active }, opt.className)}
-                    onClick={() => opt.onClick(componentProps, this.setChildProps)}
-                  >
-                    {icon}
-                  </span>
-                );
-                return opt.tooltip ? (
-                  <Tooltip placement="top" title={opt.tooltip} key={opt.key}>
-                    {content}
-                  </Tooltip>
-                ) : content;
-              })}
+              {titleContent}
             </div>
           )}
           <div className="cb-panel-content" style={{ display: show ? 'block' : 'none' }}>
             {loading ? (
               <Loading />
             ) : (
-              <C {...this.props} {...componentProps} />
+              <C {...this.props} onTitleContentChange={this.handleTitleContentChange} />
             )}
           </div>
         </div>
