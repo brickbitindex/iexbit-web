@@ -1,7 +1,6 @@
 .order-btn {
   width: 100%;
-  border: none;
-
+  
   &.buy {
     background: #2b7452;
     color: #3DE777;
@@ -9,6 +8,11 @@
     
     &:disabled {
       background: #295245;
+    }
+
+    &:hover {
+      color: #fff;
+      background-color: #2b7452;
     }
   }
   &.sell {
@@ -19,5 +23,16 @@
     &:disabled {
       background: #613746;
     }
+
+    &:hover {
+      color: #fff;
+      background-color: #8b2e46;
+    }
+  }
+
+  &.ant-btn {
+    border: none;
+    border-radius: 0;
+    font-size: 12px;
   }
 }
