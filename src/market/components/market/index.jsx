@@ -27,7 +27,7 @@ const fontSize = {
 };
 
 let maxLength = 0;
-let fs = 22;
+let fs = '22px';
 
 // icon: `/market_images/symbol_icon_${pairSymbol}.png`
 
@@ -72,14 +72,14 @@ class Market extends Component {
       } else {
         maxLength = currentPrice.split('.')[0].length + 1 + basicInfo.ask_config.price_fixed;
       }
-      fs = fontSize[maxLength];
+      fs = fontSize[maxLength] + 'px';
     }
 
     return (
       <div id="market">
         <div className="market-row">
           <div className="market-current tt">
-            <div className={classnames(currentTrade.type === 'buy' ? 'green-text' : 'red-text')} style={{ fontSize: fs, height: fs }}>
+            <div className={classnames(currentTrade.type === 'buy' ? 'green-text' : 'red-text')} style={{ fontSize: fs, height: fs, lineHeight: fs }}>
               <ZeroFormattedNumber value={currentPrice} fixed={basicInfo.ask_config.price_fixed} />
             </div>
             <div className="market-value tt light-text">≈ {value}
