@@ -80,7 +80,7 @@ var config = {
       },
       {
         test: /\.less$/,
-        loader: 'style-loader!css-loader!autoprefixer?{browsers:["last 2 version", "> 1%"]}!less'
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!autoprefixer?{browsers:["last 2 version", "> 1%"]}!less')
       },
       {
         test: /\.(jpe?g|png|gif)$/i,
