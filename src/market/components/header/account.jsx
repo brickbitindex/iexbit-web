@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import classnames from 'classnames';
-// import autobind from 'autobind-decorator';
+import autobind from 'autobind-decorator';
 import { FormattedMessage } from 'react-intl';
+import { Menu, Dropdown } from '../../lib/antd';
 
 import './account.scss';
 
@@ -11,51 +12,74 @@ function redirect(open) {
 }
 
 class Account extends Component {
+  @autobind
+  handleChangeMenu(e) {
+    const { locale } = this.props;
+    console.log(locale);
+    const lowerLocale = locale === 'en' ? 'en-us' : locale.toLowerCase();
+    switch (e.key) {
+      case 'articles':
+        window.open(`https://support.bitrabbit.com/hc/${lowerLocale}`);
+        break;
+      case 'help':
+        window.open(`https://support.bitrabbit.com/hc/${lowerLocale}/requests/new`);
+        break;
+      case 'logout':
+        window.location = '/signout';
+        break;
+      default:
+        window.open(`/dashboard/#/${e.key}`);
+        break;
+    }
+  }
   render() {
     const { anonymous, currentUser } = this.props;
+    const menu = (
+      <Menu className="header-menu" onClick={this.handleChangeMenu}>
+        <Menu.Item key="account" className="menu-item">
+          <div className="t1"><FormattedMessage id="header_dashborad" /></div>
+          <div>{currentUser.email}</div>
+        </Menu.Item>
+        <Menu.Item key="markets" className="menu-item">
+          <FormattedMessage id="header_menu_markets" />
+        </Menu.Item>
+        <Menu.Item key="history" className="menu-item">
+          <FormattedMessage id="header_menu_history" />
+        </Menu.Item>
+        <Menu.Item key="articles" className="menu-item">
+          <FormattedMessage id="header_menu_articles" />
+        </Menu.Item>
+        <Menu.Item key="help" className="menu-item">
+          <FormattedMessage id="header_menu_help" />
+        </Menu.Item>
+        <Menu.Item key="logout" className="menu-item">
+          <FormattedMessage id="header_logout" /> <i className="icon anticon icon-logout" />
+        </Menu.Item>
+      </Menu>
+    );
     return (
       <div id="account" className={classnames({ anonymous })}>
         {anonymous ? (
-          <span className="header-opts-btn" onClick={this.handleSearchBtnClick}>
+          <span className="header-opts-btn">
             <a onClick={() => redirect('signin')}><FormattedMessage id="anonymous_signin" /></a>
             <FormattedMessage id="anonymous_or" />
             <a onClick={() => redirect('signup')}><FormattedMessage id="anonymous_signup" /></a>
           </span>
         ) : (
-          <span className="header-opts-btn simple-btn" onClick={this.handleSearchBtnClick}>
-            <i className="icon anticon icon-user" />
-            <div className="header-menu">
-              <div className="menu-item" onClick={() => window.open('/dashboard/#/account')}>
-                <div className="t1"><FormattedMessage id="header_dashborad" /></div>
-                <div>{currentUser.email}</div>
-              </div>
-              <div className="menu-item" onClick={() => window.open('/dashboard/#/markets')}>
-                <FormattedMessage id="header_menu_markets" />
-              </div>
-              <div className="menu-item" onClick={() => window.open('/dashboard/#/history')}>
-                <FormattedMessage id="header_menu_history" />
-              </div>
-              <div className="menu-item" onClick={() => window.open('https://support.bitrabbit.com')}>
-                <FormattedMessage id="header_menu_articles" />
-              </div>
-              <div className="menu-item" onClick={() => window.open('https://support.bitrabbit.com/hc/zh-cn/requests/new')}>
-                <FormattedMessage id="header_menu_help" />
-              </div>
-              <div className="menu-item" onClick={() => window.location = '/signout'}>
-                <FormattedMessage id="header_logout" /><i className="icon anticon icon-logout" />
-              </div>
-            </div>
-          </span>
+          <Dropdown className="header-opts-btn simple-btn" overlay={menu}>
+            <i className="anticon anticon-user" />
+          </Dropdown>
         )}
       </div>
     );
   }
 }
 
-function mapStateToProps({ account }) {
+function mapStateToProps({ account, i18n }) {
   return {
     anonymous: account.anonymous,
     currentUser: account.currentUser,
+    locale: i18n.locale,
   };
 }
 

@@ -34,8 +34,8 @@ class OrderBook extends Component {
           onClick={this.handleModeChange.bind(this, 'all')}
         >
           <div className="slide-all">
-            <i className="icon anticon icon-verticleleft slide-buy" />
-            <i className="icon anticon icon-verticleleft slide-sell" />
+            <i className="anticon anticon-verticle-left slide-buy" />
+            <i className="anticon anticon-verticle-left slide-sell" />
           </div>
         </span>
       </Tooltip>,
@@ -44,7 +44,7 @@ class OrderBook extends Component {
           className={classnames('simple-btn', { active: mode === 'buy' })}
           onClick={this.handleModeChange.bind(this, 'buy')}
         >
-          <i className="icon anticon icon-verticleleft slide-buy" />
+          <i className="anticon anticon-verticle-left slide-buy" />
         </span>
       </Tooltip>,
       <Tooltip title={<FormattedMessage id="orderbook_sell" />} key="2">
@@ -52,7 +52,7 @@ class OrderBook extends Component {
           className={classnames('simple-btn', { active: mode === 'sell' })}
           onClick={this.handleModeChange.bind(this, 'sell')}
         >
-          <i className="icon anticon icon-verticleleft slide-sell" />
+          <i className="anticon anticon-verticle-left slide-sell" />
         </span>
       </Tooltip>,
       <Tooltip title={<FormattedMessage id="orderbook_deep" />} key="3">

@@ -25,7 +25,7 @@ class Balance extends Component {
                 <FormattedNumber value={d.balance} />
               </div>
               <div className="light-text lock">
-                <i className="icon anticon icon-lock" /><FormattedNumber value={d.locked} />
+                <i className="anticon anticon-lock" /><FormattedNumber value={d.locked} />
               </div>
             </div>
           </div>

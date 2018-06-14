@@ -1,5 +1,7 @@
 $logoHeight: 28px;
 $headerPadding: 22px;
+$primary-color: #f3ca82;
+$priamry-hover-color: #ffe5b0;
 
 #header {
   height: 60px;
@@ -35,10 +37,10 @@ $headerPadding: 22px;
     cursor: pointer;
 
     &:hover {
-      border-color: #f3ca82;
+      border-color: $priamry-hover-color;
 
       .search-btn {
-        color: #f3ca82;
+        color: $priamry-hover-color;
       }
     }
 
@@ -48,7 +50,7 @@ $headerPadding: 22px;
       padding: 5px 0;
 
       .t1 {
-        color: #f3ca82;
+        color: $primary-color;
         font-size: 22px;
         font-weight: 400;
       }
@@ -59,13 +61,14 @@ $headerPadding: 22px;
     }
 
     .search-btn {
+      color: $primary-color;
       display: inline-block;
     }
   }
 
   .market-info {
     .mt {
-      color: #f3ca82;
+      color: $primary-color;
       margin-bottom: 4px;
     }
   }
@@ -85,8 +88,21 @@ $headerPadding: 22px;
     padding: 5px 8px;
     border-radius: 5px;
 
-    & > i {
+    .header-assets {
+      color: $primary-color;
+      
+      &:hover {
+        color: $priamry-hover-color;
+      }
+    }
+
+    &.anticon-user {
       font-size: 24px;
+      color: $primary-color;
+
+      &:hover {
+        color: $priamry-hover-color;
+      }
     }
 
     a {
@@ -133,7 +149,7 @@ $headerPadding: 22px;
         z-index: 10;
     
         &:hover {
-          color: #F3CA82;
+          color: $primary-color;
         }
     
         &::before {
@@ -144,7 +160,7 @@ $headerPadding: 22px;
         }
       }
   
-      .icon-search1 {
+      .anticon-search {
         position: absolute;
         left: 135px;
         top: 80px;
@@ -197,7 +213,7 @@ $headerPadding: 22px;
           }
     
           &.active {
-            color: #F3CA82;
+            color: $primary-color;
     
             &::after {
               content: ' ';
@@ -211,7 +227,7 @@ $headerPadding: 22px;
           }
     
           &:hover {
-            color: #ffe5b0;
+            color: $priamry-hover-color;
           }
     
           .search-prices-tab > * {
@@ -260,7 +276,7 @@ $headerPadding: 22px;
       }
   
       .highlight {
-        background: #F3CA82;
+        background: $primary-color;
         color: rgba(#000, 0.65);
       }
 
@@ -281,7 +297,11 @@ $headerPadding: 22px;
   position: relative;
 
   .header-locale {
-    color: #F3CA82;
+    color: $primary-color;
+
+    &:hover {
+      color: $priamry-hover-color;
+    }
   }
 
   .header-menu {
@@ -297,15 +317,16 @@ $headerPadding: 22px;
 
 .ant-dropdown {
   .header-menu {
-    background: #F3CA82;
+    background: $primary-color;
     padding: 0;
     border-radius: 4px;
     color: #181818;
     .menu-item {
       padding: 8px 12px;
-
+      color: #181818;
       &:hover {
         border-radius: 4px;
+        color: #252529;
       }
 
       a {
@@ -313,7 +334,7 @@ $headerPadding: 22px;
 
         &:hover {
           background: #fff;
-          color: #181818;
+          color: #252529;
         }
       }
     }

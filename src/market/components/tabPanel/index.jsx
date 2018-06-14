@@ -55,7 +55,7 @@ export default class WrappedTabPanelComponent extends Component {
             <FormattedMessage id="messagecenter" />
           </span>
           {slideable && (
-            <span className="simple-btn" onClick={this.handleSlideClick}><i className={classnames('icon', 'anticon', `icon-${show ? 'down' : 'up'}`)} /></span>
+            <span className="simple-btn" onClick={this.handleSlideClick}><i className={classnames('anticon', `anticon-${show ? 'down' : 'up'}`)} /></span>
           )}
         </div>
         <div className="cb-panel-content cb-panel-tab-content" style={{ display: (show && current === keyMap.myOrders) ? 'block' : 'none' }}>

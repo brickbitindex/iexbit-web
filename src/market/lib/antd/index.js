@@ -9,6 +9,7 @@ import Dropdown from 'antd/lib/dropdown';
 import Menu from 'antd/lib/menu';
 import Tabs from 'antd/lib/tabs';
 import Table from 'antd/lib/table';
+import Icon from 'antd/lib/icon';
 
 export {
   Button,
@@ -22,4 +23,5 @@ export {
   Menu,
   Tabs,
   Table,
+  Icon,
 };

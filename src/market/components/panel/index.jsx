@@ -57,7 +57,7 @@ export default function wrapWithPanel(C, defaultState) {
             <div className="cb-panel-title">
               {title}
               {slideable && (
-                <span className="simple-btn" onClick={this.handleSlideClick}><i className={classnames('icon', 'anticon', `icon-${show ? 'down' : 'up'}`)} /></span>
+                <span className="simple-btn" onClick={this.handleSlideClick}><i className={classnames('anticon', `anticon-${show ? 'down' : 'up'}`)} /></span>
               )}
               {titleContent}
             </div>

@@ -101,7 +101,7 @@ export default class Search extends Component {
         <div className="search-area">
           <div className="search-input">
             <i className="close" ref={e => this.$close = e} />
-            <i className="icon anticon icon-search1" />
+            <i className="anticon anticon-search" />
             <input type="text" ref={e => this.$input = e} onChange={this.handleInputChange} value={this.state.filter} />
           </div>
           <div className="search-result">

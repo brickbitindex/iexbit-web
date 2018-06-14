@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import wrapWithPanel from '../panel';
 import Datefeed from './datafeed';
 import overrides from './overrides';
-import { Tooltip } from '../../lib/antd';
+import { Tooltip, Icon } from '../../lib/antd';
 import SimpleSelect from '../common/simpleSelect';
 
 import './style.scss';
@@ -147,7 +147,7 @@ class Chart extends Component {
       <span className={classnames('simple-btn text', { active: studies.bb })} onClick={this.handleTriggerStudy.bind(this, 'bb')} key="8">BB</span>,
       <Tooltip title={<FormattedMessage id="tv_fullscreen" />} key="9">
         <span className="simple-btn tooltip-container fullscreen" onClick={this.handleFullScreen}>
-          <i className="icon anticon icon-arrowsalt" />
+          <Icon type="arrows-alt" />
         </span>
       </Tooltip>,
     ];
