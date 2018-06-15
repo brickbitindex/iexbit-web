@@ -6,7 +6,8 @@ import { FormattedMessage } from 'react-intl';
 import wrapWithPanel from '../panel';
 import Datefeed from './datafeed';
 import overrides from './overrides';
-import Tooltip from '../common/tooltip';
+import { Tooltip, Icon } from '../../lib/antd';
+import SimpleSelect from '../common/simpleSelect';
 
 import './style.scss';
 
@@ -112,6 +113,45 @@ class Chart extends Component {
   }
   componentDidMount() {
     this.initWidget();
+    this.props.onTitleContentChange(this.getPanelTitleContent());
+  }
+  getPanelTitleContent() {
+    const { studies, chartType, resolution, loading } = this.state;
+    const { messages } = this.props;
+    if (loading) return [];
+    const tools = [
+      <Tooltip title={<FormattedMessage id="tv_type" />} key="0">
+        <span className="simple-btn tooltip-container with-select">
+          <SimpleSelect value={chartType} onChange={this.handleChangeChartType}>
+            {chartTypes.map((b => (
+              <option value={b.value} key={b.value}>{messages['tv_type_' + b.text]}</option>
+            )))}
+          </SimpleSelect>
+        </span>
+      </Tooltip>,
+      <span className="divider" key="1" />,
+      <Tooltip title={<FormattedMessage id="tv_select_resolution" />} key="2">
+        <span className="simple-btn tooltip-container with-select" >
+          <SimpleSelect value={resolution} onChange={this.handleChangeResolution}>
+            {buttonArr.map((b => (
+              <option value={b.value} key={b.value}>{b.text}</option>
+            )))}
+          </SimpleSelect>
+        </span>
+      </Tooltip>,
+      <span className="divider" key="3" />,
+      <span className={classnames('simple-btn text', { active: studies.ma7 })} onClick={this.handleTriggerStudy.bind(this, 'ma7')} key="4">MA(7)</span>,
+      <span className={classnames('simple-btn text', { active: studies.ma25 })} onClick={this.handleTriggerStudy.bind(this, 'ma25')} key="5">MA(25)</span>,
+      <span className={classnames('simple-btn text', { active: studies.rsi })} onClick={this.handleTriggerStudy.bind(this, 'rsi')} key="6">RSI</span>,
+      <span className={classnames('simple-btn text', { active: studies.macd })} onClick={this.handleTriggerStudy.bind(this, 'macd')} key="7">MACD</span>,
+      <span className={classnames('simple-btn text', { active: studies.bb })} onClick={this.handleTriggerStudy.bind(this, 'bb')} key="8">BB</span>,
+      <Tooltip title={<FormattedMessage id="tv_fullscreen" />} key="9">
+        <span className="simple-btn tooltip-container fullscreen" onClick={this.handleFullScreen}>
+          <Icon type="arrows-alt" />
+        </span>
+      </Tooltip>,
+    ];
+    return tools;
   }
   @autobind
   chartReady(/* messages*/) {
@@ -172,6 +212,8 @@ class Chart extends Component {
     `);
     this.setState({
       loading: false,
+    }, () => {
+      this.props.onTitleContentChange(this.getPanelTitleContent());
     });
 
     // 设置指标学习
@@ -259,6 +301,8 @@ class Chart extends Component {
     this.tvWidget.chart().setResolution(value);
     this.setState({
       resolution: value,
+    }, () => {
+      this.props.onTitleContentChange(this.getPanelTitleContent());
     });
   }
   @autobind
@@ -267,6 +311,8 @@ class Chart extends Component {
     this.tvWidget.chart().setChartType(value);
     this.setState({
       chartType: value,
+    }, () => {
+      this.props.onTitleContentChange(this.getPanelTitleContent());
     });
   }
   handleTriggerStudy(name) {
@@ -305,46 +351,13 @@ class Chart extends Component {
     }
     this.setState({
       studies: { ...studies },
+    }, () => {
+      this.props.onTitleContentChange(this.getPanelTitleContent());
     });
   }
   render() {
-    const { loading, resolution, chartType, studies } = this.state;
-    const { messages } = this.props;
     return (
-      <div className="chart-container">
-        {!loading && (
-          <div className="cb-panel-title chart-toolbar">
-            <span className="simple-btn tooltip-container with-select">
-              <select value={chartType} onChange={this.handleChangeChartType}>
-                {chartTypes.map((b => (
-                  <option value={b.value} key={b.value}>{messages['tv_type_' + b.text]}</option>
-                )))}
-              </select>
-              <Tooltip text={<FormattedMessage id="tv_type" />} />
-            </span>
-            <span className="divider" />
-            <span className="simple-btn tooltip-container with-select">
-              <select value={resolution} onChange={this.handleChangeResolution}>
-                {buttonArr.map((b => (
-                  <option value={b.value} key={b.value}>{b.text}</option>
-                )))}
-              </select>
-              <Tooltip text={<FormattedMessage id="tv_select_resolution" />} />
-            </span>
-            <span className="divider" />
-            <span className="simple-btn tooltip-container fullscreen" onClick={this.handleFullScreen}>
-              <i className="icon anticon icon-arrowsalt" />
-              <Tooltip text={<FormattedMessage id="tv_fullscreen" />} />
-            </span>
-            <span className={classnames('simple-btn text', { active: studies.ma7 })} onClick={this.handleTriggerStudy.bind(this, 'ma7')}>MA(7)</span>
-            <span className={classnames('simple-btn text', { active: studies.ma25 })} onClick={this.handleTriggerStudy.bind(this, 'ma25')}>MA(25)</span>
-            <span className={classnames('simple-btn text', { active: studies.rsi })} onClick={this.handleTriggerStudy.bind(this, 'rsi')}>RSI</span>
-            <span className={classnames('simple-btn text', { active: studies.macd })} onClick={this.handleTriggerStudy.bind(this, 'macd')}>MACD</span>
-            <span className={classnames('simple-btn text', { active: studies.bb })} onClick={this.handleTriggerStudy.bind(this, 'bb')}>BB</span>
-          </div>
-        )}
-        <div id="chart" />
-      </div>
+      <div id="chart" />
     );
   }
 }
@@ -360,6 +373,7 @@ function mapStateToProps({ market, i18n }) {
 }
 
 export default wrapWithPanel(connect(mapStateToProps)(Chart), {
-  className: 'chart-panel',
+  title: <span />,
+  className: 'chart-panel chart-container',
 });
 

@@ -3,12 +3,13 @@ import { connect } from 'dva';
 import autobind from 'autobind-decorator';
 import classnames from 'classnames';
 import { FormattedMessage, FormattedNumber } from 'react-intl';
-import Select from 'react-select';
+// import Select from 'react-select';
 import Slider from 'rc-slider';
 import Decimal from 'decimal.js-light';
 import OrderInput from './input';
 import OrderButton from './button';
-import Tooltip from '../common/tooltip';
+// import Tooltip from '../common/tooltip';
+import { Select, Tooltip } from '../../lib/antd';
 import Mask from '../common/anonymousMask';
 
 Decimal.config({ toExpNeg: -16 });
@@ -16,6 +17,7 @@ Decimal.config({ toExpNeg: -16 });
 // const Slider = createSliderWithTooltip(_Slider);
 
 const Handle = Slider.Handle;
+const Option = Select.Option;
 
 const handle = (props) => {
   const { value, dragging, index, ...restProps } = props;
@@ -122,14 +124,13 @@ class Order extends Component {
         <div className="order-row">
           <div className="order-lable"><FormattedMessage id="order_type" /></div>
           <Select
-            className={classnames('cb-select order-item', { error: error.type })}
-            searchable={false}
-            clearable={false}
+            className={classnames('order-item', { error: error.type })}
             placeholder=""
-            value={form.type}
+            defaultValue={form.type.value}
             onChange={this.props.onTypeChange}
-            options={form.types}
-          />
+          >
+            {form.types.map(t => <Option value={t.value} key={t.value}><FormattedMessage id={`order_type_${t.value}`} /></Option>)}
+          </Select>
         </div>
         <div className="order-row">
           <div className="order-lable"><FormattedMessage id="order_price" /></div>
@@ -154,7 +155,7 @@ class Order extends Component {
             <FormattedMessage id="order_budget" />
           </div>
           {marketValue && <span className="order-item tt">
-            {marketValue} {balance.key}
+            {marketValue} {basicInfo.quote_unit.code}
           </span>}
         </div>
         <div className="order-row small">

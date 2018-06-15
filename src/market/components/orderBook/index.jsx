@@ -1,30 +1,88 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 // import moment from 'moment';
-// import autobind from 'autobind-decorator';
+import autobind from 'autobind-decorator';
 import Decimal from 'decimal.js-light';
 import classnames from 'classnames';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import wrapWithPanel from '../panel';
 import ZeroFormattedNumber from '../common/zeroFormattedNumber';
 import combineDeep from './deep';
+import SimpleSelect from '../common/simpleSelect';
+import { Tooltip } from '../../lib/antd';
 
 import './style.scss';
 
 class OrderBook extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      mode: 'all',
+      deep: '0',
+    };
+  }
+  componentDidMount() {
+    this.props.onTitleContentChange(this.getPanelTitleContent());
+  }
+  getPanelTitleContent() {
+    const { mode, deep } = this.state;
+    const { basicInfo } = this.props;
+    const tools = [
+      <Tooltip title={<FormattedMessage id="orderbook_all" />} key="0">
+        <span
+          className={classnames('simple-btn', { active: mode === 'all' })}
+          onClick={this.handleModeChange.bind(this, 'all')}
+        >
+          <div className="slide-all">
+            <i className="anticon anticon-verticle-left slide-buy" />
+            <i className="anticon anticon-verticle-left slide-sell" />
+          </div>
+        </span>
+      </Tooltip>,
+      <Tooltip title={<FormattedMessage id="orderbook_buy" />} key="1">
+        <span
+          className={classnames('simple-btn', { active: mode === 'buy' })}
+          onClick={this.handleModeChange.bind(this, 'buy')}
+        >
+          <i className="anticon anticon-verticle-left slide-buy" />
+        </span>
+      </Tooltip>,
+      <Tooltip title={<FormattedMessage id="orderbook_sell" />} key="2">
+        <span
+          className={classnames('simple-btn', { active: mode === 'sell' })}
+          onClick={this.handleModeChange.bind(this, 'sell')}
+        >
+          <i className="anticon anticon-verticle-left slide-sell" />
+        </span>
+      </Tooltip>,
+      <Tooltip title={<FormattedMessage id="orderbook_deep" />} key="3">
+        <span
+          className="simple-btn deep"
+        >
+          <SimpleSelect value={deep} onChange={this.handleDeepChange}>
+            {basicInfo.deepSelectOptions.map((o, i) => (
+              <DeepOption i={i} key={i} deepSelect={o} />
+            ))}
+          </SimpleSelect>
+        </span>
+      </Tooltip>,
+    ];
+    tools.reverse();
+    return tools;
+  }
   getMax(asks, bids) {
     const bidsMax = bids.length === 0 ? 0 : bids[bids.length - 1][3];
     const asksMax = asks.length === 0 ? 0 : asks[asks.length - 1][3];
     return Math.max(bidsMax, asksMax);
   }
   processDeepData(trades) {
-    const deep = this.props.deep;
+    const deep = this.state.deep;
     const step = this.props.basicInfo.deepSelectOptions[deep].step;
     const ret = combineDeep(trades, step);
     return ret;
   }
   handleAskPriceClick(price) {
-    const deep = this.props.deep;
+    const deep = this.state.deep;
     const step = this.props.basicInfo.deepSelectOptions[deep].step;
     let payload = price;
     if (step < 1) {
@@ -37,7 +95,7 @@ class OrderBook extends Component {
     });
   }
   handleBidPriceClick(price) {
-    const deep = this.props.deep;
+    const deep = this.state.deep;
     const step = this.props.basicInfo.deepSelectOptions[deep].step;
     let payload = price;
     if (step < 1) {
@@ -49,8 +107,24 @@ class OrderBook extends Component {
       payload,
     });
   }
+  handleModeChange(mode) {
+    this.setState({
+      mode,
+    }, () => {
+      this.props.onTitleContentChange(this.getPanelTitleContent());
+    });
+  }
+  @autobind
+  handleDeepChange(deep) {
+    this.setState({
+      deep: deep.target.value,
+    }, () => {
+      this.props.onTitleContentChange(this.getPanelTitleContent());
+    });
+  }
   render() {
-    const { data, basicInfo, mode } = this.props;
+    const { data, basicInfo } = this.props;
+    const { mode } = this.state;
     const { bids, asks } = data;
     const deepAsks = this.processDeepData(asks);
     const deepBids = this.processDeepData(bids);
@@ -119,56 +193,4 @@ const DeepOption = injectIntl(({ i, deepSelect, intl }) => (
 export default wrapWithPanel(connect(mapStateToProps)(OrderBook), {
   title: <span />,
   className: 'orderBook-panel',
-}, {
-  mode: 'all',
-  deep: '0',
-}, [{
-  key: 'all',
-  icon: (
-    <div className="slide-all">
-      <i className="icon anticon icon-verticleleft slide-buy" />
-      <i className="icon anticon icon-verticleleft slide-sell" />
-    </div>
-  ),
-  active: state => state.mode === 'all',
-  tooltip: <FormattedMessage id="orderbook_all" />,
-  onClick(props, setChildProps) {
-    setChildProps({
-      mode: 'all',
-    });
-  },
-}, {
-  key: 'buy',
-  icon: <i className="icon anticon icon-verticleleft slide-buy" />,
-  active: state => state.mode === 'buy',
-  tooltip: <FormattedMessage id="orderbook_buy" />,
-  onClick(props, setChildProps) {
-    setChildProps({
-      mode: 'buy',
-    });
-  },
-}, {
-  key: 'sell',
-  icon: <i className="icon anticon icon-verticleleft slide-sell" />,
-  active: state => state.mode === 'sell',
-  tooltip: <FormattedMessage id="orderbook_sell" />,
-  onClick(props, setChildProps) {
-    setChildProps({
-      mode: 'sell',
-    });
-  },
-}, {
-  key: 'deep',
-  icon(props, store, setChildProps) {
-    return (
-      <select value={props.deep} onChange={e => setChildProps({ deep: e.target.value })} >
-        {store.market.currentBasicInfo.deepSelectOptions.map((o, i) => (
-          <DeepOption i={i} key={i} deepSelect={o} />
-        ))}
-      </select>
-    );
-  },
-  tooltip: <FormattedMessage id="orderbook_deep" />,
-  className: 'deep',
-  onClick() {},
-}]);
+});

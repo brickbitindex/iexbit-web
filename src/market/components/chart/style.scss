@@ -1,12 +1,11 @@
 #chart {
-  padding-top: 32px;
-  height: calc(100% - 32px);
+  height: 100%;
 }
 
 .chart-container {
   height: 100%;
 
-  .chart-toolbar {
+  .cb-panel-title {
     font-size: 14px;
     padding-left: 0;
 
@@ -35,11 +34,6 @@
     .simple-btn.with-select {
       width: auto;
       padding: 0 5px;
-  
-      select {
-        border: none;
-        background: transparent;
-      }
     }
 
     .simple-btn.fullscreen {

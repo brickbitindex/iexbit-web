@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import autobind from 'autobind-decorator';
 import classnames from 'classnames';
+import { Input } from '../../lib/antd';
 import './input.scss';
 
 const reg = /^[0-9.]+$/;
@@ -18,7 +19,7 @@ export default class OrderInput extends Component {
     const value = this.props.value || '';
     return (
       <div className={classnames('order-input', className)}>
-        <input className="tt" type="text" value={value} onChange={this.handleChange} />
+        <Input className="tt" value={value} onChange={this.handleChange} />
         {suffix && (
           <span className="order-input-suffix light-text">{suffix}</span>
         )}

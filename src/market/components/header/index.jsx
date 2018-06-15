@@ -5,6 +5,7 @@ import { connect } from 'dva-no-router';
 import classnames from 'classnames';
 import Search from './search';
 import Account from './account';
+import { Dropdown, Menu, Icon } from '../../lib/antd';
 import ZeroFormattedNumber from '../common/zeroFormattedNumber';
 import logoImg from '../../../assets/images/logo_all.svg';
 
@@ -23,10 +24,11 @@ class Header extends Component {
       showSearch: false,
     };
   }
+  @autobind
   handleChangeLocale(locale) {
     this.props.dispatch({
       type: 'i18n/changeLocale',
-      payload: locale,
+      payload: locale.key,
     });
   }
   @autobind
@@ -39,6 +41,14 @@ class Header extends Component {
     const { prices, current, basicInfo, locale, anonymous } = this.props;
     const baseUnit = basicInfo.base_unit.code;
     const quoteUnit = basicInfo.quote_unit.code;
+
+    const menu = (<Menu onClick={this.handleChangeLocale} className="header-menu">
+      {
+        Object.keys(localeMap).map(k => (
+          <Menu.Item className="menu-item" key={k}>{localeMap[k]}</Menu.Item>
+        ))
+      }
+    </Menu>);
     return (
       <div id="header" className="flex-fixed">
         <div className="logo-container flex-fixed">
@@ -52,7 +62,7 @@ class Header extends Component {
             <span className="t2">&nbsp;/&nbsp;{quoteUnit}</span>
           </span>
           <span className="header-opts-btn search-btn">
-            <i className="icon anticon icon-search1" />
+            <Icon type="search" />
           </span>
         </div>
         {current && [(
@@ -83,18 +93,15 @@ class Header extends Component {
         <div className="header-opts flex-fixed">
           {!anonymous && (
             <span className="header-opts-btn simple-btn">
-              <a target="_blank" href="/dashboard/#/assets" rel="noopener noreferrer"><FormattedMessage id="header_assets" /></a>
+              <a target="_blank" className="header-assets" href="/dashboard/#/assets" rel="noopener noreferrer"><FormattedMessage id="header_assets" /></a>
             </span>
           )}
           <Account />
-          <span className="header-opts-btn simple-btn" id="localeSelector">
-            <span>{localeMap[locale]}</span>
-            <div className="header-menu">
-              {Object.keys(localeMap).map((k, i) => (
-                <div className="menu-item" key={i} onClick={this.handleChangeLocale.bind(this, k)}>{localeMap[k]}</div>
-              ))}
-            </div>
-          </span>
+          <Dropdown overlay={menu} placement="bottomRight">
+            <span className="header-opts-btn simple-btn" id="localeSelector">
+              <a className="header-locale">{localeMap[locale]}</a>
+            </span>
+          </Dropdown>
         </div>
         <Search show={this.state.showSearch} prices={prices} onCancel={this.handleSearchBtnClick} />
       </div>

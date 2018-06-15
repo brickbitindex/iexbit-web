@@ -13,6 +13,11 @@
       cursor: pointer;
       color: #F3CA82;
       margin: 0 4px;
+      transition: all .3s;
+
+      &:hover {
+        color: #ffe5b0;
+      }
     }
   }
 }

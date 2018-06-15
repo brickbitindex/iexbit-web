@@ -1,5 +1,4 @@
 @import '../assets/styles/react-select.min.css';
-@import '../assets/iconfont/iconfont.css';
 
 html,
 body,
@@ -61,7 +60,8 @@ tt,
 pre,
 code,
 .tt {
-  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  // font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-family: Arial,Microsoft YaHei,sans-serif!important;
 }
 
 .red-text {
@@ -81,11 +81,6 @@ code,
   &:hover,
   &.active {
     background: rgba($color: #fff, $alpha: 0.1);
-  }
-
-  select {
-    appearance: none;
-    outline: none;
   }
 }
 

@@ -7,7 +7,7 @@ function C(props) {
   const { value, fixed } = props;
   const formatNumber = props.intl.formatNumber;
   let ret = value;
-  if (fixed) {
+  if (fixed >= 0) {
     ret = formatNumber(value, {
       minimumFractionDigits: fixed,
       maximumFractionDigits: fixed,

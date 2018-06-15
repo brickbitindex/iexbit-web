@@ -23,11 +23,12 @@
   .market-value {
     padding-left: 5px;
 
-    select {
-      border: none;
-      background: #292a2e;
+    .simple-select {
       margin-left: 6px;
-      color: rgba(#fff, 0.4);
+
+      &:hover {
+        box-shadow: 0 0 0 1px rgba($color: #fff, $alpha: 0.4);
+      }
     }
   }
   .market-change {
