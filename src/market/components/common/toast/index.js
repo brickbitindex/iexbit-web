@@ -10,9 +10,9 @@ const $toasts = $('#toasts');
 
 const disappearTime = 3000;
 const iconMap = {
-  info: '<i class="anticon icon-info-circle-o"></i>',
-  warn: '<i class="anticon icon-warning"></i>',
-  error: '<i class="anticon icon-warning"></i>',
+  info: '<i class="anticon anticon-info-circle-o"></i>',
+  warn: '<i class="anticon anticon-warning"></i>',
+  error: '<i class="anticon anticon-warning"></i>',
 };
 
 function toast(message, level = 'info') {

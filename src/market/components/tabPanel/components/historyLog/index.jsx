@@ -48,7 +48,7 @@ class HistoryLog extends Component {
         <Table
           dataSource={historyLogs}
           columns={trades}
-          pagination={paginationProps}
+          pagination={paginationProps.total_pages > 1 ? paginationProps : false}
           size="small"
         />
       </div>
