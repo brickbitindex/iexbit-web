@@ -14,7 +14,7 @@
 // @import '~antd/lib/upload/style/index.less';
 @import '~antd/lib/table/style/index.less';
 // @import '~antd/lib/divider/style/index.less';
-// @import '~antd/lib/pagination/style/index.less';
+@import '~antd/lib/pagination/style/index.less';
 // @import '~antd/lib/radio/style/index.less';
 // @import '~antd/lib/modal/style/index.less';
 @import '~antd/lib/tabs/style/index.less';
@@ -120,4 +120,40 @@
 }
 .ant-dropdown-menu-item, .ant-dropdown-menu-submenu-title {
   color: #181818;
+}
+
+// Table
+@table-header-bg: #181818;
+@heading-color: rgba(255, 255, 255, .4);
+@font-size-base: 12px;
+.ant-table table {
+  text-align: center;
+}
+.ant-table-thead > tr > th {
+  text-align: center;
+}
+.ant-table-thead > tr:hover > td,
+.ant-table-tbody > tr:hover > td {
+  background-color: #232323;
+}
+
+// small Table
+@component-background: #232323;
+@table-padding-vertical: 4px;
+@table-padding-horizontal: 0;
+@border-color-split: transparent;
+.ant-table-small {
+  border: none;
+}
+
+
+// Pagination
+// @text-color: @primary-color;
+.ant-pagination-prev a,
+.ant-pagination-next a {
+  color: @primary-color;
+}
+
+.ant-pagination-item a {
+  color: @primary-color;
 }

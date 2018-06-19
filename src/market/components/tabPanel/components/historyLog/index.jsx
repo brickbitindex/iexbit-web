@@ -41,7 +41,7 @@ class HistoryLog extends Component {
   render() {
     const { historyLogs, historyPage } = this.props;
     const paginationProps = {
-      total: historyPage.total,
+      total: historyPage.total_pages,
     };
     return (
       <div id="historyLog">
@@ -49,6 +49,7 @@ class HistoryLog extends Component {
           dataSource={historyLogs}
           columns={trades}
           pagination={paginationProps}
+          size="small"
         />
       </div>
     );

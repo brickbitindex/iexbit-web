@@ -11,12 +11,6 @@ import HistoryLog from './components/historyLog';
 
 import './style.scss';
 
-const keyMap = {
-  myOrders: 'myOrders',
-  messageCenter: 'messageCenter',
-  historyLog: 'historyLog',
-};
-
 const TabPane = Tabs.TabPane;
 
 export default class WrappedTabPanelComponent extends Component {
@@ -24,22 +18,8 @@ export default class WrappedTabPanelComponent extends Component {
     super(props);
     this.state = {
       show: true,
-      current: keyMap.myOrders,
+      current: 'myOrders',
     };
-  }
-  // @autobind
-  // handleTitleChange(index, title) {
-  //   const titles = [...this.state.titles];
-  //   titles[index] = title;
-  //   this.setState({
-  //     titles,
-  //   });
-  // }
-  @autobind
-  handleSlideClick() {
-    this.setState({
-      show: !this.state.show,
-    });
   }
   @autobind
   handleTabClick(key) {
@@ -48,7 +28,7 @@ export default class WrappedTabPanelComponent extends Component {
     });
   }
   render() {
-    const { show, current } = this.state;
+    const { current } = this.state;
     const { loadings } = this.props;
     const loading = loadings[current];
     const outerClassName = this.props.className;
@@ -79,22 +59,22 @@ export default class WrappedTabPanelComponent extends Component {
             <MessageCenter />
           )}
         </div> */}
-        <div className="cb-panel-title">
-          <Tabs
-            activeKey={current}
-            onChange={this.handleTabClick}
-          >
-            <TabPane key="myOrders" tab={<FormattedMessage id="myorders" />} style={{ display: (show && current === keyMap.myOrders) ? 'block' : 'none' }}>
-              {loading ? <Loading /> : <MyOrders />}
-            </TabPane>
-            <TabPane key="messageCenter" tab={<FormattedMessage id="messagecenter" />} style={{ display: (show && current === keyMap.messageCenter) ? 'block' : 'none' }}>
-              {loading ? <Loading /> : <MessageCenter />}
-            </TabPane>
-            <TabPane key="historyLog" tab={<FormattedMessage id="historyLog" />} style={{ display: (show && current === keyMap.messageCenter) ? 'block' : 'none' }}>
-              {loading ? <Loading /> : <HistoryLog />}
-            </TabPane>
-          </Tabs>
-        </div>
+        {loading ? <Loading /> :
+        <Tabs
+          activeKey={current}
+          onChange={this.handleTabClick}
+        >
+          <TabPane key="myOrders" tab={<FormattedMessage id="myorders" />}>
+            <MyOrders />
+          </TabPane>
+          <TabPane key="messageCenter" tab={<FormattedMessage id="messagecenter" />}>
+            <MessageCenter />
+          </TabPane>
+          <TabPane key="historyLog" tab={<FormattedMessage id="history" />}>
+            <HistoryLog />
+          </TabPane>
+        </Tabs>
+        }
       </div>
     );
   }

@@ -1,3 +1,4 @@
+$primary-color: #F3CA82;
 .cb-panel {
   .cb-panel-tab-title {
     height: 28px;
@@ -13,17 +14,51 @@
       margin-left: -12px;
     }
     &.active {
-      border-bottom: #F3CA82 solid 2px;
+      border-bottom: $primary-color solid 2px;
       color: #eee;
     }
     &:hover {
-      background: rgba(#F3CA82, 0.1);
+      background: rgba($primary-color, 0.1);
     }
   }
 }
 
 .cb-panel.cb-panel-tab {
   .cb-panel-title {
-    border-bottom: rgba(#F3CA82, 0.25) solid 1px;
+    border-bottom: rgba($primary-color, 0.25) solid 1px;
+  }
+}
+
+.cb-panel {
+  .ant-tabs {
+    font-size: 12px;
+    &-bar {
+      border-bottom: 1px solid rgba($primary-color, .25);
+      margin-bottom: 0;
+    }
+    &-nav-container {
+      font-size: 12px;
+    }
+    &-tab {
+      margin-right: 0;
+    }
+  }
+
+  .ant-table {
+    font-size: 12px;
+
+    &-thead > tr > th {
+      padding: 2px 8px;
+      border: none;
+    }
+
+    &-tbody  > tr > td {
+      padding: 2px 8px;
+    }
+
+    &-placeholder {
+      font-size: 12px;
+      background-color: #181818;
+    }
   }
 }

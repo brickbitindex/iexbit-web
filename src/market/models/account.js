@@ -4,7 +4,7 @@ import QUERY, { fetch } from './querys';
 import toast from '../components/common/toast';
 
 const deleteOrder = (id, type) => fetch.delete(QUERY.DELETE_ORDER(id, type)).catch(err => err);
-const queryHistoryLog = payload => fetch.get(QUERY.TRADES, payload).catch(err => err);
+const queryHistoryLog = (payload, options) => fetch.get(QUERY.TRADES, payload, options).catch(err => err);
 
 const model = {
   namespace: 'account',
@@ -97,13 +97,17 @@ const model = {
       const page = yield select(({ account }) => account.page);
       const count = yield select(({ account }) => account.count);
       const locale = window.locale;
-      const data = yield call(queryHistoryLog, { ...payload, page, count, locale });
+      const marketId = window.document.body.dataset.market_id;
+      const options = {
+        credentials: 'include',
+      };
+      const data = yield call(queryHistoryLog, { ...payload, page, count, locale, market_id: marketId }, options);
       if (data.success) {
         const history = data.data;
         yield put({
           type: 'updateState',
           payload: {
-            historyLog: history.trades,
+            historyLogs: history.trades,
             historyPage: {
               total: history.total_pages,
             },
