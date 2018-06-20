@@ -62,3 +62,4 @@ build/*
 dist/*
 .DS_Store
 .idea
+.cache/
