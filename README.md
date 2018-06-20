@@ -16,11 +16,10 @@ $ npm run dev
 需要登录到线上测试环境，启动开发模式，然后代理如下两个文件到本地即可：
 
 ```shell
-http://test.exchange.grootapp.com/test/market2.bundle.js http://localhost:8080/market.bundle.js
-http://test.exchange.grootapp.com/test/market2.css http://localhost:8080/market2.css
+/https://assets.bitrabbit.com/market/vendors.*.js/ http://localhost:8111/vendors.bundle.js
+/https://assets.bitrabbit.com/market/market.*.js/ http://localhost:8111/market.bundle.js
 ```
 
-其中这里的`test.exchange.grootapp.com`是线上测试地址
 
 ## 部署
 
@@ -30,5 +29,7 @@ $ npm run deploy
 
 然后在`dist`目录下找到各个文件。
 
+## 线上部署
+将dist目录下的`market.html`文件中的内容替换toastio项目中的`app/views/markets/show.html.erb`文件内容，然后提交代码让老龚部署
 **注：各个文件放在`toastio`项目中，是不同的路径，切记！**
 

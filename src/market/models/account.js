@@ -6,6 +6,9 @@ import toast from '../components/common/toast';
 const deleteOrder = (id, type) => fetch.delete(QUERY.DELETE_ORDER(id, type)).catch(err => err);
 const queryHistoryLog = (payload, options) => fetch.get(QUERY.TRADES, payload, options).catch(err => err);
 
+const marketId = window.document.body.dataset.market_id;
+const locale = window.locale;
+
 const model = {
   namespace: 'account',
   state: {
@@ -16,6 +19,7 @@ const model = {
     historyLogs: [],
     historyPage: {
       total: 1,
+      total_pages: 1,
     },
     page: 1,
     count: 20,
@@ -96,12 +100,10 @@ const model = {
     * queryHistoryLog({ payload }, { select, call, put }) {
       const page = yield select(({ account }) => account.page);
       const count = yield select(({ account }) => account.count);
-      const locale = window.locale;
-      const marketId = window.document.body.dataset.market_id;
       const options = {
         credentials: 'include',
       };
-      const data = yield call(queryHistoryLog, { ...payload, page, count, locale, market_id: marketId }, options);
+      const data = yield call(queryHistoryLog, { page, count, locale, market_id: marketId, ...payload }, options);
       if (data.success) {
         const history = data.data;
         yield put({
@@ -109,7 +111,8 @@ const model = {
           payload: {
             historyLogs: history.trades,
             historyPage: {
-              total: history.total_pages,
+              total: history.total_pages * count || 1,
+              total_pages: history.total_pages,
             },
           },
         });

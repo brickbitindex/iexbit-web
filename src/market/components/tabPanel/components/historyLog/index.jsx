@@ -40,16 +40,27 @@ const trades = [{
 class HistoryLog extends Component {
   render() {
     const { historyLogs, historyPage } = this.props;
+    console.log(historyPage);
     const paginationProps = {
-      total: historyPage.total_pages,
+      total: historyPage.total,
+      pageSize: 20,
+      onChange: (page) => {
+        this.props.dispatch({
+          type: 'account/queryHistoryLog',
+          payload: {
+            page,
+          },
+        });
+      },
     };
     return (
       <div id="historyLog">
         <Table
           dataSource={historyLogs}
           columns={trades}
-          pagination={paginationProps.total_pages > 1 ? paginationProps : false}
+          pagination={historyPage.total_pages > 1 ? paginationProps : false}
           size="small"
+          rowKey="id"
         />
       </div>
     );

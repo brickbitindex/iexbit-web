@@ -65,7 +65,7 @@ class MyOrders extends Component {
                 <FormattedDate value={date} month="2-digit" day="2-digit" /> <FormattedTime value={date} hour="2-digit" minute="2-digit" hour12={false} />
               </div>
               <div className="myorder-col opt">
-                <span onClick={() => this.handleDelete(row)}><i className="anticon anticon-delete" /></span>
+                <span onClick={() => this.handleDelete(row)}><FormattedMessage id="cancel" /></span>
               </div>
             </div>
           );
