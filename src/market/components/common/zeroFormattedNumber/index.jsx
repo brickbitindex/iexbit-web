@@ -1,17 +1,12 @@
 import React from 'react';
-import { injectIntl } from 'react-intl';
 
 const reg = /0+$/;
 
 function C(props) {
   const { value, fixed } = props;
-  const formatNumber = props.intl.formatNumber;
   let ret = value;
   if (fixed >= 0) {
-    ret = formatNumber(value, {
-      minimumFractionDigits: fixed,
-      maximumFractionDigits: fixed,
-    });
+    ret = parseFloat(value).toFixed(fixed);
   }
   const zero = ret.match(reg);
   if (zero) {
@@ -20,4 +15,4 @@ function C(props) {
   return <span>{ret}</span>;
 }
 
-export default injectIntl(C);
+export default C;
