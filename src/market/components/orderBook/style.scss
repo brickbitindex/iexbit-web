@@ -67,6 +67,8 @@
       .order-book-col {
         z-index: 1;
         box-sizing: border-box;
+        overflow: hidden;
+
         &.price {
           width: 30%;
           text-align: right;
