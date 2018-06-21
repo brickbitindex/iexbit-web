@@ -46,10 +46,20 @@
     }
 
     .order-book-row {
-      display: flex;
-      position: relative;
       height: 20px;
       line-height: 20px;
+      position: relative;
+
+      .order-book-row-content {
+        height: 20px;
+        line-height: 20px;
+        display: flex;
+        position: absolute;
+        width: 100%;
+        left: 0;
+        z-index: 10;
+      }
+
 
       &:not(.thead) {
         cursor: pointer;
@@ -72,16 +82,19 @@
         &.price {
           width: 30%;
           text-align: right;
-          padding-left: 6px;
+          margin-left: 6px;
+          margin-right: 2px;
         }
         &.amount {
           width: 35%;
           text-align: right;
+          margin: 0 2px;
         }
         &.total {
           width: 35%;
           text-align: right;
-          padding-right: 6px;
+          margin-left: 2px;
+          margin-right: 6px;
         }
       }
     }

@@ -72,15 +72,15 @@ var config = {
       },
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!autoprefixer?{browsers:["last 2 version", "> 1%"]}')
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss')
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!autoprefixer?{browsers:["last 2 version", "> 1%"]}!sass')
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss!sass')
       },
       {
         test: /\.less$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!autoprefixer?{browsers:["last 2 version", "> 1%"]}!less')
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss!less')
       },
       {
         test: /\.(jpe?g|png|gif)$/i,
