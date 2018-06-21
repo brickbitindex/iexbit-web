@@ -19,6 +19,8 @@
     }
  
     .trades-col {
+      overflow: hidden;
+
       &.time {
         width: 25%;
         text-align: center;
