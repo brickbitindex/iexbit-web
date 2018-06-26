@@ -1,7 +1,7 @@
 #myOrders {
   overflow: auto;
   height: 100%;
-  position: relative;
+  position: static;
 
   .myorder-row {
     display: flex;

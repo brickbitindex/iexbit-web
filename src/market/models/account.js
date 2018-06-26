@@ -4,6 +4,10 @@ import QUERY, { fetch } from './querys';
 import toast from '../components/common/toast';
 
 const deleteOrder = (id, type) => fetch.delete(QUERY.DELETE_ORDER(id, type)).catch(err => err);
+const queryHistoryLog = (payload, options) => fetch.get(QUERY.TRADES, payload, options).catch(err => err);
+
+const marketId = window.document.body.dataset.market_id;
+const locale = window.locale;
 
 const model = {
   namespace: 'account',
@@ -12,6 +16,13 @@ const model = {
     orders: [],
     anonymous: !window.gon.current_user,
     currentUser: {},
+    historyLogs: [],
+    historyPage: {
+      total: 1,
+      total_pages: 1,
+    },
+    page: 1,
+    count: 20,
   },
   subscriptions: {
     setup({ dispatch }) {
@@ -26,11 +37,15 @@ const model = {
     },
   },
   effects: {
-    * deleteOrder({ payload }, { call }) {
+    * deleteOrder({ payload }, { call, put }) {
       const response = yield call(deleteOrder, payload.id, payload.kind);
       if (response.ok) {
         toast.info('text_order_delete');
       }
+      yield put({
+        type: 'queryHistoryLog',
+        payload: {},
+      });
     },
     * updateOrders({ payload }, { select, put }) {
       let orders = yield select(({ account }) => account.orders);
@@ -72,11 +87,36 @@ const model = {
       }
       orders.sort((a, b) => b.id - a.id);
       yield put({
+        type: 'queryHistoryLog',
+        payload: {},
+      });
+      yield put({
         type: 'updateState',
         payload: {
           orders,
         },
       });
+    },
+    * queryHistoryLog({ payload }, { select, call, put }) {
+      const page = yield select(({ account }) => account.page);
+      const count = yield select(({ account }) => account.count);
+      const options = {
+        credentials: 'include',
+      };
+      const data = yield call(queryHistoryLog, { page, count, locale, market_id: marketId, ...payload }, options);
+      if (data.success) {
+        const history = data.data;
+        yield put({
+          type: 'updateState',
+          payload: {
+            historyLogs: history.trades,
+            historyPage: {
+              total: history.total_pages * count || 1,
+              total_pages: history.total_pages,
+            },
+          },
+        });
+      }
     },
   },
   reducers: {

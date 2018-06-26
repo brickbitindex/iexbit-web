@@ -3,51 +3,38 @@ import classnames from 'classnames';
 import autobind from 'autobind-decorator';
 import { FormattedMessage } from 'react-intl';
 import Loading from '../loading';
+import { Tabs } from '../../lib/antd';
 
-import MyOrders from '../myOrders';
-import MessageCenter from '../messageCenter';
+import MyOrders from './components/myOrders';
+import MessageCenter from './components/messageCenter';
+import HistoryLog from './components/historyLog';
 
 import './style.scss';
 
-const keyMap = {
-  myOrders: 'myOrders',
-  messageCenter: 'messageCenter',
-};
+const TabPane = Tabs.TabPane;
 
 export default class WrappedTabPanelComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
       show: true,
-      current: keyMap.myOrders,
+      current: 'myOrders',
     };
   }
-  handleTitleChange(index, title) {
-    const titles = [...this.state.titles];
-    titles[index] = title;
-    this.setState({
-      titles,
-    });
-  }
   @autobind
-  handleSlideClick() {
-    this.setState({
-      show: !this.state.show,
-    });
-  }
   handleTabClick(key) {
     this.setState({
       current: key,
     });
   }
   render() {
-    const { show, slideable, current } = this.state;
+    const { current } = this.state;
     const { loadings } = this.props;
     const loading = loadings[current];
     const outerClassName = this.props.className;
     return (
       <div className={classnames('cb-panel cb-panel-tab', outerClassName, { loading })}>
-        <div className="cb-panel-title">
+        {/* <div className="cb-panel-title">
           <span className={classnames('cb-panel-tab-title', { active: current === keyMap.myOrders })} onClick={this.handleTabClick.bind(this, keyMap.myOrders)}>
             <FormattedMessage id="myorders" />
           </span>
@@ -71,7 +58,23 @@ export default class WrappedTabPanelComponent extends Component {
           ) : (
             <MessageCenter />
           )}
-        </div>
+        </div> */}
+        {loading ? <Loading /> :
+        <Tabs
+          activeKey={current}
+          onChange={this.handleTabClick}
+        >
+          <TabPane key="myOrders" tab={<FormattedMessage id="myorders" />}>
+            <MyOrders />
+          </TabPane>
+          <TabPane key="messageCenter" tab={<FormattedMessage id="messagecenter" />}>
+            <MessageCenter />
+          </TabPane>
+          <TabPane key="historyLog" tab={<FormattedMessage id="history" />}>
+            <HistoryLog />
+          </TabPane>
+        </Tabs>
+        }
       </div>
     );
   }
