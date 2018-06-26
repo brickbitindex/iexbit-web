@@ -40,7 +40,6 @@ const trades = [{
 class HistoryLog extends Component {
   render() {
     const { historyLogs, historyPage } = this.props;
-    console.log(historyPage);
     const paginationProps = {
       total: historyPage.total,
       pageSize: 20,
@@ -60,7 +59,7 @@ class HistoryLog extends Component {
           columns={trades}
           pagination={historyPage.total_pages > 1 ? paginationProps : false}
           size="small"
-          rowKey="id"
+          rowKey={(_, i) => i}
         />
       </div>
     );
