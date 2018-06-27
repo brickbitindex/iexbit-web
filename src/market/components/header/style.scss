@@ -88,11 +88,22 @@ $priamry-hover-color: #ffe5b0;
     padding: 5px 8px;
     border-radius: 5px;
 
-    .header-assets {
+    & > i {
+      font-size: 24px;
+    }
+
+    &.simple-btn {
       color: $primary-color;
+
+      a {
+        text-decoration: none;
+        color: $primary-color;
+      }
       
       &:hover {
-        color: $priamry-hover-color;
+        a {
+          color: $priamry-hover-color;
+        }
       }
     }
 
@@ -105,9 +116,6 @@ $priamry-hover-color: #ffe5b0;
       }
     }
 
-    a {
-      text-decoration: none;
-    }
   }
 
   .search-btn {
@@ -293,27 +301,18 @@ $priamry-hover-color: #ffe5b0;
 
 }
 
-#localeSelector {
-  position: relative;
+// #localeSelector {
+//   position: relative;
+//   .header-menu {
+//     text-align: center;
+//   }
 
-  .header-locale {
-    color: $primary-color;
-
-    &:hover {
-      color: $priamry-hover-color;
-    }
-  }
-
-  .header-menu {
-    text-align: center;
-  }
-
-  &:hover {
-    .header-menu {
-      display: block;
-    }
-  }
-}
+//   &:hover {
+//     .header-menu {
+//       display: block;
+//     }
+//   }
+// }
 
 .ant-dropdown {
   .header-menu {

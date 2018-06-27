@@ -59,7 +59,7 @@ class HistoryLog extends Component {
           columns={trades}
           pagination={historyPage.total_pages > 1 ? paginationProps : false}
           size="small"
-          rowKey="id"
+          rowKey={(_, i) => i}
         />
       </div>
     );
