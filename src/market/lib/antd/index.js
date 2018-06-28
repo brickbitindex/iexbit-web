@@ -11,6 +11,7 @@ import Tabs from 'antd/lib/tabs';
 import Table from 'antd/lib/table';
 import Pagination from 'antd/lib/pagination';
 import Icon from 'antd/lib/icon';
+import Modal from 'antd/lib/modal';
 
 export {
   Button,
@@ -26,4 +27,5 @@ export {
   Table,
   Icon,
   Pagination,
+  Modal,
 };

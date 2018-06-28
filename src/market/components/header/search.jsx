@@ -74,19 +74,13 @@ export default class Search extends Component {
     return tab;
   }
   @autobind
-  handleMaskClick(e) {
-    if (e.target === this.$dom || e.target === this.$close) {
-      this.props.onCancel();
-    }
-  }
-  @autobind
   handleInputChange(e) {
     this.setState({
       filter: e.target.value.toUpperCase(),
     });
   }
   render() {
-    const { prices, show } = this.props;
+    const { prices } = this.props;
     const { filter } = this.state;
     let _prices = prices;
     let reg;
@@ -97,10 +91,9 @@ export default class Search extends Component {
     const reducedPrices = reducePrices(_prices);
     const tab = this.calculateTab(reducedPrices);
     return (
-      <div id="search" style={{ display: show ? 'flex' : 'none' }} onClick={this.handleMaskClick} ref={e => this.$dom = e}>
+      <div id="search" onClick={this.handleMaskClick} ref={e => this.$dom = e}>
         <div className="search-area">
           <div className="search-input">
-            <i className="close" ref={e => this.$close = e} />
             <i className="anticon anticon-search" />
             <input type="text" ref={e => this.$input = e} onChange={this.handleInputChange} value={this.state.filter} />
           </div>
