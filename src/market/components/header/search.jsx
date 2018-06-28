@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 // import classnames from 'classnames';
 import autobind from 'autobind-decorator';
 import Price from './price';
-import { Input, Icon, Tabs } from '../../lib/antd';
+import { Input, Icon, Tabs, Badge } from '../../lib/antd';
 
 const { TabPane } = Tabs;
 
@@ -30,7 +30,6 @@ function reducePrices(data) {
   });
   return ret;
 }
-
 
 export default class Search extends Component {
   constructor(props) {
@@ -92,8 +91,13 @@ export default class Search extends Component {
       _prices = prices.filter(p => p.name.match(reg));
     }
     const reducedPrices = reducePrices(_prices);
-    console.log(reducedPrices);
     const tab = this.calculateTab(reducedPrices);
+    const createTab = market => (
+      <span>
+        <FormattedMessage id="markets_tab" values={{ name: market.market }} />
+        {filter.length > 0 && <Badge count={market.currencies.length} />}
+      </span>
+    );
     return (
       <div id="search" onClick={this.handleMaskClick} ref={e => this.$dom = e}>
         <div className="search-area">
@@ -112,7 +116,7 @@ export default class Search extends Component {
                 //     {filter.length > 0 && <span className="search-prices-tab-badge">{market.currencies.length}</span>}
                 //   </span>
                 // </TabPane>
-                <TabPane key={market.market} tab={<FormattedMessage id="markets_tab" values={{ name: market.market }} />} />
+                <TabPane key={market.market} tab={createTab(market)} />
               ))}
             </Tabs>
             <div className="search-prices">

@@ -186,6 +186,13 @@ $primary-hover-color: #ffe5b0;
           }
           &-tab {
             font-size: 14px;
+            .ant-badge-count {
+              background-color: $primary-color;
+              margin-left: 5px;
+              color: #000;
+              border: 1px solid $primary-hover-color;
+              box-shadow: 0 0 0 1px $primary-hover-color;
+            }
           }
         }
       }

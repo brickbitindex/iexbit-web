@@ -12,6 +12,7 @@ import Table from 'antd/lib/table';
 import Pagination from 'antd/lib/pagination';
 import Icon from 'antd/lib/icon';
 import Modal from 'antd/lib/modal';
+import Badge from 'antd/lib/badge';
 
 export {
   Button,
@@ -28,4 +29,5 @@ export {
   Icon,
   Pagination,
   Modal,
+  Badge,
 };
