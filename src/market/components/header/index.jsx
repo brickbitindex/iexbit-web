@@ -109,8 +109,9 @@ class Header extends Component {
           onCancel={this.handleSearchBtnClick}
           footer={null}
           width="708px"
+          className="search-modal"
         >
-          <Search prices={prices} />
+          <Search prices={prices} show={this.state.showSearch} />
         </Modal>
       </div>
     );

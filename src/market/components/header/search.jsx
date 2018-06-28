@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
-import classnames from 'classnames';
+// import classnames from 'classnames';
 import autobind from 'autobind-decorator';
 import Price from './price';
+import { Input, Icon, Tabs } from '../../lib/antd';
+
+const { TabPane } = Tabs;
 
 function reducePrices(data) {
   let ret = {};
@@ -89,25 +92,29 @@ export default class Search extends Component {
       _prices = prices.filter(p => p.name.match(reg));
     }
     const reducedPrices = reducePrices(_prices);
+    console.log(reducedPrices);
     const tab = this.calculateTab(reducedPrices);
     return (
       <div id="search" onClick={this.handleMaskClick} ref={e => this.$dom = e}>
         <div className="search-area">
           <div className="search-input">
-            <i className="anticon anticon-search" />
-            <input type="text" ref={e => this.$input = e} onChange={this.handleInputChange} value={this.state.filter} />
+            <Input prefix={<Icon type="search" />} ref={e => this.$input = e} onChange={this.handleInputChange} value={this.state.filter} />
           </div>
           <div className="search-result">
-            <div className="search-result-tabs-bar">
-              {reducedPrices.map((market, i) => (
-                <div key={i} className={classnames('search-result-tabs-title', { active: tab === i })} onClick={() => this.setState({ tab: i, currentTabName: market.market })}>
-                  <span className="search-prices-tab">
-                    <FormattedMessage id="markets_tab" values={{ name: market.market }} />
-                    {filter.length > 0 && <span className="search-prices-tab-badge">{market.currencies.length}</span>}
-                  </span>
-                </div>
+            <Tabs
+              className="search-result-tabs-bar"
+              onChange={key => this.setState({ currentTabName: key })}
+            >
+              {reducedPrices.map(market => (
+                // <TabPane key={market.market} className={classnames('search-result-tabs-title')} tab={market.market} >
+                //   <span className="search-prices-tab">
+                //     <FormattedMessage id="markets_tab" values={{ name: market.market }} />
+                //     {filter.length > 0 && <span className="search-prices-tab-badge">{market.currencies.length}</span>}
+                //   </span>
+                // </TabPane>
+                <TabPane key={market.market} tab={<FormattedMessage id="markets_tab" values={{ name: market.market }} />} />
               ))}
-            </div>
+            </Tabs>
             <div className="search-prices">
               {reducedPrices[tab] && reducedPrices[tab].currencies.map((price, i) => (<Price key={i} data={price} highlightReg={reg} />))}
             </div>
