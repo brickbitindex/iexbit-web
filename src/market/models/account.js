@@ -1,7 +1,7 @@
 /* eslint no-confusing-arrow: 0 */
 
 import QUERY, { fetch } from './querys';
-import toast from '../components/common/toast';
+import { message } from '../lib/antd';
 
 const deleteOrder = (id, type) => fetch.delete(QUERY.DELETE_ORDER(id, type)).catch(err => err);
 const queryHistoryLog = (payload, options) => fetch.get(QUERY.TRADES, payload, options).catch(err => err);
@@ -40,7 +40,7 @@ const model = {
     * deleteOrder({ payload }, { call, put }) {
       const response = yield call(deleteOrder, payload.id, payload.kind);
       if (response.ok) {
-        toast.info('text_order_delete');
+        message.info('text_order_delete');
       }
       yield put({
         type: 'queryHistoryLog',
@@ -68,7 +68,7 @@ const model = {
           // 订单成交
           orders.splice(orders.indexOf(idArr[0]), 1);
           const currentBasicInfo = yield select(({ market }) => market.currentBasicInfo);
-          toast.info('text_order_done');
+          message.info('text_order_done');
           yield put({
             type: 'utils/pushMessage',
             payload: {

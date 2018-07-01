@@ -1,5 +1,6 @@
 import qs from 'qs';
 import '../../assets/lib/fetch';
+import { message } from '../lib/antd';
 
 const fetchlib = window.fetch;
 const market = document.body.getAttribute('data-market') || '';
@@ -31,12 +32,33 @@ function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response;
   }
-  throw response.json();
+  const { status, statusText } = response;
+  throw new Error(`[${status}] ${statusText}`);
 }
 
 function parseJSON(response) {
   return response.json();
 }
+
+function processData(data) {
+  if (data.success === false) {
+    // TODO: 兼容老版本
+    if (data.message) {
+      message.error(data.message);
+    } else {
+      data.errors.forEach(e => message.error(e.message ? e.message : e));
+    }
+  }
+  return data;
+}
+
+function catchError(error) {
+  message.error(error.message, 1000);
+  return {
+    success: false,
+  };
+}
+
 
 export const fetch = {
   post(url, data, options = {}) {
@@ -57,7 +79,9 @@ export const fetch = {
       credentials: 'include',
     })
     .then(checkStatus)
-    .then(parseJSON);
+    .then(parseJSON)
+    .then(processData)
+    .catch(catchError);
   },
   delete(url, options = {}) {
     return fetchlib(url, {
@@ -69,7 +93,9 @@ export const fetch = {
       method: 'DELETE',
       credentials: 'include',
     })
-    .then(checkStatus);
+    .then(checkStatus)
+    .then(processData)
+    .catch(catchError);
   },
   get(url, data, options = {}) {
     let queryUrl = url;
@@ -84,7 +110,9 @@ export const fetch = {
       method: 'GET',
     })
     .then(checkStatus)
-    .then(parseJSON);
+    .then(parseJSON)
+    .then(processData)
+    .catch(catchError);
   },
 };
 

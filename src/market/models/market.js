@@ -13,7 +13,7 @@
  */
 import Decimal from 'decimal.js-light';
 import QUERY, { fetch } from './querys';
-import toast from '../components/common/toast';
+import { message } from '../lib/antd';
 import { getDecimalCount, formatMessage } from '../lib/utils';
 
 const addBidOrder = data => fetch.post(QUERY.ADD_BID_ORDER, data).catch(err => err);
@@ -151,7 +151,7 @@ const model = {
       }
       const response = yield call(caller, params);
       if (response.result) {
-        toast.info('text_order_success');
+        message.info('text_order_success');
         const currentBasicInfo = yield select(({ market }) => market.currentBasicInfo);
         yield put({
           type: 'utils/pushMessage',
@@ -167,8 +167,6 @@ const model = {
             },
           },
         });
-      } else {
-        toast.error(response.message);
       }
     },
     * queryPrices(_, { select, call, put }) {
