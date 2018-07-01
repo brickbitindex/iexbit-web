@@ -34,31 +34,6 @@ export default class WrappedTabPanelComponent extends Component {
     const outerClassName = this.props.className;
     return (
       <div className={classnames('cb-panel cb-panel-tab', outerClassName, { loading })}>
-        {/* <div className="cb-panel-title">
-          <span className={classnames('cb-panel-tab-title', { active: current === keyMap.myOrders })} onClick={this.handleTabClick.bind(this, keyMap.myOrders)}>
-            <FormattedMessage id="myorders" />
-          </span>
-          <span className={classnames('cb-panel-tab-title', { active: current === keyMap.messageCenter })} onClick={this.handleTabClick.bind(this, keyMap.messageCenter)}>
-            <FormattedMessage id="messagecenter" />
-          </span>
-          {slideable && (
-            <span className="simple-btn" onClick={this.handleSlideClick}><i className={classnames('anticon', `anticon-${show ? 'down' : 'up'}`)} /></span>
-          )}
-        </div>
-        <div className="cb-panel-content cb-panel-tab-content" style={{ display: (show && current === keyMap.myOrders) ? 'block' : 'none' }}>
-          {loading ? (
-            <Loading />
-          ) : (
-            <MyOrders />
-          )}
-        </div>
-        <div className="cb-panel-content cb-panel-tab-content" style={{ display: (show && current === keyMap.messageCenter) ? 'block' : 'none' }}>
-          {loading ? (
-            <Loading />
-          ) : (
-            <MessageCenter />
-          )}
-        </div> */}
         {loading ? <Loading /> :
         <Tabs
           activeKey={current}

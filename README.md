@@ -7,6 +7,17 @@ This is the source of iexbit
 $ npm run dev
 ```
 
+开发时切记验证移动端样式，约定以`875px`为界：
+
+```scss
+@media (max-width: 875px) {
+  /// ...
+}
+```
+
+若有元素需要只在移动端展示，则添加`.m-only`即可。
+若有元素需要在移动端隐藏，则添加`.m-hide`即可。
+
 ### 新增页面
 
 在`webpack/`目录下，在`routers.deploy.json`和`routers.dev.json`中增加路由即可。
