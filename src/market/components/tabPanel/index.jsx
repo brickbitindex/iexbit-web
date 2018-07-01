@@ -33,7 +33,7 @@ export default class WrappedTabPanelComponent extends Component {
     const loading = loadings[current];
     const outerClassName = this.props.className;
     return (
-      <div className={classnames('cb-panel cb-panel-tab', outerClassName, { loading })}>
+      <div className={classnames('cb-panel cb-panel-tab m-part-info', outerClassName, { loading })}>
         {loading ? <Loading /> :
         <Tabs
           activeKey={current}

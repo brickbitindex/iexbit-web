@@ -139,12 +139,12 @@ class Chart extends Component {
           </SimpleSelect>
         </span>
       </Tooltip>,
-      <span className="divider" key="3" />,
-      <span className={classnames('simple-btn text', { active: studies.ma7 })} onClick={this.handleTriggerStudy.bind(this, 'ma7')} key="4">MA(7)</span>,
-      <span className={classnames('simple-btn text', { active: studies.ma25 })} onClick={this.handleTriggerStudy.bind(this, 'ma25')} key="5">MA(25)</span>,
-      <span className={classnames('simple-btn text', { active: studies.rsi })} onClick={this.handleTriggerStudy.bind(this, 'rsi')} key="6">RSI</span>,
-      <span className={classnames('simple-btn text', { active: studies.macd })} onClick={this.handleTriggerStudy.bind(this, 'macd')} key="7">MACD</span>,
-      <span className={classnames('simple-btn text', { active: studies.bb })} onClick={this.handleTriggerStudy.bind(this, 'bb')} key="8">BB</span>,
+      <span className="divider m-hide" key="3" />,
+      <span className={classnames('simple-btn text m-hide', { active: studies.ma7 })} onClick={this.handleTriggerStudy.bind(this, 'ma7')} key="4">MA(7)</span>,
+      <span className={classnames('simple-btn text m-hide', { active: studies.ma25 })} onClick={this.handleTriggerStudy.bind(this, 'ma25')} key="5">MA(25)</span>,
+      <span className={classnames('simple-btn text m-hide', { active: studies.rsi })} onClick={this.handleTriggerStudy.bind(this, 'rsi')} key="6">RSI</span>,
+      <span className={classnames('simple-btn text m-hide', { active: studies.macd })} onClick={this.handleTriggerStudy.bind(this, 'macd')} key="7">MACD</span>,
+      <span className={classnames('simple-btn text m-hide', { active: studies.bb })} onClick={this.handleTriggerStudy.bind(this, 'bb')} key="8">BB</span>,
       <Tooltip title={<FormattedMessage id="tv_fullscreen" />} key="9">
         <span className="simple-btn tooltip-container fullscreen" onClick={this.handleFullScreen}>
           <Icon type="arrows-alt" />
@@ -231,6 +231,30 @@ class Chart extends Component {
         datafeed,
       },
     });
+    const disabledFeatures = [
+      'header_symbol_search',
+      'use_localstorage_for_settings',
+      'symbol_search_hot_key',
+      // 'header_chart_type',
+      'header_compare',
+      'header_undo_redo',
+      'header_screenshot',
+      'header_saveload',
+      'timeframes_toolbar',
+      'context_menus',
+      'left_toolbar',
+      'header_indicators', // 图表指标
+      'header_settings', // 设置
+      // 'header_resolutions',  // 时间下拉框
+      // 'header_fullscreen_button' //全屏按钮
+      // 'format_button_in_legend', // 顶端标题里study的设置按钮
+      'volume_force_overlay', // 交易量分离
+    ];
+    if (this.props.isMobile) {
+      // 底部控制栏
+      disabledFeatures.push('control_bar');
+    }
+
     this.tvWidget = new TradingView.widget({
       symbol: 'Bitrabbit' + symbol,
       interval: '15',
@@ -242,25 +266,7 @@ class Chart extends Component {
       // Regression Trend-related functionality is not implemented yet, so it's hidden for a while
       drawings_access: { type: 'black', tools: [{ name: 'Regression Trend' }] },
       // TODO: 禁用
-      disabled_features: [
-        'header_symbol_search',
-        'use_localstorage_for_settings',
-        'symbol_search_hot_key',
-        // 'header_chart_type',
-        'header_compare',
-        'header_undo_redo',
-        'header_screenshot',
-        'header_saveload',
-        'timeframes_toolbar',
-        'context_menus',
-        'left_toolbar',
-        'header_indicators', // 图表指标
-        'header_settings', // 设置
-        // 'header_resolutions',  // 时间下拉框
-        // 'header_fullscreen_button' //全屏按钮
-        // 'format_button_in_legend', // 顶端标题里study的设置按钮
-        'volume_force_overlay', // 交易量分离
-      ],
+      disabled_features: disabledFeatures,
       // TODO: 启用了
       enabled_features: [
         'dont_show_boolean_study_arguments',
@@ -362,18 +368,19 @@ class Chart extends Component {
   }
 }
 
-function mapStateToProps({ market, i18n }) {
+function mapStateToProps({ market, i18n, mobile }) {
   return {
     symbol: market.pairSymbol,
     pair: market.pair,
     basicInfo: market.currentBasicInfo,
     messages: i18n.messages,
     locale: i18n.locale,
+    isMobile: mobile.isMobile,
   };
 }
 
 export default wrapWithPanel(connect(mapStateToProps)(Chart), {
   title: <span />,
-  className: 'chart-panel chart-container',
+  className: 'chart-panel chart-container m-part-market',
 });
 

@@ -39,7 +39,7 @@ $itemHeight: 30px;
       line-height: $itemHeight;
     }
     .order-item {
-      width: 80%;
+      width: 100%;
     }
 
     &.small {
@@ -101,4 +101,39 @@ $itemHeight: 30px;
 .cb-panel.sell-panel {
   overflow: hidden;
   width: 275px;
+}
+
+@media (max-width: 875px) {
+  .cb-panel.buy-panel {
+    margin-bottom: 2px;
+  }
+  .cb-panel.sell-panel {
+    margin-right: 2px;
+  }
+
+  .order {
+    padding: 12px 8px;
+    height: 250px;
+
+    .order-balance {
+      display: block;
+      height: auto;
+      line-height: 1.5;
+
+      .order-balance-value {
+        text-align: left;
+      }
+    }
+
+    .order-row,
+    .order-row .ant-select-selection,
+    .order-btn.ant-btn {
+      height: 24px;
+    }
+
+    .order-input .order-input-suffix,
+    .ant-select-selection__rendered {
+      line-height: 24px;
+    }
+  }
 }

@@ -21,6 +21,10 @@ $primary-hover-color: #ffe5b0;
     img {
       height: $logoHeight;
     }
+
+    img:first-child {
+      margin-right: 6px;
+    }
   }
 
   .market-name {
@@ -131,32 +135,19 @@ $primary-hover-color: #ffe5b0;
     justify-content: center;
     align-items: flex-start;
     font-size: 12px;
-  
     .search-area {
-      width: 660px;
-      height: 100%;
+      width: 100%;
       background: #181818;
       position: relative;
-  
       .search-input {
         width: 100%;
         padding-top: 40px;
         text-align: center;
-    
         .anticon-search {
-          position: absolute;
-          left: 135px;
-          top: -10px;
           font-size: 20px;
           color: $primary-color;
-          cursor: pointer;
-          &:hover {
-            color: $primary-hover-color;
-          }
         }
-    
         input {
-          width: 60%;
           height: 40px;
           margin: 0;
           padding-left: 40px;
@@ -168,21 +159,19 @@ $primary-hover-color: #ffe5b0;
           font-size: 20px;
           text-align: left;
           border: 1px solid $primary-color;
-          
           &:hover {
             border-color: $primary-hover-color;
           }
         }
       }
       .search-result {
-
         .search-result-tabs-bar {
           text-align: center;
         }
-        
         .ant-tabs {
           &-bar {
             margin: 20px 0 0 0;
+            border-bottom: none;
           }
           &-tab {
             font-size: 14px;
@@ -196,32 +185,23 @@ $primary-hover-color: #ffe5b0;
           }
         }
       }
-      
-    
       .search-prices {
         text-align: center;
         padding: 32px 0;
         box-sizing: border-box;
         overflow: auto;
-    
         .header-price {
-          max-width: 200px;
-          flex-shrink: 1;
-          flex-grow: 1;
           padding: 12px;
           display: inline-block;
           width: 160px;
           box-sizing: border-box;
-      
           &>div {
             line-height: 20px;
           }
-      
           .highlight {
             background: $primary-color;
             color: rgba(#000, 0.65);
           }
-    
           .header-price-name {
             color: rgba(#FFF, 0.65);
           }
@@ -233,7 +213,6 @@ $primary-hover-color: #ffe5b0;
       }
     }
   }
-  
   .ant-dropdown {
     .header-menu {
       background: $primary-color;
@@ -247,15 +226,86 @@ $primary-hover-color: #ffe5b0;
           border-radius: 4px;
           color: #252529;
         }
-  
         a {
           color: #181818;
-  
           &:hover {
             background: #fff;
             color: #252529;
           }
         }
+      }
+    }
+  }
+}
+
+@media (max-width: 875px) {
+  div#header {
+    height: 45px;
+    justify-content: space-between;
+
+    .header-opts-btn {
+      padding: 5px;
+    }
+
+    .logo-container {
+      width: auto;
+      padding-left: 12px;
+    }
+
+    .market-name {
+      margin-right: 0;
+
+      .header-opt-trades {
+        padding: 0;
+
+        .t1 {
+          font-size: 20px;
+        }
+        .t2 {
+          font-size: 16px;
+        }
+      }
+      .search-btn {
+        padding: 2px 0;
+      }
+    }
+
+    .header-opts-btn.anticon-user,
+    .header-opts-btn > i {
+      font-size: 20px;
+    }
+
+    .header-locale {
+      font-size: 12px;
+    }
+
+    .header-opts {
+      flex-grow: 3;
+      padding-right: 12px;
+    }
+  }
+}
+
+@media (max-width: 875px) {
+  .search-modal #search .search-area {
+    .search-prices {
+      padding: 0.12rem 0 0;
+    }
+
+    .search-prices .header-price {
+      width: auto;
+      display: flex;
+      padding: 0;
+      margin-bottom: 0.12rem;
+      justify-content: space-between;
+
+      .header-price-current span {
+        display: inline-block;
+        width: auto;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
       }
     }
   }

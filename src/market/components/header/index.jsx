@@ -7,7 +7,6 @@ import Search from './search';
 import Account from './account';
 import { Dropdown, Menu, Icon, Modal } from '../../lib/antd';
 import ZeroFormattedNumber from '../common/zeroFormattedNumber';
-import logoImg from '../../../assets/images/logo_all.svg';
 
 import './style.scss';
 
@@ -53,7 +52,8 @@ class Header extends Component {
       <div id="header" className="flex-fixed">
         <div className="logo-container flex-fixed">
           <a href={`/${locale.toLowerCase()}`}>
-            <img src={logoImg} alt="Bitrabbit" />
+            <img src="https://assets.bitrabbit.com/upload/29e044ad-d025-4225-abcd-7494e9541d1f.svg" alt="Bitrabbit" />
+            <img className="m-hide" src="https://assets.bitrabbit.com/upload/0d41cc5e-184f-40dd-b5fb-6ca512252695.svg" alt="Bitrabbit" />
           </a>
         </div>
         <div className="market-name flex-autofixed" onClick={this.handleSearchBtnClick}>
@@ -66,7 +66,7 @@ class Header extends Component {
           </span>
         </div>
         {current && [(
-          <div key="0" className="market-info flex-autofixed">
+          <div key="0" className="market-info flex-autofixed m-hide">
             <div className="mt"><FormattedMessage id="market_change" /></div>
             <div className="mv tt">
               <span className={classnames(current.down ? 'red-text' : 'green-text')}>
@@ -75,24 +75,24 @@ class Header extends Component {
             </div>
           </div>
         ), (
-          <div key="1" className="market-info flex-autofixed">
+          <div key="1" className="market-info flex-autofixed m-hide">
             <div className="mt"><FormattedMessage id="market_low" /></div>
             <div className="mv tt"><ZeroFormattedNumber value={current.low} /> <span className="light-text">{quoteUnit}</span></div>
           </div>
         ), (
-          <div key="2" className="market-info flex-autofixed">
+          <div key="2" className="market-info flex-autofixed m-hide">
             <div className="mt"><FormattedMessage id="market_high" /></div>
             <div className="mv tt"><ZeroFormattedNumber value={current.high} /> <span className="light-text">{quoteUnit}</span></div>
           </div>
         ), (
-          <div key="3" className="market-info flex-autofixed">
+          <div key="3" className="market-info flex-autofixed m-hide">
             <div className="mt"><FormattedMessage id="market_vol" /></div>
             <div className="mv tt"><ZeroFormattedNumber value={current.volume} /> <span className="light-text">{baseUnit}</span></div>
           </div>
         )]}
         <div className="header-opts flex-fixed">
           {!anonymous && (
-            <span className="header-opts-btn simple-btn">
+            <span className="header-opts-btn simple-btn m-hide">
               <a target="_blank" className="header-assets" href="/dashboard/#/assets" rel="noopener noreferrer"><FormattedMessage id="header_assets" /></a>
             </span>
           )}

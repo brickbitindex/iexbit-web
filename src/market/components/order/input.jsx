@@ -15,11 +15,11 @@ export default class OrderInput extends Component {
     this.props.onChange(e);
   }
   render() {
-    const { className, suffix } = this.props;
+    const { className, suffix, placeholder, size } = this.props;
     const value = this.props.value || '';
     return (
       <div className={classnames('order-input', className)}>
-        <Input className="tt" value={value} onChange={this.handleChange} />
+        <Input size={size} placeholder={placeholder} className="tt" value={value} onChange={this.handleChange} />
         {suffix && (
           <span className="order-input-suffix light-text">{suffix}</span>
         )}

@@ -80,3 +80,15 @@ $marketHeight: 52px + 2px + 2px;
     height: $marketHeight;
   }
 }
+
+@media (max-width: 875px) {
+  .cb-panel.buy-panel, .cb-panel.sell-panel, .cb-panel.orderBook-panel, .cb-panel.trades-panel {
+    width: auto;
+  }
+
+  .cb-panel.trades-panel,
+  .cb-panel.buy-panel, .cb-panel.sell-panel,
+  .cb-panel.cb-panel-tab {
+    height: auto;
+  }
+}

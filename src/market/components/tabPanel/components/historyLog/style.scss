@@ -5,3 +5,19 @@
     }
   }
 }
+
+@media (max-width: 875px) {
+  #historyLog {
+    padding: 6px 12px;
+
+    .mobile-table .mobile-table-row {
+      display: inline-block;
+      width: 33.3%;
+
+      &.price,
+      &.fee {
+        text-align: right;
+      }
+    }
+  }
+}

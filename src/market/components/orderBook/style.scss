@@ -143,3 +143,31 @@
 .cb-panel.orderBook-panel.loading {
   background: #181818;
 }
+
+@media (max-width: 875px) {
+  .cb-panel.orderBook-panel {
+    margin-right: 0;
+  }
+
+  #orderBook {
+    .order-book .order-book-row .order-book-col.price,
+    .order-book .order-book-row .order-book-col.amount {
+      width: 50%;
+    }
+  }
+
+  
+  .m-show-trade {
+    #orderBook .order-book-container.mode-all .order-book.asks {
+      margin-bottom: 8px;
+    }
+
+    #orderBook .order-book-container.mode-all .order-book.bids, #orderBook .order-book-container.mode-all .order-book.asks {
+      height: 48%;
+    }
+
+    .cb-panel.orderBook-panel {
+      height: 500px;
+    }
+  }
+}

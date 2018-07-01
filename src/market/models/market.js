@@ -242,7 +242,8 @@ const model = {
       });
       trades = Object.keys(tradesObj).map(k => tradesObj[k]);
       trades.sort((a, b) => b.date - a.date);
-      trades = trades.slice(0, 100);
+      const isMobile = yield select(({ mobile }) => mobile.isMobile);
+      trades = trades.slice(0, isMobile ? 10 : 100);
       if (trades[0]) {
         yield put({
           type: 'updateDatafeedLast',

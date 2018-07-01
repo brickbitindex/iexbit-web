@@ -1,0 +1,28 @@
+.mobile-table {
+  .mobile-table-block {
+    margin-bottom: 8px;
+    border-bottom: 1px solid #54585A;
+
+    &:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+  }
+
+  .mobile-table-row {
+    margin-bottom: 8px;
+
+    .mobile-table-row-title {
+      font-weight: 600;
+    }
+
+    .mobile-table-row-value {
+      word-break: break-all;
+    }
+  }
+
+  .mobile-table-empty {
+    text-align: center;
+    color: #54585A;
+  }
+}

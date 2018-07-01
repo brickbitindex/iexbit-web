@@ -102,7 +102,7 @@ export default class Search extends Component {
       <div id="search" onClick={this.handleMaskClick} ref={e => this.$dom = e}>
         <div className="search-area">
           <div className="search-input">
-            <Input prefix={<Icon type="search" />} ref={e => this.$input = e} onChange={this.handleInputChange} value={this.state.filter} />
+            <Input style={{ maxWidth: '390px' }} prefix={<Icon type="search" />} ref={e => this.$input = e} onChange={this.handleInputChange} value={this.state.filter} />
           </div>
           <div className="search-result">
             <Tabs

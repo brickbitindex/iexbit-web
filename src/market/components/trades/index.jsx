@@ -59,5 +59,5 @@ function mapStateToProps({ market }) {
 
 export default wrapWithPanel(connect(mapStateToProps)(Trades), {
   title: <FormattedMessage id="trades" />,
-  className: 'trades-panel',
+  className: 'trades-panel m-part-market',
 });
