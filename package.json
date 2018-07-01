@@ -75,6 +75,7 @@
     "jquery": "^3.2.1",
     "keymaster": "^1.6.2",
     "moment": "^2.19.4",
+    "postcss-loader": "^2.1.5",
     "qs": "^6.5.1",
     "rc-slider": "^8.6.0",
     "rc-tooltip": "^3.7.0",

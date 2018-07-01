@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
-import classnames from 'classnames';
+// import classnames from 'classnames';
 import autobind from 'autobind-decorator';
 import Price from './price';
+import { Input, Icon, Tabs, Badge } from '../../lib/antd';
+
+const { TabPane } = Tabs;
 
 function reducePrices(data) {
   let ret = {};
@@ -27,7 +30,6 @@ function reducePrices(data) {
   });
   return ret;
 }
-
 
 export default class Search extends Component {
   constructor(props) {
@@ -74,19 +76,13 @@ export default class Search extends Component {
     return tab;
   }
   @autobind
-  handleMaskClick(e) {
-    if (e.target === this.$dom || e.target === this.$close) {
-      this.props.onCancel();
-    }
-  }
-  @autobind
   handleInputChange(e) {
     this.setState({
       filter: e.target.value.toUpperCase(),
     });
   }
   render() {
-    const { prices, show } = this.props;
+    const { prices } = this.props;
     const { filter } = this.state;
     let _prices = prices;
     let reg;
@@ -96,25 +92,33 @@ export default class Search extends Component {
     }
     const reducedPrices = reducePrices(_prices);
     const tab = this.calculateTab(reducedPrices);
+    const createTab = market => (
+      <span>
+        <FormattedMessage id="markets_tab" values={{ name: market.market }} />
+        {filter.length > 0 && <Badge count={market.currencies.length} />}
+      </span>
+    );
     return (
-      <div id="search" style={{ display: show ? 'flex' : 'none' }} onClick={this.handleMaskClick} ref={e => this.$dom = e}>
+      <div id="search" onClick={this.handleMaskClick} ref={e => this.$dom = e}>
         <div className="search-area">
           <div className="search-input">
-            <i className="close" ref={e => this.$close = e} />
-            <i className="anticon anticon-search" />
-            <input type="text" ref={e => this.$input = e} onChange={this.handleInputChange} value={this.state.filter} />
+            <Input prefix={<Icon type="search" />} ref={e => this.$input = e} onChange={this.handleInputChange} value={this.state.filter} />
           </div>
           <div className="search-result">
-            <div className="search-result-tabs-bar">
-              {reducedPrices.map((market, i) => (
-                <div key={i} className={classnames('search-result-tabs-title', { active: tab === i })} onClick={() => this.setState({ tab: i, currentTabName: market.market })}>
-                  <span className="search-prices-tab">
-                    <FormattedMessage id="markets_tab" values={{ name: market.market }} />
-                    {filter.length > 0 && <span className="search-prices-tab-badge">{market.currencies.length}</span>}
-                  </span>
-                </div>
+            <Tabs
+              className="search-result-tabs-bar"
+              onChange={key => this.setState({ currentTabName: key })}
+            >
+              {reducedPrices.map(market => (
+                // <TabPane key={market.market} className={classnames('search-result-tabs-title')} tab={market.market} >
+                //   <span className="search-prices-tab">
+                //     <FormattedMessage id="markets_tab" values={{ name: market.market }} />
+                //     {filter.length > 0 && <span className="search-prices-tab-badge">{market.currencies.length}</span>}
+                //   </span>
+                // </TabPane>
+                <TabPane key={market.market} tab={createTab(market)} />
               ))}
-            </div>
+            </Tabs>
             <div className="search-prices">
               {reducedPrices[tab] && reducedPrices[tab].currencies.map((price, i) => (<Price key={i} data={price} highlightReg={reg} />))}
             </div>

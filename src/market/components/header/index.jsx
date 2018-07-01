@@ -5,7 +5,7 @@ import { connect } from 'dva-no-router';
 import classnames from 'classnames';
 import Search from './search';
 import Account from './account';
-import { Dropdown, Menu, Icon } from '../../lib/antd';
+import { Dropdown, Menu, Icon, Modal } from '../../lib/antd';
 import ZeroFormattedNumber from '../common/zeroFormattedNumber';
 import logoImg from '../../../assets/images/logo_all.svg';
 
@@ -103,7 +103,16 @@ class Header extends Component {
             </span>
           </Dropdown>
         </div>
-        <Search show={this.state.showSearch} prices={prices} onCancel={this.handleSearchBtnClick} />
+        {/* <Search show={this.state.showSearch} prices={prices} onCancel={this.handleSearchBtnClick} /> */}
+        <Modal
+          visible={this.state.showSearch}
+          onCancel={this.handleSearchBtnClick}
+          footer={null}
+          width="708px"
+          className="search-modal"
+        >
+          <Search prices={prices} show={this.state.showSearch} />
+        </Modal>
       </div>
     );
   }
