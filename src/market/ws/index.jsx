@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'dva';
 // import autobind from 'autobind-decorator';
 import ActionCable from 'actioncable';
-
-import toast from '../components/common/toast';
+import { message } from '../lib/antd';
 
 const channalConnect = {};
 
@@ -39,7 +38,7 @@ class IActionCable extends Component {
         this.checkLoading('myOrders');
         this.checkLoading('order');
       }
-      toast.info('text_connect');
+      message.info('text_connect');
       this.props.dispatch({
         type: 'utils/pushMessage',
         payload: {
@@ -52,7 +51,7 @@ class IActionCable extends Component {
   }
   channalDisconnected(tag) {
     if (getAllChannelConnect()) {
-      toast.warn('text_disconnect');
+      message.warn('text_disconnect');
       this.props.dispatch({
         type: 'utils/pushMessage',
         payload: {
@@ -192,6 +191,7 @@ class IActionCable extends Component {
     });
   }
   handleOrders(data) {
+    console.log(data);
     // TODO:
     this.checkLoading('myOrders');
     this.checkLoading('order');
