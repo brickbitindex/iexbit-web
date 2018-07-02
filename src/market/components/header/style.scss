@@ -80,10 +80,6 @@ $primary-hover-color: #ffe5b0;
   .header-opts {
     text-align: right;
     padding-right: $headerPadding;
-
-    & > * {
-      vertical-align: middle;
-    }
   }
 
   .header-opts-btn {
@@ -254,6 +250,7 @@ $primary-hover-color: #ffe5b0;
 
     .market-name {
       margin-right: 0;
+      padding: 0 6px 0 12px;
 
       .header-opt-trades {
         padding: 0;
@@ -272,7 +269,7 @@ $primary-hover-color: #ffe5b0;
 
     .header-opts-btn.anticon-user,
     .header-opts-btn > i {
-      font-size: 20px;
+      font-size: 18px;
     }
 
     .header-locale {
@@ -307,6 +304,14 @@ $primary-hover-color: #ffe5b0;
       &:last-child {
         margin-bottom: 0;
       }
+    }
+  }
+
+  #header #account {
+    font-size: 12px;
+
+    .header-opts-btn {
+      padding: 5px 0;
     }
   }
 }
