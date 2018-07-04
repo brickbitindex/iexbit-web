@@ -1,3 +1,5 @@
+import React from 'react';
+import { connect } from 'dva';
 import Button from 'antd/lib/button';
 import Select from 'antd/lib/select';
 import Slider from 'antd/lib/slider';
@@ -8,11 +10,13 @@ import Input from 'antd/lib/input';
 import Dropdown from 'antd/lib/dropdown';
 import Menu from 'antd/lib/menu';
 import Tabs from 'antd/lib/tabs';
-import Table from 'antd/lib/table';
+import OriginTable from 'antd/lib/table';
 import Pagination from 'antd/lib/pagination';
 import Icon from 'antd/lib/icon';
 import Modal from 'antd/lib/modal';
 import Badge from 'antd/lib/badge';
+
+import MobileTable from './mobileTable';
 
 const message = {};
 
@@ -26,6 +30,30 @@ const message = {};
     originMessage[k](_message, ...args);
   };
 });
+
+function mapStateToPropsTable({ mobile }) {
+  return {
+    isMobile: mobile.isMobile,
+  };
+}
+
+const Table = connect(mapStateToPropsTable)((props) => {
+  const { isMobile, useMobileTable } = props;
+  let size = props.size;
+  if (!size) {
+    size = isMobile ? 'middle' : 'default';
+  }
+  if (useMobileTable && isMobile) {
+    return <MobileTable {...props} />;
+  }
+  return (
+    <OriginTable
+      {...props}
+      size={size}
+    />
+  );
+});
+
 
 export {
   Button,

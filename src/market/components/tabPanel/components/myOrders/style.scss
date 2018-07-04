@@ -63,3 +63,42 @@
     overflow: auto;
   }
 }
+
+@media (max-width: 875px) {
+  #myOrders {
+    padding: 6px 12px;
+
+    .mobile-table .mobile-table-row {
+      display: inline-block;
+
+      &.type,
+      &.date,
+      &.state {
+        width: 33.3%;
+      }
+
+      &.price,
+      &.amount {
+        width: 50%;
+      }
+
+      &.opt {
+        width: 100%;
+        font-size: 14px;
+
+        a {
+          color: #F3CA82;
+        }
+      }
+
+      &.date,
+      &.opt {
+        text-align: center;
+      }
+      &.state,
+      &.amount {
+        text-align: right;
+      }
+    }
+  }
+}

@@ -136,6 +136,6 @@ function mapStateToProps({ market, i18n }) {
 }
 
 export default wrapWithPanel(connect(mapStateToProps)(Market), {
-  className: 'market-panel',
+  className: 'market-panel m-hide',
 });
 

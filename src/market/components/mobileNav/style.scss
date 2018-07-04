@@ -1,0 +1,66 @@
+#mNav {
+  .m-nav-tabs {
+    .ant-tabs-bar {
+      margin-bottom: 0;
+    }
+
+    .ant-tabs-nav-scroll {
+      text-align: center;
+    }
+
+    .ant-tabs-tab {
+      padding: 4px 8px;
+      font-size: 14px;
+    }
+  }
+
+  .m-market {
+    padding: 3px 12px;
+
+    .market-price {
+      font-size: 20px;
+      margin-right: 4px;
+    }
+    .market-value {
+      .simple-select {
+        margin-left: 4px;
+      }
+    }
+    .m-market-row {
+      display: flex;
+
+      &>div {
+        width: 50%;
+
+        &:last-child {
+          text-align: right;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 875px) {
+  .m-part-market,
+  .m-part-trade,
+  .m-part-info {
+    display: none;
+  }
+
+  // 在router入口index.jsx中设置了m-show-${mobile.showPart}
+  .m-show-market {
+    .m-part-market {
+      display: inherit;
+    }
+  }
+  .m-show-trade {
+    .m-part-trade {
+      display: inherit;
+    }
+  }
+  .m-show-info {
+    .m-part-info {
+      display: inherit;
+    }
+  }
+}

@@ -44,3 +44,9 @@ $primary-color: #F3CA82;
     }
   }
 }
+
+@media (max-width: 875px) {
+  .cb-panel .ant-tabs-tabpane {
+    max-height: none;
+  }
+}

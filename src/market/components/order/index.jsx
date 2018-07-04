@@ -81,11 +81,11 @@ function mapStateToPropsSell({ order, market }) {
 }
 
 const BuyOrder = wrapWithPanel(connect(mapStateToPropsBuy)(WrapBuyOrder), {
-  className: 'buy-panel',
+  className: 'buy-panel m-part-trade',
 });
 
 const SellOrder = wrapWithPanel(connect(mapStateToPropsSell)(WrapSellOrder), {
-  className: 'sell-panel',
+  className: 'sell-panel m-part-trade',
 });
 
 export {

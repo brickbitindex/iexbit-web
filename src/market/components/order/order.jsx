@@ -110,7 +110,7 @@ class Order extends Component {
     this.handleQuickAmount(e / 100);
   }
   render() {
-    const { basicInfo, anonymous, form } = this.props;
+    const { basicInfo, anonymous, form, i18n } = this.props;
     const error = form.error;
     const balance = this.getBalance();
     const sliderValue = this.getSliderValue();
@@ -122,10 +122,9 @@ class Order extends Component {
           <div className="order-balance-value flex-autofixed"><FormattedNumber value={balance.balanceText} maximumFractionDigits={8} /></div>
         </div>
         <div className="order-row">
-          <div className="order-lable"><FormattedMessage id="order_type" /></div>
           <Select
             className={classnames('order-item', { error: error.type })}
-            placeholder=""
+            placeholder={i18n.order_type}
             defaultValue={form.type.value}
             onChange={this.props.onTypeChange}
           >
@@ -133,19 +132,19 @@ class Order extends Component {
           </Select>
         </div>
         <div className="order-row">
-          <div className="order-lable"><FormattedMessage id="order_price" /></div>
           <OrderInput
             className={classnames('order-item', { error: error.price })}
             value={form.price}
+            placeholder={i18n.order_price}
             onChange={this.props.onPriceChange}
             suffix={basicInfo.quote_unit.code}
           />
         </div>
         <div className="order-row">
-          <div className="order-lable"><FormattedMessage id="order_amount" /></div>
           <OrderInput
             className={classnames('order-item', { error: error.amount })}
             value={form.amount}
+            placeholder={i18n.order_amount}
             onChange={this.props.onAmountChange}
             suffix={basicInfo.base_unit.code}
           />
@@ -184,11 +183,12 @@ class Order extends Component {
   }
 }
 
-function mapStateToProps({ market, account }) {
+function mapStateToProps({ market, account, i18n }) {
   return {
     basicInfo: market.currentBasicInfo,
     balance: account.balance,
     anonymous: account.anonymous,
+    i18n: i18n.messages,
   };
 }
 

@@ -30,7 +30,7 @@ class OrderBook extends Component {
     const tools = [
       <Tooltip title={<FormattedMessage id="orderbook_all" />} key="0">
         <span
-          className={classnames('simple-btn', { active: mode === 'all' })}
+          className={classnames('simple-btn m-hide', { active: mode === 'all' })}
           onClick={this.handleModeChange.bind(this, 'all')}
         >
           <div className="slide-all">
@@ -41,7 +41,7 @@ class OrderBook extends Component {
       </Tooltip>,
       <Tooltip title={<FormattedMessage id="orderbook_buy" />} key="1">
         <span
-          className={classnames('simple-btn', { active: mode === 'buy' })}
+          className={classnames('simple-btn m-hide', { active: mode === 'buy' })}
           onClick={this.handleModeChange.bind(this, 'buy')}
         >
           <i className="anticon anticon-verticle-left slide-buy" />
@@ -49,7 +49,7 @@ class OrderBook extends Component {
       </Tooltip>,
       <Tooltip title={<FormattedMessage id="orderbook_sell" />} key="2">
         <span
-          className={classnames('simple-btn', { active: mode === 'sell' })}
+          className={classnames('simple-btn m-hide', { active: mode === 'sell' })}
           onClick={this.handleModeChange.bind(this, 'sell')}
         >
           <i className="anticon anticon-verticle-left slide-sell" />
@@ -136,7 +136,7 @@ class OrderBook extends Component {
             <div className="order-book-row-content">
               <div className="order-book-col price"><FormattedMessage id="orderbook_price" /></div>
               <div className="order-book-col amount"><FormattedMessage id="orderbook_amount" /></div>
-              <div className="order-book-col total"><FormattedMessage id="orderbook_total" /></div>
+              <div className="order-book-col total m-hide"><FormattedMessage id="orderbook_total" /></div>
             </div>
           </div>
         </div>
@@ -152,7 +152,7 @@ class OrderBook extends Component {
                   <div className="order-book-col amount">
                     <tt><ZeroFormattedNumber value={row[1]} fixed={basicInfo.ask_config.amount_fixed} /></tt>
                   </div>
-                  <div className="order-book-col total">
+                  <div className="order-book-col total m-hide">
                     <tt><ZeroFormattedNumber value={row[2]} fixed={basicInfo.ask_config.price_fixed} /></tt>
                   </div>
                 </div>
@@ -171,7 +171,7 @@ class OrderBook extends Component {
                   <div className="order-book-col amount">
                     <tt><ZeroFormattedNumber value={row[1]} fixed={basicInfo.bid_config.amount_fixed} /></tt>
                   </div>
-                  <div className="order-book-col total">
+                  <div className="order-book-col total m-hide">
                     <tt><ZeroFormattedNumber value={row[2]} fixed={basicInfo.bid_config.price_fixed} /></tt>
                   </div>
                 </div>
@@ -198,5 +198,5 @@ const DeepOption = injectIntl(({ i, deepSelect, intl }) => (
 
 export default wrapWithPanel(connect(mapStateToProps)(OrderBook), {
   title: <span />,
-  className: 'orderBook-panel',
+  className: 'orderBook-panel m-part-trade',
 });

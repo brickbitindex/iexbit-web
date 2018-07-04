@@ -8,11 +8,64 @@ import ZeroFormattedNumber from '../../../common/zeroFormattedNumber';
 
 import Mask from '../../../common/anonymousMask';
 
+import { Table } from '../../../../lib/antd';
+
 import './style.scss';
 
 const reg = /0+$/;
 
 class MyOrders extends Component {
+  getCols() {
+    return [{
+      title: <FormattedMessage id="myorder_type" />,
+      dataIndex: 'id',
+      key: 'id',
+      className: 'type',
+      render: () => <FormattedMessage id="order_type_limit" />,
+    }, {
+      title: <FormattedMessage id="myorder_placed" />,
+      dataIndex: 'date',
+      key: 'date',
+      className: 'date',
+      render: (_, record) => (
+        <span>
+          <FormattedDate value={record.date} month="2-digit" day="2-digit" /> <FormattedTime value={record.date} hour="2-digit" minute="2-digit" hour12={false} />
+        </span>
+      ),
+    }, {
+      title: <FormattedMessage id="myorder_state" />,
+      dataIndex: 'partial',
+      key: 'partial',
+      className: 'state',
+      render: (_, record) => <span className={classnames('tag', { partial: record.partial })}><FormattedMessage id={record.partial ? 'myorder_partial' : 'myorder_wait'} /></span>,
+    }, {
+      title: <FormattedMessage id="myorder_price" />,
+      dataIndex: 'price',
+      key: 'price',
+      className: 'price',
+      render: (_, record) => <ZeroFormattedNumber value={record.price} fixed={record.price_fixed} />,
+    }, {
+      title: <FormattedMessage id="myorder_amount" />,
+      dataIndex: 'amount',
+      key: 'amount',
+      className: 'amount',
+      render: (_, record) => (
+        <span>
+          <ZeroFormattedNumber value={record.volume} fixed={record.amount_fixed} />
+          {record.partial && (
+            <span className="light-text"> / <ZeroFormattedNumber value={record.origin_volume} fixed={record.amount_fixed} /></span>
+          )}
+        </span>
+      ),
+    }, {
+      title: <FormattedMessage id="myorder_opt" />,
+      dataIndex: 'opt',
+      key: 'opt',
+      className: 'opt',
+      render: (_, record) => <a onClick={() => this.handleDelete(record)}><FormattedMessage id="cancel" /></a>,
+      mobileHideTitle: true,
+    }];
+  }
   handleDelete(data) {
     this.props.dispatch({
       type: 'account/deleteOrder',
@@ -28,48 +81,35 @@ class MyOrders extends Component {
     }
     return <span>{ret}</span>;
   }
+  processData() {
+    const { data, basicInfo } = this.props;
+    return data.map((row) => {
+      const partial = row.volume !== row.origin_volume;
+      const config = row.kind === 'bid' ? basicInfo.bid_config : basicInfo.ask_config;
+      const date = new Date(row.at * 1000);
+      return {
+        partial,
+        date,
+        price_fixed: config.price_fixed,
+        amount_fixed: config.amount_fixed,
+        ...row,
+      };
+    });
+  }
   render() {
-    const { data, anonymous, basicInfo } = this.props;
+    const { anonymous } = this.props;
+    const data = this.processData();
+    const cols = this.getCols();
     return (
       <div id="myOrders">
-        <div className="myorder-row thead light-text">
-          <div className="myorder-col type"><FormattedMessage id="myorder_type" /></div>
-          <div className="myorder-col state"><FormattedMessage id="myorder_state" /></div>
-          <div className="myorder-col price"><FormattedMessage id="myorder_price" /></div>
-          <div className="myorder-col amount"><FormattedMessage id="myorder_amount" /></div>
-          <div className="myorder-col placed"><FormattedMessage id="myorder_placed" /></div>
-          <div className="myorder-col opt"><FormattedMessage id="myorder_opt" /></div>
-        </div>
-        {data.map((row) => {
-          const partial = row.volume !== row.origin_volume;
-          const date = new Date(row.at * 1000);
-          const config = row.kind === 'bid' ? basicInfo.bid_config : basicInfo.ask_config;
-          return (
-            <div className="myorder-row" key={row.id}>
-              <div className="myorder-col type light-text">
-                <FormattedMessage id={'order_type_limit'} />
-              </div>
-              <div className="myorder-col state">
-                <span className={classnames('tag', { partial })}><FormattedMessage id={partial ? 'myorder_partial' : 'myorder_wait'} /></span>
-              </div>
-              <div className={classnames('myorder-col price tt', row.kind === 'bid' ? 'green-text' : 'red-text')}>
-                <ZeroFormattedNumber value={row.price} fixed={config.price_fixed} />
-              </div>
-              <div className="myorder-col amount tt">
-                <ZeroFormattedNumber value={row.volume} fixed={config.amount_fixed} />
-                {partial && (
-                  <span className="light-text"> / <ZeroFormattedNumber value={row.origin_volume} fixed={config.amount_fixed} /></span>
-                )}
-              </div>
-              <div className="myorder-col placed tt">
-                <FormattedDate value={date} month="2-digit" day="2-digit" /> <FormattedTime value={date} hour="2-digit" minute="2-digit" hour12={false} />
-              </div>
-              <div className="myorder-col opt">
-                <span onClick={() => this.handleDelete(row)}><FormattedMessage id="cancel" /></span>
-              </div>
-            </div>
-          );
-        })}
+        <Table
+          useMobileTable
+          dataSource={data}
+          columns={cols}
+          pagination={false}
+          size="small"
+          rowKey={(_, i) => i}
+        />
         {anonymous && (
           <Mask />
         )}

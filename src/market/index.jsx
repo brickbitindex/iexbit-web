@@ -19,6 +19,8 @@ import Trades from './components/trades';
 import OrderBook from './components/orderBook';
 import TabPanel from './components/tabPanel';
 
+import MobileNav from './components/mobileNav';
+
 import WS from './ws';
 
 import './layout.scss';
@@ -38,14 +40,15 @@ class Index extends Component {
     });
   }
   render() {
-    const { locale, messages, loading } = this.props;
+    const { locale, messages, loading, mobileShowPart } = this.props;
     const localePrefix = locale.split('-')[0];
     return (
       <IntlProvider locale={localePrefix} key={locale} messages={messages}>
         <div id="squareContainer" className="no-panel-anime">
           <WS />
-          <div id="square">
+          <div id="square" className={`m-show-${mobileShowPart}`}>
             <Header />
+            <MobileNav />
             <div className="sq-b flex-autofixed">
               <div className="sq-b-l flex-autofixed">
                 <Chart />
@@ -71,12 +74,13 @@ class Index extends Component {
   }
 }
 
-function mapStateToProps({ i18n, utils }) {
+function mapStateToProps({ i18n, utils, mobile }) {
   return {
     locale: i18n.locale,
     messages: i18n.messages,
     loading: utils.loading,
     config: utils.config,
+    mobileShowPart: mobile.showPart,
   };
 }
 

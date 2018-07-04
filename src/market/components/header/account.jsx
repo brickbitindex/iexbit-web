@@ -40,6 +40,9 @@ class Account extends Component {
           <div className="t1"><FormattedMessage id="header_dashborad" /></div>
           <div>{currentUser.email}</div>
         </Menu.Item>
+        <Menu.Item key="assets" className="menu-item m-only">
+          <FormattedMessage id="header_assets" />
+        </Menu.Item>
         <Menu.Item key="markets" className="menu-item">
           <FormattedMessage id="header_menu_markets" />
         </Menu.Item>
@@ -66,7 +69,7 @@ class Account extends Component {
             <a onClick={() => redirect('signup')}><FormattedMessage id="anonymous_signup" /></a>
           </span>
         ) : (
-          <Dropdown className="header-opts-btn simple-btn" overlay={menu}>
+          <Dropdown className="header-opts-btn simple-btn" placement="bottomRight" overlay={menu}>
             <i className="anticon anticon-user" />
           </Dropdown>
         )}

@@ -203,3 +203,59 @@ code,
   border: rgba(#F3CA82, 0.25) solid 1px;
   padding: 2px 4px;
 }
+
+.m-only {
+  display: none !important;
+}
+
+@media (max-width: 875px) {
+  .m-only {
+    display: inherit !important;
+  }
+
+  .m-hide {
+    display: none !important;
+  }
+
+  html,
+  body,
+  #main {
+    min-width: auto;
+  }
+
+  #square {
+    display: block;
+  
+    .sq-b {
+      display: block;
+    }
+  
+    .sq-b-l {
+      margin-right: 0;
+    }
+
+    .sq-b-r-t {
+      display: block;
+    }
+  
+    .sq-b-r-b {
+      display: block;
+    }
+
+    // trade部分，左右结构
+    .sq-b-r {
+      flex-direction: row-reverse;
+    }
+  }
+
+  .m-show-trade {
+    .sq-b-r {
+      .sq-b-r-t,
+      .sq-b-r-b {
+        flex-grow: 1;
+        flex-shrink: 1;
+        width: 50%;
+      }
+    }
+  }
+}
