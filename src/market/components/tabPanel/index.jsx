@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
+import { connect } from 'dva';
 import autobind from 'autobind-decorator';
 import { FormattedMessage } from 'react-intl';
 import Loading from '../loading';
@@ -13,7 +14,7 @@ import './style.scss';
 
 const TabPane = Tabs.TabPane;
 
-export default class WrappedTabPanelComponent extends Component {
+class WrappedTabPanelComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,6 +27,13 @@ export default class WrappedTabPanelComponent extends Component {
     this.setState({
       current: key,
     });
+    console.log(key);
+    if (key === 'historyLog') {
+      this.props.dispatch({
+        type: 'account/queryHistoryLog',
+        payload: {},
+      });
+    }
   }
   render() {
     const { current } = this.state;
@@ -54,4 +62,10 @@ export default class WrappedTabPanelComponent extends Component {
     );
   }
 }
+
+function mapStateToProps() {
+  return {};
+}
+
+export default connect(mapStateToProps)(WrappedTabPanelComponent);
 

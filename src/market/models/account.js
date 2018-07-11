@@ -87,10 +87,6 @@ const model = {
       }
       orders.sort((a, b) => b.id - a.id);
       yield put({
-        type: 'queryHistoryLog',
-        payload: {},
-      });
-      yield put({
         type: 'updateState',
         payload: {
           orders,
