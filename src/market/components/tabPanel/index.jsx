@@ -22,18 +22,27 @@ class WrappedTabPanelComponent extends Component {
       current: 'myOrders',
     };
   }
+  componentDidMount() {
+    const page = this.props.page;
+    setInterval(() => this.fetchHistoryLog({ page }), 30000);
+  }
   @autobind
   handleTabClick(key) {
     this.setState({
       current: key,
     });
-    console.log(key);
     if (key === 'historyLog') {
-      this.props.dispatch({
-        type: 'account/queryHistoryLog',
-        payload: {},
-      });
+      const page = this.props.page;
+      this.fetchHistoryLog({ page });
     }
+  }
+  fetchHistoryLog({ page }) {
+    this.props.dispatch({
+      type: 'account/queryHistoryLog',
+      payload: {
+        page,
+      },
+    });
   }
   render() {
     const { current } = this.state;
@@ -63,8 +72,10 @@ class WrappedTabPanelComponent extends Component {
   }
 }
 
-function mapStateToProps() {
-  return {};
+function mapStateToProps({ account }) {
+  return {
+    page: account.page,
+  };
 }
 
 export default connect(mapStateToProps)(WrappedTabPanelComponent);
