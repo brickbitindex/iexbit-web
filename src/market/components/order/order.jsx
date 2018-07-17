@@ -9,7 +9,7 @@ import Decimal from 'decimal.js-light';
 import OrderInput from './input';
 import OrderButton from './button';
 // import Tooltip from '../common/tooltip';
-import { Select, Tooltip } from '../../lib/antd';
+import { Select, Tooltip, Modal } from '../../lib/antd';
 import Mask from '../common/anonymousMask';
 
 Decimal.config({ toExpNeg: -16 });
@@ -75,9 +75,28 @@ class Order extends Component {
   }
   @autobind
   handleSubmit() {
-    const { anonymous } = this.props;
+    const { anonymous, trades, i18n, form } = this.props;
     if (anonymous) return;
-    this.props.onSubmit();
+    const currentPrice = trades.length ? trades[0].price : 0;
+    if (form.price > currentPrice * 1.25 || form.price < currentPrice * 0.75) {
+      Modal.confirm({
+        title: i18n.order_tips_title,
+        content: (<div>
+          <p><b>{i18n.order_tips_1}</b></p>
+          <p>{i18n.order_tips_2}</p>
+          <p><b>{i18n.order_tips_3}</b></p>
+        </div>),
+        okText: i18n.order_tips_ok,
+        cancelText: i18n.order_tips_cancel,
+        className: 'modal-tips',
+        width: 326,
+        onOk: () => {
+          this.props.onSubmit();
+        },
+      });
+    } else {
+      this.props.onSubmit();
+    }
   }
   handleQuickAmount(percentage) {
     const balance = this.getBalance();
@@ -189,6 +208,7 @@ function mapStateToProps({ market, account, i18n }) {
     balance: account.balance,
     anonymous: account.anonymous,
     i18n: i18n.messages,
+    trades: market.trades,
   };
 }
 

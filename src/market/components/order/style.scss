@@ -137,3 +137,32 @@ $itemHeight: 30px;
     }
   }
 }
+
+.modal-tips {
+  .ant-confirm-title {
+    font-size: 16px;
+    margin-bottom: 24px;
+  }
+  p {
+    font-size: 14px;
+  }
+  .ant-confirm-btns {
+    .ant-btn-primary {
+      span {
+        color: #181818;
+      }
+    }
+  }
+  &.ant-modal {
+    bottom: 20px;
+    transform: translateY(-100%);
+    top: 100%;
+    right: -20%;
+  }
+}
+
+@media (max-width: 767px) {
+  .modal-tips.ant-modal {
+    right: 0;
+  }
+}
