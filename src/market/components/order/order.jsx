@@ -8,13 +8,10 @@ import Slider from 'rc-slider';
 import Decimal from 'decimal.js-light';
 import OrderInput from './input';
 import OrderButton from './button';
-// import Tooltip from '../common/tooltip';
 import { Select, Tooltip, Modal } from '../../lib/antd';
 import Mask from '../common/anonymousMask';
 
 Decimal.config({ toExpNeg: -16 });
-// const createSliderWithTooltip = _Slider.createSliderWithTooltip;
-// const Slider = createSliderWithTooltip(_Slider);
 
 const Handle = Slider.Handle;
 const Option = Select.Option;
@@ -133,7 +130,7 @@ class Order extends Component {
     const error = form.error;
     const balance = this.getBalance();
     const sliderValue = this.getSliderValue();
-    const marketValue = form.price && form.amount ? new Decimal(parseFloat(form.price * form.amount)).toString() : undefined;
+    const marketValue = form.price && form.amount ? new Decimal(parseFloat(form.price * form.amount).toFixed(2)).toString() : undefined;
     return (
       <div className="order">
         <div className="order-balance">
@@ -171,10 +168,11 @@ class Order extends Component {
         <div className="order-row-trade">
           <div className="order-label">
             <FormattedMessage id="order_budget" />
+            {marketValue && <span className="order-item tt">
+              {marketValue} {basicInfo.quote_unit.code}
+            </span>}
           </div>
-          {marketValue && <span className="order-item tt">
-            {marketValue} {basicInfo.quote_unit.code}
-          </span>}
+          <div>( <Tooltip title={i18n.myorder_fee_tips}><FormattedMessage id="history_table_trades_fee" />: 0.00</Tooltip> )</div>
         </div>
         <div className="order-row small">
           <Slider step={0.1} value={sliderValue} handle={handle} onChange={this.handleSliderChange} />
