@@ -8,6 +8,7 @@ import Slider from 'rc-slider';
 import Decimal from 'decimal.js-light';
 import OrderInput from './input';
 import OrderButton from './button';
+// import Tooltip from '../common/tooltip';
 import { Select, Tooltip, Modal } from '../../lib/antd';
 import Mask from '../common/anonymousMask';
 
@@ -79,13 +80,14 @@ class Order extends Component {
       Modal.confirm({
         title: i18n.order_tips_title,
         content: (<div>
-          <p><b>{i18n.order_tips_1}</b></p>
-          <p>{i18n.order_tips_2}</p>
-          <p><b>{i18n.order_tips_3}</b></p>
+          <div>{i18n.order_tips_1}</div>
+          <div>{i18n.order_tips_2}</div>
+          <div>{i18n.order_tips_3}</div>
         </div>),
         okText: i18n.order_tips_ok,
         cancelText: i18n.order_tips_cancel,
         className: 'modal-tips',
+        iconType: ' ',
         width: 326,
         onOk: () => {
           this.props.onSubmit();
