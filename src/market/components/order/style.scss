@@ -137,3 +137,49 @@ $itemHeight: 30px;
     }
   }
 }
+
+.modal-tips {
+  text-align: center;
+  .ant-modal-content {
+    background-color: #fff;
+    .ant-modal-body {
+      padding: 24px;
+      .ant-confirm-title {
+        color: #202534;
+        font-size: 16px;
+        margin-bottom: 12px;
+      }
+      .ant-confirm-content {
+        color: #555;
+        font-size: 14px;
+        line-height: 1.5;
+        margin-left: 0;
+      }
+    }
+  }
+  .ant-confirm-btns {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    .ant-btn {
+      border: 1px solid #f3ca82;
+    }
+    .ant-btn-primary {
+      span {
+        color: #181818;
+      }
+    }
+  }
+  &.ant-modal {
+    bottom: 20px;
+    transform: translateY(-100%);
+    top: 100%;
+    right: -20%;
+  }
+}
+
+@media (max-width: 767px) {
+  .modal-tips.ant-modal {
+    right: 0;
+  }
+}

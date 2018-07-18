@@ -191,7 +191,6 @@ class IActionCable extends Component {
     });
   }
   handleOrders(data) {
-    console.log(data);
     // TODO:
     this.checkLoading('myOrders');
     this.checkLoading('order');
