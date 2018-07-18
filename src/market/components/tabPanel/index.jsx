@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
+import { connect } from 'dva';
 import autobind from 'autobind-decorator';
 import { FormattedMessage } from 'react-intl';
 import Loading from '../loading';
@@ -13,7 +14,7 @@ import './style.scss';
 
 const TabPane = Tabs.TabPane;
 
-export default class WrappedTabPanelComponent extends Component {
+class WrappedTabPanelComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,10 +22,26 @@ export default class WrappedTabPanelComponent extends Component {
       current: 'myOrders',
     };
   }
+  componentDidMount() {
+    const page = this.props.page;
+    setInterval(() => this.fetchHistoryLog({ page }), 30000);
+  }
   @autobind
   handleTabClick(key) {
     this.setState({
       current: key,
+    });
+    if (key === 'historyLog') {
+      const page = this.props.page;
+      this.fetchHistoryLog({ page });
+    }
+  }
+  fetchHistoryLog({ page }) {
+    this.props.dispatch({
+      type: 'account/queryHistoryLog',
+      payload: {
+        page,
+      },
     });
   }
   render() {
@@ -54,4 +71,12 @@ export default class WrappedTabPanelComponent extends Component {
     );
   }
 }
+
+function mapStateToProps({ account }) {
+  return {
+    page: account.page,
+  };
+}
+
+export default connect(mapStateToProps)(WrappedTabPanelComponent);
 
