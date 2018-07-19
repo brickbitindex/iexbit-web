@@ -9,12 +9,10 @@ import Decimal from 'decimal.js-light';
 import OrderInput from './input';
 import OrderButton from './button';
 // import Tooltip from '../common/tooltip';
-import { Select, Tooltip } from '../../lib/antd';
+import { Select, Tooltip, Modal } from '../../lib/antd';
 import Mask from '../common/anonymousMask';
 
 Decimal.config({ toExpNeg: -16 });
-// const createSliderWithTooltip = _Slider.createSliderWithTooltip;
-// const Slider = createSliderWithTooltip(_Slider);
 
 const Handle = Slider.Handle;
 const Option = Select.Option;
@@ -75,9 +73,29 @@ class Order extends Component {
   }
   @autobind
   handleSubmit() {
-    const { anonymous } = this.props;
+    const { anonymous, trades, i18n, form } = this.props;
     if (anonymous) return;
-    this.props.onSubmit();
+    const currentPrice = trades.length ? trades[0].price : 0;
+    if (form.price > currentPrice * 1.25 || form.price < currentPrice * 0.75) {
+      Modal.confirm({
+        title: i18n.order_tips_title,
+        content: (<div>
+          <div>{i18n.order_tips_1}</div>
+          <div>{i18n.order_tips_2}</div>
+          <div>{i18n.order_tips_3}</div>
+        </div>),
+        okText: i18n.order_tips_ok,
+        cancelText: i18n.order_tips_cancel,
+        className: 'modal-tips',
+        iconType: ' ',
+        width: 326,
+        onOk: () => {
+          this.props.onSubmit();
+        },
+      });
+    } else {
+      this.props.onSubmit();
+    }
   }
   handleQuickAmount(percentage) {
     const balance = this.getBalance();
@@ -114,7 +132,7 @@ class Order extends Component {
     const error = form.error;
     const balance = this.getBalance();
     const sliderValue = this.getSliderValue();
-    const marketValue = form.price && form.amount ? new Decimal(parseFloat(form.price * form.amount)).toString() : undefined;
+    const marketValue = form.price && form.amount ? new Decimal(parseFloat(form.price * form.amount).toFixed(2)).toString() : undefined;
     return (
       <div className="order">
         <div className="order-balance">
@@ -152,10 +170,11 @@ class Order extends Component {
         <div className="order-row-trade">
           <div className="order-label">
             <FormattedMessage id="order_budget" />
+            {marketValue && <span className="order-item tt">
+              {marketValue} {basicInfo.quote_unit.code}
+            </span>}
           </div>
-          {marketValue && <span className="order-item tt">
-            {marketValue} {basicInfo.quote_unit.code}
-          </span>}
+          <div>( <Tooltip title={i18n.myorder_fee_tips}><FormattedMessage id="history_table_trades_fee" />: 0.00</Tooltip> )</div>
         </div>
         <div className="order-row small">
           <Slider step={0.1} value={sliderValue} handle={handle} onChange={this.handleSliderChange} />
@@ -189,6 +208,7 @@ function mapStateToProps({ market, account, i18n }) {
     balance: account.balance,
     anonymous: account.anonymous,
     i18n: i18n.messages,
+    trades: market.trades,
   };
 }
 
