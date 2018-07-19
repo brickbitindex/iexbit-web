@@ -141,16 +141,16 @@ $itemHeight: 30px;
 .modal-tips {
   text-align: center;
   .ant-modal-content {
-    background-color: #fff;
+    background-color: #292a2e;
     .ant-modal-body {
       padding: 24px;
       .ant-confirm-title {
-        color: #202534;
+        color: #fff;
         font-size: 16px;
         margin-bottom: 12px;
       }
       .ant-confirm-content {
-        color: #555;
+        color: #fff;
         font-size: 14px;
         line-height: 1.5;
         margin-left: 0;
@@ -163,8 +163,12 @@ $itemHeight: 30px;
     width: 100%;
     .ant-btn {
       border: 1px solid #f3ca82;
+      &:hover {
+        border: 1px solid #ffe5b0;
+      }
     }
     .ant-btn-primary {
+      margin-left: 24px;
       span {
         color: #181818;
       }
