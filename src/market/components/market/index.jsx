@@ -5,7 +5,7 @@ import classnames from 'classnames';
 // import { FormattedMessage } from 'react-intl';
 import wrapWithPanel from '../panel';
 import ZeroFormattedNumber from '../common/zeroFormattedNumber';
-import SimpleSelect from '../common/simpleSelect';
+import { Select } from '../../lib/antd';
 
 import './style.scss';
 
@@ -28,6 +28,7 @@ const fontSize = {
 
 let maxLength = 0;
 let fs = '22px';
+const Option = Select.Option;
 
 // icon: `/market_images/symbol_icon_${pairSymbol}.png`
 
@@ -37,10 +38,12 @@ class Market extends Component {
     if (props.locale === 'zh-CN') {
       this.state = {
         defaultChecked: 'cny',
+        size: 'small',
       };
     } else {
       this.state = {
         defaultChecked: 'usdt',
+        size: 'small',
       };
     }
   }
@@ -53,12 +56,14 @@ class Market extends Component {
     if (defaultChecked === 'cny') return (value * 6.3).toFixed(3);
     return value.toFixed(3);
   }
-  handleChangeUnit(e) {
-    this.setState({ defaultChecked: e.target.value });
+  handleChangeUnit = (value) => {
+    this.setState({ defaultChecked: value });
   }
   render() {
     const { data, currentTrade, basicInfo } = this.props;
+    console.log(currentTrade);
     const { defaultChecked } = this.state;
+    const { size } = this.state;
     const currentPrice = currentTrade.price;
     const change = data.change;
     const down = data.down;
@@ -83,13 +88,15 @@ class Market extends Component {
               <ZeroFormattedNumber value={currentPrice} fixed={basicInfo.ask_config.price_fixed} />
             </div>
             <div className="market-value tt light-text">≈ {value}
-              <SimpleSelect
+              <Select
                 defaultValue={defaultChecked}
-                onChange={val => this.handleChangeUnit(val)}
+                onChange={this.handleChangeUnit}
+                size={size}
+                className="color"
               >
-                <option value="usdt">USDT</option>
-                <option value="cny">CNY</option>
-              </SimpleSelect>
+                <Option value="usdt">USDT</Option>
+                <Option value="cny">CNY</Option>
+              </Select>
             </div>
           </div>
           <div>
