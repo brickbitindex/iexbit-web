@@ -37,15 +37,11 @@ const model = {
     },
   },
   effects: {
-    * deleteOrder({ payload }, { call, put }) {
+    * deleteOrder({ payload }, { call }) {
       const response = yield call(deleteOrder, payload.id, payload.kind);
       if (response.ok) {
         message.info('text_order_delete');
       }
-      yield put({
-        type: 'queryHistoryLog',
-        payload: {},
-      });
     },
     * updateOrders({ payload }, { select, put }) {
       let orders = yield select(({ account }) => account.orders);
@@ -87,10 +83,6 @@ const model = {
       }
       orders.sort((a, b) => b.id - a.id);
       yield put({
-        type: 'queryHistoryLog',
-        payload: {},
-      });
-      yield put({
         type: 'updateState',
         payload: {
           orders,
@@ -114,6 +106,7 @@ const model = {
               total: history.total_pages * count || 1,
               total_pages: history.total_pages,
             },
+            page,
           },
         });
       }
