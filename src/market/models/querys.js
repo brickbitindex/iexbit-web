@@ -53,7 +53,7 @@ function processData(data) {
 }
 
 function catchError(error) {
-  message.error(error.message, 1000);
+  message.error(error.message);
   return {
     success: false,
   };
