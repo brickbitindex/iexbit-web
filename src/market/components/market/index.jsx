@@ -48,12 +48,12 @@ class Market extends Component {
     }
   }
   getValue() {
-    const { currentTrade, quoteUnitUsdtPrice } = this.props;
+    const { currentTrade, quoteUnitUsdtPrice, usdtRate } = this.props;
     const { defaultChecked } = this.state;
     const currentPrice = currentTrade.price;
     if (defaultChecked === 'usdt' && quoteUnitUsdtPrice === 1) return currentPrice;
     const value = quoteUnitUsdtPrice * parseFloat(currentPrice);
-    if (defaultChecked === 'cny') return (value * 6.3).toFixed(3);
+    if (defaultChecked === 'cny') return (value * usdtRate).toFixed(3);
     return value.toFixed(3);
   }
   handleChangeUnit = (value) => {
@@ -61,7 +61,6 @@ class Market extends Component {
   }
   render() {
     const { data, currentTrade, basicInfo } = this.props;
-    console.log(currentTrade);
     const { defaultChecked } = this.state;
     const { size } = this.state;
     const currentPrice = currentTrade.price;
@@ -139,6 +138,7 @@ function mapStateToProps({ market, i18n }) {
     basicInfo: market.currentBasicInfo,
     locale: i18n.locale,
     quoteUnitUsdtPrice: market.quoteUnitUsdtPrice,
+    usdtRate: market.usdtRate,
   };
 }
 

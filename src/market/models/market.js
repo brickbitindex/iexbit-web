@@ -18,6 +18,7 @@ import { getDecimalCount, formatMessage } from '../lib/utils';
 
 const addBidOrder = data => fetch.post(QUERY.ADD_BID_ORDER, data).catch(err => err);
 const addAskOrder = data => fetch.post(QUERY.ADD_ASK_ORDER, data).catch(err => err);
+const queryRate = () => fetch.get(QUERY.PRICE).catch(err => err);
 const queryPrices = () => fetch.get(QUERY.QUERY_PRICES).catch(err => err);
 
 
@@ -89,6 +90,7 @@ const model = {
     prices: [],
     current: undefined,
     currentBasicInfo: undefined,
+    cny_price: '',
     trades: [],
     orderBook: {
       asks: [],
@@ -113,6 +115,10 @@ const model = {
           pairSymbol,
           currentBasicInfo,
         },
+      });
+
+      dispatch({
+        type: 'queryRate',
       });
 
       function qp() {
@@ -295,6 +301,15 @@ const model = {
       if (datafeed) {
         datafeed.updateLast(payload.last);
       }
+    },
+    * queryRate({ payload }, { put, call }) {
+      const dataFee = yield call(queryRate);
+      yield put({
+        type: 'updateState',
+        payload: {
+          usdtRate: dataFee,
+        },
+      });
     },
   },
   reducers: {
