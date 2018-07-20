@@ -5,14 +5,9 @@
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf dist/",
-<<<<<<< HEAD
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": " webpack-dev-server --port 8111 --progress --colors --display-error-details --inline --hot --content-base test/build --config webpack/webpack.dev.config.js",
     "deploy": "npm run clean && NODE_ENV=production webpack --progress -p --display-error-details --config webpack/webpack.deploy.config.js",
-=======
-    "dev": "DEBUG=leancloud* webpack-dev-server --port 8111 --progress --colors --display-error-details --inline --hot --content-base test/build --config webpack/webpack.dev.config.js",
-    "deploy": "npm run clean && NODE_ENV=production webpack --progress -p --display-error-details --config webpack/webpack.deploy.config.js && npm run release",
->>>>>>> b2a6b795a2f22d13494a8ee792f6e708abf66ef5
     "release": "scp dist/assets/* deploy@35.194.159.171:~/market/"
   },
   "repository": {
