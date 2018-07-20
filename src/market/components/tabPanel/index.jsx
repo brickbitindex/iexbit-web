@@ -24,7 +24,8 @@ class WrappedTabPanelComponent extends Component {
   }
   componentDidMount() {
     const page = this.props.page;
-    setInterval(() => this.fetchHistoryLog({ page }), 30000);
+    const currentUser = window.gon && window.gon.current_user;
+    if (currentUser) setInterval(() => this.fetchHistoryLog({ page }), 30000);
   }
   @autobind
   handleTabClick(key) {
