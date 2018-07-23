@@ -18,10 +18,14 @@
     }
  
     .myorder-col {
-      &.type {
+      // &.type {
+      //   width: 15%;
+      //   text-align: center;
+      //   // padding-left: 12px;
+      // }
+      &.kind {
         width: 15%;
         text-align: center;
-        // padding-left: 12px;
       }
       &.state {
         width: 15%;
