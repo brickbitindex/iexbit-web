@@ -14,6 +14,8 @@ import Mask from '../common/anonymousMask';
 
 Decimal.config({ toExpNeg: -16 });
 
+const FEE = 0.00;
+
 const Handle = Slider.Handle;
 const Option = Select.Option;
 
@@ -129,10 +131,18 @@ class Order extends Component {
   }
   render() {
     const { basicInfo, anonymous, form, i18n } = this.props;
+    /**
+     * form.price 是指价格，买入或者卖出的
+     * basicInfo里面的quote_unit代表买入的币种
+     * basicInfo里面的base_unit代表卖出的币种
+     * 常规时间，交易手续费等于买入的币种的价格 * 0.1%
+     * 7月31日之前手续费为0
+     */
+    const exchangeFee = form.price ? `${parseFloat(form.price * FEE).toFixed(4)}${basicInfo.quote_unit.code}` : parseFloat(0).toFixed(4);
     const error = form.error;
     const balance = this.getBalance();
     const sliderValue = this.getSliderValue();
-    const marketValue = form.price && form.amount ? new Decimal(parseFloat(form.price * form.amount).toFixed(2)).toString() : undefined;
+    const marketValue = form.price && form.amount ? new Decimal(parseFloat(form.price * form.amount).toFixed(4)).toString() : undefined;
     return (
       <div className="order">
         <div className="order-balance">
@@ -171,10 +181,10 @@ class Order extends Component {
           <div className="order-label">
             <FormattedMessage id="order_budget" />
             {marketValue && <span className="order-item tt">
-              {marketValue} {basicInfo.quote_unit.code}
+              &nbsp;{marketValue} {basicInfo.quote_unit.code}
             </span>}
           </div>
-          <div>( <Tooltip title={i18n.myorder_fee_tips}><FormattedMessage id="history_table_trades_fee" />: 0.00</Tooltip> )</div>
+          <div>( <Tooltip title={i18n.myorder_fee_tips}><FormattedMessage id="history_table_trades_fee" />: {exchangeFee}</Tooltip> )</div>
         </div>
         <div className="order-row small">
           <Slider step={0.1} value={sliderValue} handle={handle} onChange={this.handleSliderChange} />
