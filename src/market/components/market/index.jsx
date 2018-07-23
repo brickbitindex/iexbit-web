@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
+import $ from 'jquery';
 // import Select from 'react-select';
 import classnames from 'classnames';
 // import { FormattedMessage } from 'react-intl';
@@ -43,6 +44,11 @@ class Market extends Component {
         defaultChecked: 'usdt',
       };
     }
+  }
+  componentWillReceiveProps(props) {
+    const currentTrade = props.currentTrade;
+    const currentPrice = currentTrade.price;
+    $('head title').html(currentPrice);
   }
   getValue() {
     const { currentTrade, quoteUnitUsdtPrice } = this.props;
