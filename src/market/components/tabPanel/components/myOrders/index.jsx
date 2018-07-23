@@ -18,11 +18,17 @@ class MyOrders extends Component {
   getCols() {
     return [{
       title: <FormattedMessage id="myorder_type" />,
-      dataIndex: 'id',
-      key: 'id',
-      className: 'type',
-      render: () => <FormattedMessage id="order_type_limit" />,
+      dataIndex: 'kind',
+      key: 'kind',
+      className: 'kind',
+      render: t => (t === 'ask' ? <span className="red-text"><FormattedMessage id="order_sell" /> </span> : <span className="green-text"><FormattedMessage id="order_buy" /> </span>),
     }, {
+    //   title: <FormattedMessage id="myorder_type" />,
+    //   dataIndex: 'type',
+    //   key: 'type',
+    //   className: 'type',
+    //   render: () => <FormattedMessage id="order_type_limit" />,
+    // }, {
       title: <FormattedMessage id="myorder_placed" />,
       dataIndex: 'date',
       key: 'date',
@@ -99,6 +105,7 @@ class MyOrders extends Component {
   render() {
     const { anonymous } = this.props;
     const data = this.processData();
+    console.log(data);
     const cols = this.getCols();
     return (
       <div id="myOrders">
