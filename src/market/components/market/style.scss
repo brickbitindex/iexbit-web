@@ -72,3 +72,22 @@
     padding: 0;
   }
 }
+
+.color {
+  color: #fff;
+  margin-left: 6px;
+}
+
+.ant-select-dropdown-menu-item,
+.ant-select-dropdown-menu-item-selected,
+.ant-select-dropdown-menu-item-selected:hover {
+  color: #fff;
+}
+
+.ant-select-selection {
+  border: none;
+}
+
+.ant-select-sm .ant-select-selection--single {
+  height: 20px;
+}

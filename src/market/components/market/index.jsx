@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
+import $ from 'jquery';
 // import Select from 'react-select';
 import classnames from 'classnames';
 // import { FormattedMessage } from 'react-intl';
 import wrapWithPanel from '../panel';
 import ZeroFormattedNumber from '../common/zeroFormattedNumber';
-import SimpleSelect from '../common/simpleSelect';
+import { Select } from '../../lib/antd';
 
 import './style.scss';
 
@@ -28,6 +29,7 @@ const fontSize = {
 
 let maxLength = 0;
 let fs = '22px';
+const Option = Select.Option;
 
 // icon: `/market_images/symbol_icon_${pairSymbol}.png`
 
@@ -44,17 +46,22 @@ class Market extends Component {
       };
     }
   }
+  componentWillReceiveProps(props) {
+    const currentTrade = props.currentTrade;
+    const currentPrice = currentTrade.price;
+    $('head title').html(currentPrice);
+  }
   getValue() {
-    const { currentTrade, quoteUnitUsdtPrice } = this.props;
+    const { currentTrade, quoteUnitUsdtPrice, usdtRate } = this.props;
     const { defaultChecked } = this.state;
     const currentPrice = currentTrade.price;
     if (defaultChecked === 'usdt' && quoteUnitUsdtPrice === 1) return currentPrice;
     const value = quoteUnitUsdtPrice * parseFloat(currentPrice);
-    if (defaultChecked === 'cny') return (value * 6.3).toFixed(3);
+    if (defaultChecked === 'cny') return (value * usdtRate).toFixed(3);
     return value.toFixed(3);
   }
-  handleChangeUnit(e) {
-    this.setState({ defaultChecked: e.target.value });
+  handleChangeUnit = (value) => {
+    this.setState({ defaultChecked: value });
   }
   render() {
     const { data, currentTrade, basicInfo } = this.props;
@@ -83,13 +90,15 @@ class Market extends Component {
               <ZeroFormattedNumber value={currentPrice} fixed={basicInfo.ask_config.price_fixed} />
             </div>
             <div className="market-value tt light-text">≈ {value}
-              <SimpleSelect
+              <Select
                 defaultValue={defaultChecked}
-                onChange={val => this.handleChangeUnit(val)}
+                onChange={this.handleChangeUnit}
+                size="small"
+                className="color"
               >
-                <option value="usdt">USDT</option>
-                <option value="cny">CNY</option>
-              </SimpleSelect>
+                <Option value="usdt">USDT</Option>
+                <Option value="cny">CNY</Option>
+              </Select>
             </div>
           </div>
           <div>
@@ -132,6 +141,7 @@ function mapStateToProps({ market, i18n }) {
     basicInfo: market.currentBasicInfo,
     locale: i18n.locale,
     quoteUnitUsdtPrice: market.quoteUnitUsdtPrice,
+    usdtRate: market.usdtRate,
   };
 }
 

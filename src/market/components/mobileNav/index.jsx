@@ -3,13 +3,13 @@ import { connect } from 'dva';
 import classnames from 'classnames';
 import autobind from 'autobind-decorator';
 import { FormattedMessage } from 'react-intl';
-import { Tabs } from '../../lib/antd';
+import { Tabs, Select } from '../../lib/antd';
 import ZeroFormattedNumber from '../common/zeroFormattedNumber';
-import SimpleSelect from '../common/simpleSelect';
 
 import './style.scss';
 
 const TabPane = Tabs.TabPane;
+const Option = Select.Option;
 
 class MobileNav extends Component {
   constructor(props) {
@@ -25,13 +25,17 @@ class MobileNav extends Component {
     }
   }
   getValue() {
-    const { currentTrade, quoteUnitUsdtPrice } = this.props;
+    const { currentTrade, quoteUnitUsdtPrice, usdtRate } = this.props;
     const { defaultChecked } = this.state;
     const currentPrice = currentTrade.price;
     if (defaultChecked === 'usdt' && quoteUnitUsdtPrice === 1) return currentPrice;
     const value = quoteUnitUsdtPrice * parseFloat(currentPrice);
-    if (defaultChecked === 'cny') return (value * 6.3).toFixed(3);
+    if (defaultChecked === 'cny') return (value * usdtRate).toFixed(3);
     return value.toFixed(3);
+  }
+
+  handleChangeUnit = (value) => {
+    this.setState({ defaultChecked: value });
   }
   @autobind
   handleTabClick(showPart) {
@@ -57,13 +61,15 @@ class MobileNav extends Component {
                 <ZeroFormattedNumber value={currentTrade.price} fixed={basicInfo.ask_config.price_fixed} />
               </span>
               <span className="market-value tt light-text">≈ {value}
-                <SimpleSelect
+                <Select
                   defaultValue={defaultChecked}
-                  onChange={val => this.handleChangeUnit(val)}
+                  onChange={this.handleChangeUnit}
+                  size="small"
+                  className="color"
                 >
-                  <option value="usdt">USDT</option>
-                  <option value="cny">CNY</option>
-                </SimpleSelect>
+                  <Option value="usdt">USDT</Option>
+                  <Option value="cny">CNY</Option>
+                </Select>
               </span>
             </div>
             <div className="m-market-row">
@@ -117,6 +123,7 @@ function mapStateToProps({ mobile, market, utils }) {
     showPart: mobile.showPart,
     basicInfo: market.currentBasicInfo,
     quoteUnitUsdtPrice: market.quoteUnitUsdtPrice,
+    usdtRate: market.usdtRate,
   };
 }
 

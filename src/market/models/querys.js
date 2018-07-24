@@ -21,6 +21,7 @@ const QUERY = {
   I18N: locale => `https://assets.bitrabbit.com/i18n/${__ENV__}/market/${locale}.json?_=${getSign()}`,
   TRADES: '/web/trades.json',
   CLEAR_ORDERS: '/web/orders/clear',
+  PRICE: '/web/settings/cny_price',
 };
 
 const $token = document.querySelector('meta[name=csrf-token]');
