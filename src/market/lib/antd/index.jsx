@@ -15,6 +15,7 @@ import Pagination from 'antd/lib/pagination';
 import Icon from 'antd/lib/icon';
 import Modal from 'antd/lib/modal';
 import Badge from 'antd/lib/badge';
+import Popconfirm from 'antd/lib/popconfirm';
 
 import MobileTable from './mobileTable';
 
@@ -71,4 +72,5 @@ export {
   Pagination,
   Modal,
   Badge,
+  Popconfirm,
 };

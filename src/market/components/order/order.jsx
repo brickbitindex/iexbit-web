@@ -142,7 +142,7 @@ class Order extends Component {
     const error = form.error;
     const balance = this.getBalance();
     const sliderValue = this.getSliderValue();
-    const marketValue = form.price && form.amount ? new Decimal(parseFloat(form.price * form.amount).toFixed(4)).toString() : undefined;
+    const marketValue = form.price && form.amount ? new Decimal(parseFloat(form.price * form.amount).toFixed(3)).toString() : undefined;
     return (
       <div className="order">
         <div className="order-balance">

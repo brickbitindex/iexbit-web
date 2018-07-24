@@ -1,20 +1,32 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 // import moment from 'moment';
-// import autobind from 'autobind-decorator';
+import autobind from 'autobind-decorator';
 import classnames from 'classnames';
 import { injectIntl, FormattedMessage, FormattedTime, FormattedDate } from 'react-intl';
 import ZeroFormattedNumber from '../../../common/zeroFormattedNumber';
 
 import Mask from '../../../common/anonymousMask';
 
-import { Table } from '../../../../lib/antd';
+import { Table, Button, Popconfirm } from '../../../../lib/antd';
 
 import './style.scss';
 
 const reg = /0+$/;
 
 class MyOrders extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      disabled: true,
+    };
+  }
+  componentWillReceiveProps(props) {
+    const data = props.data;
+    const waitLen = data.filter(d => d.state === 'wait').length;
+    if (waitLen) this.setState({ disabled: false });
+    else this.setState({ disabled: true });
+  }
   getCols() {
     return [{
       title: <FormattedMessage id="myorder_type" />,
@@ -102,13 +114,31 @@ class MyOrders extends Component {
       };
     });
   }
+  @autobind
+  handleCancelAll() {
+    this.props.dispatch({
+      type: 'account/clearOrders',
+      payload: {},
+    });
+  }
   render() {
-    const { anonymous } = this.props;
+    const { anonymous, i18n } = this.props;
+    const { disabled } = this.state;
     const data = this.processData();
-    console.log(data);
     const cols = this.getCols();
     return (
       <div id="myOrders">
+        <div className="text-right">
+          <Popconfirm
+            overlayClassName="myorders-pop"
+            onConfirm={this.handleCancelAll}
+            title={i18n.myorder_cancel_all_confirm}
+            okText={i18n.order_tips_ok}
+            cancelText={i18n.order_tips_cancel}
+          >
+            <Button size="small" disabled={disabled}><FormattedMessage id="myorder_cancel_all" /></Button>
+          </Popconfirm>
+        </div>
         <Table
           useMobileTable
           dataSource={data}
@@ -125,11 +155,12 @@ class MyOrders extends Component {
   }
 }
 
-function mapStateToProps({ account, market }) {
+function mapStateToProps({ account, market, i18n }) {
   return {
     data: account.orders,
     anonymous: account.anonymous,
     basicInfo: market.currentBasicInfo,
+    i18n: i18n.messages,
   };
 }
 
