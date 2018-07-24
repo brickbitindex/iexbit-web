@@ -39,12 +39,10 @@ class Market extends Component {
     if (props.locale === 'zh-CN') {
       this.state = {
         defaultChecked: 'cny',
-        size: 'small',
       };
     } else {
       this.state = {
         defaultChecked: 'usdt',
-        size: 'small',
       };
     }
   }
@@ -68,7 +66,6 @@ class Market extends Component {
   render() {
     const { data, currentTrade, basicInfo } = this.props;
     const { defaultChecked } = this.state;
-    const { size } = this.state;
     const currentPrice = currentTrade.price;
     const change = data.change;
     const down = data.down;
@@ -96,7 +93,7 @@ class Market extends Component {
               <Select
                 defaultValue={defaultChecked}
                 onChange={this.handleChangeUnit}
-                size={size}
+                size="small"
                 className="color"
               >
                 <Option value="usdt">USDT</Option>
