@@ -17,12 +17,10 @@ class MobileNav extends Component {
     if (props.locale === 'zh-CN') {
       this.state = {
         defaultChecked: 'cny',
-        size: 'small',
       };
     } else {
       this.state = {
         defaultChecked: 'usdt',
-        size: 'small',
       };
     }
   }
@@ -53,7 +51,6 @@ class MobileNav extends Component {
     if (!isMobile) return <div className="m-only" />;
     const { defaultChecked } = this.state;
     const value = this.getValue();
-    const { size } = this.state;
     const baseUnit = basicInfo.base_unit.code;
     return (
       <div id="mNav" className="m-only m-nav">
@@ -67,7 +64,7 @@ class MobileNav extends Component {
                 <Select
                   defaultValue={defaultChecked}
                   onChange={this.handleChangeUnit}
-                  size={size}
+                  size="small"
                   className="color"
                 >
                   <Option value="usdt">USDT</Option>

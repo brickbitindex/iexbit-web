@@ -66,7 +66,6 @@ class Market extends Component {
   render() {
     const { data, currentTrade, basicInfo } = this.props;
     const { defaultChecked } = this.state;
-    const { size } = this.state;
     const currentPrice = currentTrade.price;
     const change = data.change;
     const down = data.down;
