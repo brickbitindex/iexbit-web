@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
+import $ from 'jquery';
 // import moment from 'moment';
 import autobind from 'autobind-decorator';
 import classnames from 'classnames';
@@ -116,9 +117,12 @@ class MyOrders extends Component {
   }
   @autobind
   handleCancelAll() {
+    const marketId = $('body').attr('data-market_id');
     this.props.dispatch({
       type: 'account/clearOrders',
-      payload: {},
+      payload: {
+        market_id: marketId,
+      },
     });
   }
   render() {
