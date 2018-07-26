@@ -3,6 +3,14 @@
   height: 100%;
   position: static;
 
+  .text-right {
+    text-align: right;
+
+    .ant-btn[disabled] {
+      background-color: inherit;
+    }
+  }
+
   .myorder-row {
     display: flex;
     height: 22px;
@@ -103,6 +111,18 @@
       &.amount {
         text-align: right;
       }
+    }
+  }
+}
+
+
+.myorders-pop {
+  .ant-popover-inner,
+  .ant-popover-arrow {
+    background-color: #333;
+    .ant-table-filter-dropdown-link,
+    .ant-btn.ant-btn-primary {
+      color: #181818;
     }
   }
 }

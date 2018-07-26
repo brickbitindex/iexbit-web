@@ -138,11 +138,11 @@ class Order extends Component {
      * 常规时间，交易手续费等于买入的币种的价格 * 0.1%
      * 7月31日之前手续费为0
      */
-    const exchangeFee = form.price ? `${parseFloat(form.price * FEE).toFixed(4)}${basicInfo.quote_unit.code}` : parseFloat(0).toFixed(4);
+    const exchangeFee = form.price ? `${parseFloat(form.price * FEE).toFixed(4)}${basicInfo.quote_unit.code}` : `${parseFloat(0).toFixed(4)}${basicInfo.quote_unit.code}`;
     const error = form.error;
     const balance = this.getBalance();
     const sliderValue = this.getSliderValue();
-    const marketValue = form.price && form.amount ? new Decimal(parseFloat(form.price * form.amount).toFixed(4)).toString() : undefined;
+    const marketValue = form.price && form.amount ? new Decimal(parseFloat(form.price * form.amount).toFixed(3)).toString() : undefined;
     return (
       <div className="order">
         <div className="order-balance">
@@ -181,10 +181,10 @@ class Order extends Component {
           <div className="order-label">
             <FormattedMessage id="order_budget" />
             {marketValue && <span className="order-item tt">
-              &nbsp;{marketValue} {basicInfo.quote_unit.code}
+              &nbsp;{marketValue}{basicInfo.quote_unit.code}
             </span>}
           </div>
-          <div>( <Tooltip title={i18n.myorder_fee_tips}><FormattedMessage id="history_table_trades_fee" />: {exchangeFee}</Tooltip> )</div>
+          <div><Tooltip title={i18n.myorder_fee_tips}><FormattedMessage id="history_table_trades_fee" />: {exchangeFee}</Tooltip></div>
         </div>
         <div className="order-row small">
           <Slider step={0.1} value={sliderValue} handle={handle} onChange={this.handleSliderChange} />
