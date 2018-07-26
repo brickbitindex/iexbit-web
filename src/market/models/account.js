@@ -5,7 +5,7 @@ import { message } from '../lib/antd';
 
 const deleteOrder = (id, type) => fetch.delete(QUERY.DELETE_ORDER(id, type)).catch(err => err);
 const queryHistoryLog = (payload, options) => fetch.get(QUERY.TRADES, payload, options).catch(err => err);
-const clearOrders = () => fetch.post(QUERY.CLEAR_ORDERS).catch(err => err);
+const clearOrders = payload => fetch.post(QUERY.CLEAR_ORDERS, payload).catch(err => err);
 
 const marketId = window.document.body.dataset.market_id;
 const locale = window.locale;
@@ -38,8 +38,8 @@ const model = {
     },
   },
   effects: {
-    * clearOrders(_, { call }) {
-      const data = yield call(clearOrders);
+    * clearOrders({ payload }, { call }) {
+      const data = yield call(clearOrders, payload);
       if (data.success) message.success('myorder_cancel_success');
     },
     * deleteOrder({ payload }, { call }) {
