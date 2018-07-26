@@ -48,8 +48,12 @@ class Market extends Component {
   }
   componentWillReceiveProps(props) {
     const currentTrade = props.currentTrade;
+    const basicInfo = props.basicInfo;
+    const quoteUnit = basicInfo.quote_unit.code;
+    const baseUnit = basicInfo.base_unit.code;
     const currentPrice = currentTrade.price;
-    $('head title').html(currentPrice);
+    const title = `${currentPrice}   ${baseUnit}/${quoteUnit}   BitRabbit`;
+    $('head title').html(title);
   }
   getValue() {
     const { currentTrade, quoteUnitUsdtPrice, usdtRate } = this.props;
