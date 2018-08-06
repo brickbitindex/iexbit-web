@@ -8,7 +8,7 @@ import { Menu, Dropdown } from '../../lib/antd';
 import './account.scss';
 
 function redirect(open) {
-  window.location = `/?open=${open}&redirect_to=${encodeURIComponent(window.location.pathname + window.location.hash)}`;
+  window.location = `/${window.locale.toLowerCase()}?open=${open}&redirect_to=${encodeURIComponent(window.location.pathname + window.location.hash)}`;
 }
 
 class Account extends Component {
