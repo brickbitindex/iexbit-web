@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import './style.scss';
 
 function redirect(open) {
-  window.location = `/?open=${open}&redirect_to=${encodeURIComponent(window.location.pathname + window.location.hash)}`;
+  window.location = `/${window.locale.toLowerCase()}?open=${open}&redirect_to=${encodeURIComponent(window.location.pathname + window.location.hash)}`;
 }
 
 export default function AnonymousMask() {
