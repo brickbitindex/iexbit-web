@@ -13,6 +13,7 @@ function getSign() {
 }
 
 const QUERY = {
+  QUERY_ACCOUNT_BASEINFO: '/web/settings.json',
   ADD_BID_ORDER: `/markets/${market}/order_bids`,
   ADD_ASK_ORDER: `/markets/${market}/order_asks`,
   DELETE_ORDER: (id, type) => `/markets/${marketId}/order_${type}s/${id}`,
@@ -22,6 +23,8 @@ const QUERY = {
   TRADES: '/web/trades.json',
   CLEAR_ORDERS: '/web/orders/clear_market',
   PRICE: '/web/settings/cny_price',
+  // i18n
+  UPDATE_LOCALE: '/web/members/language',
 };
 
 const $token = document.querySelector('meta[name=csrf-token]');
@@ -66,8 +69,8 @@ export const fetch = {
   post(url, data, options = {}) {
     const body = qs.stringify({
       utf8: '✓',
-      ...data,
       locale: window.locale,
+      ...data,
     });
     return fetchlib(url, {
       headers: {
