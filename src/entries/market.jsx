@@ -1,5 +1,6 @@
 import dva from 'dva-no-router';
 import React from 'react';
+import $ from 'jquery';
 
 import '../market/lib/antd/index.less';
 import Index, { models } from '../market';
@@ -10,7 +11,7 @@ window.locale = locale;
 
 
 function render() {
-  fetch.get(QUERY.I18N(locale), undefined, {
+  /* fetch.get(QUERY.I18N(locale), undefined, {
     headers: undefined,
     credentials: undefined,
   }).then((i18n) => {
@@ -25,6 +26,34 @@ function render() {
     app.start('#main');
 
     window._appStore = app._store;
+  }); */
+
+  $.ajax(QUERY.QUERY_ACCOUNT_BASEINFO).catch((response) => {
+    if (response.status === 401 || response.status === 403) {
+      window.location.href = `/${window.locale.toLowerCase()}?open=signin&redirect_to=${encodeURIComponent(window.location.pathname + window.location.search + window.location.hash)}`;
+    }
+  }).done((response) => {
+    if (!response.data.language) {
+      window.locale = 'zh-CN';
+    } else {
+      window.locale = response.data.language;
+    }
+    localStorage.setItem('BRB_LOCAL', window.locale);
+    $.ajax(QUERY.I18N(window.locale)).done((data) => {
+      // 设置一个全局变量
+      window.i18n = data;
+      // 初始化
+      const app = dva();
+      models.forEach(model => app.model(model));
+
+      app.router(param => (
+        <Index {...param} />
+      ));
+
+      app.start('#main');
+
+      window._appStore = app._store;
+    });
   });
 }
 
