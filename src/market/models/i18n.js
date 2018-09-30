@@ -46,10 +46,8 @@ const model = {
   effects: {
     /* * changeLocale({ payload }, { call, select, put }) {
       const origin = yield select(({ utils }) => utils.locale);
-      console.log(origin);
       if (origin === payload) return;
       const i18n = yield call(changeLocale(payload));
-      console.log(i18n);
       if (i18n) {
         // 一些全局变量以及LocalStorage
         window.locale = payload;

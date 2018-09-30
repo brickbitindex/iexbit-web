@@ -15,7 +15,6 @@ class Account extends Component {
   @autobind
   handleChangeMenu(e) {
     const { locale } = this.props;
-    console.log(locale);
     const lowerLocale = locale === 'en' ? 'en-us' : locale.toLowerCase();
     switch (e.key) {
       case 'articles':
