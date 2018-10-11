@@ -103,17 +103,19 @@ const model = {
       const data = yield call(queryHistoryLog, { page, count, locale, market_id: marketId, ...payload }, options);
       if (data.success) {
         const history = data.data;
-        yield put({
-          type: 'updateState',
-          payload: {
-            historyLogs: history.trades,
-            historyPage: {
-              total: history.total_pages * count || 1,
-              total_pages: history.total_pages,
+        if (history) {
+          yield put({
+            type: 'updateState',
+            payload: {
+              historyLogs: history.trades,
+              historyPage: {
+                total: history.total_pages * count || 1,
+                total_pages: history.total_pages,
+              },
+              page,
             },
-            page,
-          },
-        });
+          });
+        }
       }
     },
   },
