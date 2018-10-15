@@ -21,7 +21,7 @@ const model = {
   effects: {
     * deleteOrder({ payload }, { call }) {
       const id = payload.id;
-      const response = yield call(deleteOrder, id);
+      yield call(deleteOrder, id);
     },
   },
   reducers: {

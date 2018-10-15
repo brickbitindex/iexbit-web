@@ -4,7 +4,7 @@ import $ from 'jquery';
 
 import '../market/lib/antd/index.less';
 import Index, { models } from '../market';
-import QUERY, { fetch } from '../market/models/querys';
+import QUERY from '../market/models/querys';
 
 const locale = localStorage.getItem('BRB_LOCAL') || 'zh-CN';
 window.locale = locale;
@@ -29,13 +29,13 @@ function render() {
   }); */
 
   $.ajax(QUERY.QUERY_ACCOUNT_BASEINFO).catch((response) => {
-    if (response.status === 401 || response.status === 403) {
+    if (response.status === 403) {
       window.location.href = `/${window.locale.toLowerCase()}?open=signin&redirect_to=${encodeURIComponent(window.location.pathname + window.location.search + window.location.hash)}`;
     }
   }).done((response) => {
-    if (!response.data.language) {
+    if (response && !response.data.language) {
       window.locale = 'zh-CN';
-    } else {
+    } else if (response && response.data.language) {
       window.locale = response.data.language;
     }
     localStorage.setItem('BRB_LOCAL', window.locale);
