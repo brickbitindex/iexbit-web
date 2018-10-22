@@ -8,7 +8,7 @@ import { Tabs } from '../../lib/antd';
 
 import MyOrders from './components/myOrders';
 import MessageCenter from './components/messageCenter';
-import HistoryLog from './components/historyLog';
+// import HistoryLog from './components/historyLog';
 
 import './style.scss';
 
@@ -63,9 +63,9 @@ class WrappedTabPanelComponent extends Component {
           <TabPane key="messageCenter" tab={<FormattedMessage id="messagecenter" />}>
             <MessageCenter />
           </TabPane>
-          <TabPane key="historyLog" tab={<FormattedMessage id="history" />}>
+          {/* <TabPane key="historyLog" tab={<FormattedMessage id="history" />}>
             <HistoryLog />
-          </TabPane>
+          </TabPane> */}
         </Tabs>
         }
       </div>

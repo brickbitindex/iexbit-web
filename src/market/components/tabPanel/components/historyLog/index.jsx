@@ -31,7 +31,7 @@ const trades = [{
   className: 'base_unit_code',
   render: (text, record) => record.base_unit_code + '/' + record.base_unit_volume,
 }, {
-  title: <FormattedMessage id="history_table_trades_quete" />,
+  title: <FormattedMessage id="history_table_trades_quote" />,
   dataIndex: 'quete_unit_code',
   key: 'quete_unit_code',
   className: 'quete_unit_code',
