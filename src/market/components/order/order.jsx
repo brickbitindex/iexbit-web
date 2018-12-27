@@ -128,8 +128,9 @@ class Order extends Component {
     this.handleQuickAmount(e / 100);
   }
   render() {
-    const { basicInfo, anonymous, form, i18n } = this.props;
-    const FEE = basicInfo.ask_config && basicInfo.ask_config.fee_rate;
+    const { basicInfo, anonymous, form, i18n, type } = this.props;
+    const fee = basicInfo.ask_config.fee_rate ? basicInfo.ask_config.fee_rate.toString() : 0;
+    const totalFee = parseFloat(form.amount * form.price * fee || 0);
     /**
      * form.price 是指价格，买入或者卖出的
      * basicInfo里面的quote_unit代表买入的币种
@@ -137,7 +138,7 @@ class Order extends Component {
      * 常规时间，交易手续费等于买入的币种的价格 * 0.1%
      * 7月31日之前手续费为0
      */
-    const exchangeFee = form.price ? `${parseFloat(form.price * FEE).toFixed(4)}${basicInfo.quote_unit.code}` : `${parseFloat(0).toFixed(4)}${basicInfo.quote_unit.code}`;
+    const exchangeFee = form.price ? `${totalFee.toFixed(4)}${basicInfo.quote_unit.code}` : `${parseFloat(0).toFixed(4)}${basicInfo.quote_unit.code}`;
     const error = form.error;
     const balance = this.getBalance();
     const sliderValue = this.getSliderValue();
@@ -198,8 +199,8 @@ class Order extends Component {
           </div>
         </div> */}
         <div className="order-row">
-          <OrderButton className={this.props.type} onClick={this.handleSubmit}>
-            <FormattedMessage id={`order_${this.props.type}`} />
+          <OrderButton className={type} onClick={this.handleSubmit}>
+            <FormattedMessage id={`order_${type}`} />
             <span> {basicInfo.base_unit.code}</span>
           </OrderButton>
         </div>
