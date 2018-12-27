@@ -129,8 +129,19 @@ class Order extends Component {
   }
   render() {
     const { basicInfo, anonymous, form, i18n, type } = this.props;
-    const fee = basicInfo.ask_config.fee_rate ? basicInfo.ask_config.fee_rate.toString() : 0;
-    const totalFee = parseFloat(form.amount * form.price * fee || 0);
+    let totalFee = 0;
+    let fee = 0;
+    let unit;
+    console.log(basicInfo);
+    if (type === 'buy') {
+      fee = basicInfo.ask_config.fee_rate && basicInfo.ask_config.fee_rate.toString();
+      totalFee = parseFloat(form.amount * fee || 0);
+      unit = basicInfo.base_unit.code;
+    } else if (type === 'sell') {
+      fee = basicInfo.bid_config.fee_rate && basicInfo.bid_config.fee_rate.toString();
+      totalFee = parseFloat(form.amount * form.price * fee || 0);
+      unit = basicInfo.quote_unit.code;
+    }
     /**
      * form.price 是指价格，买入或者卖出的
      * basicInfo里面的quote_unit代表买入的币种
@@ -138,7 +149,7 @@ class Order extends Component {
      * 常规时间，交易手续费等于买入的币种的价格 * 0.1%
      * 7月31日之前手续费为0
      */
-    const exchangeFee = form.price ? `${totalFee.toFixed(4)}${basicInfo.quote_unit.code}` : `${parseFloat(0).toFixed(4)}${basicInfo.quote_unit.code}`;
+    const exchangeFee = form.price ? `${totalFee.toFixed(4)}${unit}` : `${parseFloat(0).toFixed(4)}${unit}`;
     const error = form.error;
     const balance = this.getBalance();
     const sliderValue = this.getSliderValue();
