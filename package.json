@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": " webpack-dev-server --port 8111 --progress --colors --display-error-details --inline --hot --content-base test/build --config webpack/webpack.dev.config.js",
     "deploy": "npm run clean && NODE_ENV=production webpack --progress -p --display-error-details --config webpack/webpack.deploy.config.js && npm run release",
-    "release": "scp dist/assets/* deploy@35.194.159.171:~/market/"
+    "release": "scp dist/assets/* deploy@172.104.107.24:~/market/"
   },
   "repository": {
     "type": "git",
