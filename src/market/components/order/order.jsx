@@ -132,7 +132,6 @@ class Order extends Component {
     let totalFee = 0;
     let fee = 0;
     let unit;
-    console.log(basicInfo);
     if (type === 'buy') {
       fee = basicInfo.ask_config.fee_rate && basicInfo.ask_config.fee_rate.toString();
       totalFee = parseFloat(form.amount * fee || 0);
