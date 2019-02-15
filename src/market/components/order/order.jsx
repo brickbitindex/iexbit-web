@@ -124,15 +124,14 @@ class Order extends Component {
     }
   }
   @autobind
-  handleSliderChange(e) {
-    this.handleQuickAmount(e / 100);
+  handleSliderChange(value) {
+    this.handleQuickAmount(new Decimal(value).div(100).toNumber());
   }
   render() {
     const { basicInfo, anonymous, form, i18n, type } = this.props;
     let totalFee = 0;
     let fee = 0;
     let unit;
-    console.log(basicInfo);
     if (type === 'buy') {
       fee = basicInfo.ask_config.fee_rate && basicInfo.ask_config.fee_rate.toString();
       totalFee = parseFloat(form.amount * fee || 0);
@@ -147,7 +146,6 @@ class Order extends Component {
      * basicInfo里面的quote_unit代表买入的币种
      * basicInfo里面的base_unit代表卖出的币种
      * 常规时间，交易手续费等于买入的币种的价格 * 0.1%
-     * 7月31日之前手续费为0
      */
     const exchangeFee = form.price ? `${totalFee.toFixed(4)}${unit}` : `${parseFloat(0).toFixed(4)}${unit}`;
     const error = form.error;
