@@ -1,23 +1,19 @@
 var fs = require('fs');
+var routers = require('./routers.deploy.json').routers;
 
 var files = fs.readdirSync('./dist/assets');
 
 var reg = /.+\.html/;
+var analysis = require('./analysis');
 
 files.forEach(function(file) {
   if (reg.test(file)) {
-    var content = fs.readFileSync('./dist/assets/' + file).toString();
-    content = content.replace('</head>', `
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-113346386-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    var fileRouter = routers.find(r => r.filename === file);
+    var contents = analysis[fileRouter.base || 'toastio'];
+    var replaceContent = fileRouter.erb ? contents.erb : contents.static;
 
-  gtag('config', 'UA-113346386-1');
-</script>
-</head>`);
+    var content = fs.readFileSync('./dist/assets/' + file).toString();
+    content = content.replace('</head>', replaceContent);
     fs.writeFileSync('./dist/assets/' + file, content);
     fs.renameSync('./dist/assets/' + file, './dist/' + file);
   }
