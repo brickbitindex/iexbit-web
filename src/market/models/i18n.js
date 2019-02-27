@@ -66,6 +66,10 @@ const model = {
       let data = yield call(queryBaseInfo);
       if (!data.success) return;
       data = data.data;
+      // gagio
+      if (window.gagioUser) {
+        window.gagioUser(data.member_id.toString());
+      }
     },
     * changeLocale({ payload }, { call, select, put }) {
       const origin = yield select(({ i18n }) => i18n.locale);
