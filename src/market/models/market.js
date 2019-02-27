@@ -203,6 +203,7 @@ const model = {
             ...ticker,
             change,
             down,
+            innovation: price.innovation,
           };
           ['buy', 'high', 'last', 'low', 'open', 'sell'].forEach((key) => {
             _ret[key] = parseFloat(_ret[key]).toFixed(fixed);

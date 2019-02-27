@@ -17,8 +17,8 @@ class Balance extends Component {
           <div className="trades-col price"><FormattedMessage id="trades_price" /></div>
           <div className="trades-col amount"><FormattedMessage id="trades_amount" /></div>
         </div> */}
-        {data.map(d => (
-          <div className="balance-row">
+        {data.map((d, i) => (
+          <div className="balance-row" key={i}>
             <div className="balance-col currency">{d.currency.toUpperCase()}</div>
             <div className="balance-col balance">
               <div>
