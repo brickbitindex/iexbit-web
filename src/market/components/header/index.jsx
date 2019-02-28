@@ -111,7 +111,7 @@ class Header extends Component {
           width="708px"
           className="search-modal"
         >
-          <Search prices={prices} show={this.state.showSearch} />
+          <Search prices={prices} show={this.state.showSearch} locale={locale} />
         </Modal>
       </div>
     );

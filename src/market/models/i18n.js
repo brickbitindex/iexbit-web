@@ -74,22 +74,20 @@ const model = {
     * changeLocale({ payload }, { call, select, put }) {
       const origin = yield select(({ i18n }) => i18n.locale);
       if (origin === payload) return;
-      const data = yield call(changeLocale, { locale: payload });
-      if (data.success) {
-        const i18n = yield call(queryI18n(payload));
-        if (i18n) {
-          // 一些全局变量以及LocalStorage
-          window.locale = payload;
-          window.i18n = i18n;
-          localStorage.setItem('BRB_LOCAL', payload);
-          yield put({
-            type: 'updateState',
-            payload: {
-              messages: i18n,
-              locale: payload,
-            },
-          });
-        }
+      yield call(changeLocale, { locale: payload });
+      const i18n = yield call(queryI18n(payload));
+      if (i18n) {
+        // 一些全局变量以及LocalStorage
+        window.locale = payload;
+        window.i18n = i18n;
+        localStorage.setItem('BRB_LOCAL', payload);
+        yield put({
+          type: 'updateState',
+          payload: {
+            messages: i18n,
+            locale: payload,
+          },
+        });
       }
     },
   },

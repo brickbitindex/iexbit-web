@@ -7,9 +7,16 @@ import { Input, Icon, Tabs, Badge } from '../../lib/antd';
 
 const { TabPane } = Tabs;
 
-function reducePrices(data) {
+const localeMap = {
+  en: 'Innovation',
+  'zh-CN': '创新区',
+  'zh-TW': '創新區',
+};
+
+function reducePrices(data, locale) {
   let ret = {};
-  data.forEach((node) => {
+  const normalData = data.filter(node => !node.innovation);
+  normalData.forEach((node) => {
     const names = node.name.split('/');
     if (!ret[names[1]]) {
       ret[names[1]] = [];
@@ -28,6 +35,23 @@ function reducePrices(data) {
     if (a.market === b.market) return 0;
     return 1;
   });
+
+  // 加入创新区
+  const innovationData = data.filter(node => node.innovation);
+  const innovationMarket = [];
+  innovationData.forEach((node) => {
+    const names = node.name.split('/');
+    innovationMarket.push({
+      ...node,
+      currency: names[0],
+    });
+  });
+  ret.push({
+    // TODO: 语言
+    market: localeMap[locale],
+    currencies: innovationMarket,
+  });
+
   return ret;
 }
 
@@ -82,7 +106,7 @@ export default class Search extends Component {
     });
   }
   render() {
-    const { prices } = this.props;
+    const { prices, locale } = this.props;
     const { filter } = this.state;
     let _prices = prices;
     let reg;
@@ -90,7 +114,7 @@ export default class Search extends Component {
       reg = new RegExp(filter, 'i');
       _prices = prices.filter(p => p.name.match(reg));
     }
-    const reducedPrices = reducePrices(_prices);
+    const reducedPrices = reducePrices(_prices, locale);
     const tab = this.calculateTab(reducedPrices);
     const createTab = market => (
       <span>
