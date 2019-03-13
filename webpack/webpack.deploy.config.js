@@ -30,7 +30,7 @@ var config = {
   output: {
     path: path.join(__dirname, '..', '/dist/assets'),
     filename: '[name].[chunkhash:8].js',
-    publicPath: 'https://assets.bitrabbit.com/market/'
+    publicPath: 'https://assets.zjzsxhy.com/market/'
   },
   plugins: [
     new webpack.DefinePlugin({

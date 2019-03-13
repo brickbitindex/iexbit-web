@@ -19,7 +19,7 @@ const QUERY = {
   DELETE_ORDER: (id, type) => `/markets/${marketId}/order_${type}s/${id}`,
   K: '/api/v2/k.json',
   QUERY_PRICES: '/api/v2/markets?innovation=1',
-  I18N: locale => `https://assets.bitrabbit.com/i18n/${__ENV__}/market/${locale}.json?_=${getSign()}`,
+  I18N: locale => `https://assets.zjzsxhy.com/i18n/${__ENV__}/market/${locale}.json?_=${getSign()}`,
   TRADES: '/web/trades.json',
   CLEAR_ORDERS: '/web/orders/clear_market',
   PRICE: '/web/settings/cny_price',

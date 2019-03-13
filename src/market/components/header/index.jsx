@@ -52,8 +52,8 @@ class Header extends Component {
       <div id="header" className="flex-fixed">
         <div className="logo-container flex-fixed">
           <a href={`/${locale.toLowerCase()}`}>
-            <img src="https://assets.bitrabbit.com/upload/29e044ad-d025-4225-abcd-7494e9541d1f.svg" alt="Bitrabbit" />
-            <img className="m-hide" src="https://assets.bitrabbit.com/upload/0d41cc5e-184f-40dd-b5fb-6ca512252695.svg" alt="Bitrabbit" />
+            <img src="https://assets.zjzsxhy.com/upload/29e044ad-d025-4225-abcd-7494e9541d1f.svg" alt="Bitrabbit" />
+            <img className="m-hide" src="https://assets.zjzsxhy.com/upload/0d41cc5e-184f-40dd-b5fb-6ca512252695.svg" alt="Bitrabbit" />
           </a>
         </div>
         <div className="market-name flex-autofixed" onClick={this.handleSearchBtnClick}>

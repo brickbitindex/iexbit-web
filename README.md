@@ -29,8 +29,8 @@ $ npm run dev
 需要登录到线上测试环境，启动开发模式，然后代理如下两个文件到本地即可：
 
 ```shell
-/https://assets.bitrabbit.com/market/vendors.*.js/ http://localhost:8111/vendors.bundle.js
-/https://assets.bitrabbit.com/market/market.*.js/ http://localhost:8111/market.bundle.js
+/https://assets.zjzsxhy.com/market/vendors.*.js/ http://localhost:8111/vendors.bundle.js
+/https://assets.zjzsxhy.com/market/market.*.js/ http://localhost:8111/market.bundle.js
 ```
 
 ## staging部署
