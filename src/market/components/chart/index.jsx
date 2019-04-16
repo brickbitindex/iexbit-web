@@ -337,13 +337,13 @@ class Chart extends Component {
       // 添加
       switch (name) {
         case 'ma7':
-          entry = this.tvWidget.chart().createStudy('Moving Average', true, false, [7], null, { 'Plot.color': '#9562c2' });
+          entry = this.tvWidget.chart().createStudy('Moving Average', false, false, [7], null, { 'Plot.color': '#9562c2' });
           break;
         case 'ma25':
-          entry = this.tvWidget.chart().createStudy('Moving Average', true, false, [25], null, { 'Plot.color': '#85abd3' });
+          entry = this.tvWidget.chart().createStudy('Moving Average', false, false, [25], null, { 'Plot.color': '#85abd3' });
           break;
         case 'ma99':
-          entry = this.tvWidget.chart().createStudy('Moving Average', true, false, [99]);
+          entry = this.tvWidget.chart().createStudy('Moving Average', false, false, [99]);
           break;
         case 'rsi':
           entry = this.tvWidget.chart().createStudy('Relative Strength Index', false, false, [14]);
@@ -352,7 +352,7 @@ class Chart extends Component {
           entry = this.tvWidget.chart().createStudy('MACD', false, false, [12, 16, 'close', 9]);
           break;
         case 'bb':
-          entry = this.tvWidget.chart().createStudy('Bollinger Bands', true, false, [20, 2]);
+          entry = this.tvWidget.chart().createStudy('Bollinger Bands', false, false, [20, 2]);
           break;
 
         default:
