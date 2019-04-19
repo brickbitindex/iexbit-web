@@ -1,7 +1,7 @@
 import dva from 'dva-no-router';
 import React from 'react';
 import $ from 'jquery';
-
+import qs from 'qs';
 import '../market/lib/antd/index.less';
 import Index, { models } from '../market';
 import QUERY from '../market/models/querys';
@@ -27,6 +27,13 @@ function render() {
 
     window._appStore = app._store;
   }); */
+
+  if (window.location.search.length > 0) {
+    const params = qs.parse(window.location.search.slice(1));
+    if (params.type) {
+      document.body.classList.add(params.type);
+    }
+  }
 
   $.ajax(QUERY.QUERY_ACCOUNT_BASEINFO).catch((response) => {
     if (response.status === 403) {

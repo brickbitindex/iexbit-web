@@ -259,3 +259,11 @@ code,
     }
   }
 }
+
+.bitrabbit_app_android {
+  #header,
+  #mNav .ant-tabs,
+  .chart-panel .cb-panel-title .fullscreen {
+    display: none;
+  }
+}
