@@ -13,8 +13,15 @@ const localeMap = {
   'zh-TW': '創新區',
 };
 
+const localeEntertainment = {
+  en: 'Entertainment',
+  'zh-CN': '娱乐区',
+  'zh-TW': '娛樂區',
+};
+
 function reducePrices(data, locale) {
   let ret = {};
+  const carrotMarket = {};
   const normalData = data.filter(node => !node.innovation);
   normalData.forEach((node) => {
     const names = node.name.split('/');
@@ -26,6 +33,13 @@ function reducePrices(data, locale) {
       currency: names[0],
     });
   });
+
+  if (ret.CARROT) {
+    carrotMarket.currencies = ret.CARROT;
+    carrotMarket.market = localeEntertainment[locale];
+    delete ret.CARROT;
+  }
+
   ret = Object.keys(ret).map(k => ({
     market: k,
     currencies: ret[k],
@@ -51,6 +65,11 @@ function reducePrices(data, locale) {
     market: localeMap[locale],
     currencies: innovationMarket,
   });
+
+ // 加入娱乐区
+  if (JSON.stringify(carrotMarket) !== '{}') {
+    ret.push(carrotMarket);
+  }
 
   return ret;
 }
