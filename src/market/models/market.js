@@ -16,8 +16,6 @@ import QUERY, { fetch } from './querys';
 import { message } from '../lib/antd';
 import { getDecimalCount, formatMessage } from '../lib/utils';
 
-const $ = window.$;
-
 const addBidOrder = data => fetch.post(QUERY.ADD_BID_ORDER, data).catch(err => err);
 const addAskOrder = data => fetch.post(QUERY.ADD_ASK_ORDER, data).catch(err => err);
 const queryRate = () => fetch.get(QUERY.PRICE).catch(err => err);
