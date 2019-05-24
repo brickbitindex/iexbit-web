@@ -125,7 +125,8 @@ const model = {
         dispatch({ type: 'queryPrices' });
       }
 
-      setInterval(qp, 30000);
+      // 去掉定时请求市场数据
+      // setInterval(qp, 30000);
       qp();
     },
   },

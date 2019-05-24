@@ -31,9 +31,18 @@ class Header extends Component {
     });
   }
   @autobind
+  handleCloseModal() {
+    this.setState({
+      showSearch: !this.state.showSearch,
+    });
+  }
+  @autobind
   handleSearchBtnClick() {
     this.setState({
       showSearch: !this.state.showSearch,
+    });
+    this.props.dispatch({
+      type: 'market/queryPrices',
     });
   }
   render() {
@@ -106,7 +115,7 @@ class Header extends Component {
         {/* <Search show={this.state.showSearch} prices={prices} onCancel={this.handleSearchBtnClick} /> */}
         <Modal
           visible={this.state.showSearch}
-          onCancel={this.handleSearchBtnClick}
+          onCancel={this.handleCloseModal}
           footer={null}
           width="708px"
           className="search-modal"
