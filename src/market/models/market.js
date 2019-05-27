@@ -82,7 +82,7 @@ function initCurrentBasicInfo() {
 }
 
 // 当收到2次订单空才真的置空
-const checkEmpyt = true;
+const checkEmpty = true;
 let lastAskOrderEmpty = false;
 let lastBidOrderEmpty = false;
 
@@ -297,7 +297,7 @@ const model = {
       const sourceOrderBook = yield select(({ market }) => market.orderBook);
       const orderBook = { ...sourceOrderBook };
       // 开启2次空检查
-      if (checkEmpyt) {
+      if (checkEmpty) {
         if (asks.length === 0) {
           if (lastAskOrderEmpty) {
             // 上一次也为空
