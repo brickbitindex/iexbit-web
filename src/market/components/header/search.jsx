@@ -67,7 +67,7 @@ function reducePrices(data, locale) {
   });
 
  // 加入娱乐区
-  if (JSON.stringify(carrotMarket) !== '{}') {
+  if (carrotMarket.currencies) {
     ret.push(carrotMarket);
   }
 
