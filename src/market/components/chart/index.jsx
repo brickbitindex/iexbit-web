@@ -150,7 +150,7 @@ class Chart extends Component {
           <Icon type="arrows-alt" />
         </span>
       </Tooltip>,
-      <a className="cmclogo" target="_blank" rel="noopener noreferrer" href={`https://coinmarketcap.com/currencies/${window.gon.current_market.base_unit.key}/`}>
+      <a className="cmclogo" target="_blank" rel="noopener noreferrer" href={`https://coinmarketcap.com/currencies/${window.gon.current_market.base_unit.key}/`} key="CMC">
         <span className="simple-btn tooltip-container">
           <img src="https://assets.zjzsxhy.com/upload/047cd154-d0c6-4cfc-92ab-09bffaf83e27.svg" alt="" />
         </span>

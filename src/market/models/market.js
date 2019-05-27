@@ -81,6 +81,11 @@ function initCurrentBasicInfo() {
   return currentBasicInfo;
 }
 
+// 当收到2次订单空才真的置空
+const checkEmpyt = true;
+let lastAskOrderEmpty = false;
+let lastBidOrderEmpty = false;
+
 const model = {
   namespace: 'market',
   state: {
@@ -267,7 +272,7 @@ const model = {
         },
       });
     },
-    * updateOrderBook({ payload }, { put }) {
+    * updateOrderBook({ payload }, { put, select }) {
       // 处理数据
       // 结构
       // ['price', 'amount', 'total', deep]
@@ -288,13 +293,45 @@ const model = {
       // if (deep > max) max = deep;
       const asks = payload.asks;
       const bids = payload.bids;
+
+      const sourceOrderBook = yield select(({ market }) => market.orderBook);
+      const orderBook = { ...sourceOrderBook };
+      // 开启2次空检查
+      if (checkEmpyt) {
+        if (asks.length === 0) {
+          if (lastAskOrderEmpty) {
+            // 上一次也为空
+            orderBook.asks = asks;
+            lastAskOrderEmpty = false;
+          } else {
+            // 本次为空，不变
+            lastAskOrderEmpty = true;
+          }
+        } else {
+          lastAskOrderEmpty = false;
+          orderBook.asks = asks;
+        }
+        if (bids.length === 0) {
+          if (lastBidOrderEmpty) {
+            // 上一次也为空
+            orderBook.bids = bids;
+            lastBidOrderEmpty = false;
+          } else {
+            // 本次为空，不变
+            lastBidOrderEmpty = true;
+          }
+        } else {
+          lastBidOrderEmpty = false;
+          orderBook.bids = bids;
+        }
+      } else {
+        orderBook.asks = asks;
+        orderBook.bids = bids;
+      }
       yield put({
         type: 'updateState',
         payload: {
-          orderBook: {
-            asks,
-            bids,
-          },
+          orderBook,
         },
       });
     },
