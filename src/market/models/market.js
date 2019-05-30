@@ -254,7 +254,13 @@ const model = {
         tradesObj[t.tid] = t;
       });
       trades = Object.keys(tradesObj).map(k => tradesObj[k]);
-      trades.sort((a, b) => b.date - a.date);
+      trades.sort((a, b) => {
+        const tida = new Decimal(a.tid);
+        const tidb = new Decimal(b.tid);
+        if (tidb.lte(tida)) return -1;
+        if (tida.lte(tidb)) return 1;
+        return 0;
+      });
       const isMobile = yield select(({ mobile }) => mobile.isMobile);
       trades = trades.slice(0, isMobile ? 10 : 100);
       if (trades[0]) {
