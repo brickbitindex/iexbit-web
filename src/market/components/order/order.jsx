@@ -97,6 +97,7 @@ class Order extends Component {
       this.props.onSubmit();
     }
   }
+  // 旧逻辑
   handleQuickAmount(percentage) {
     const balance = this.getBalance();
     const price = this.props.form.price;
@@ -124,8 +125,32 @@ class Order extends Component {
     }
   }
   @autobind
-  handleSliderChange(value) {
-    this.handleQuickAmount(new Decimal(value).div(100).toNumber());
+  handleSliderChange(p) {
+    const percentage = new Decimal(p).div(100);
+    const balance = new Decimal(this.getBalance().balanceText);
+    const amountFixed = this.props.config.amount_fixed;
+    // let value;
+    if (this.props.type === 'buy') {
+      // 买入则
+      if (this.props.form.price) {
+        const price = new Decimal(this.props.form.price);
+        const amount = balance.mul(percentage).div(price);
+        const value = amount.toFixed(amountFixed, Decimal.ROUND_DOWN);
+        this.props.onAmountChange({
+          target: {
+            value,
+          },
+        });
+      }
+    } else {
+      const amount = balance.mul(percentage);
+      const value = amount.toFixed(amountFixed, Decimal.ROUND_DOWN);
+      this.props.onAmountChange({
+        target: {
+          value,
+        },
+      });
+    }
   }
   render() {
     const { basicInfo, anonymous, form, i18n, type } = this.props;
