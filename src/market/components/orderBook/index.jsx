@@ -9,7 +9,7 @@ import wrapWithPanel from '../panel';
 import ZeroFormattedNumber from '../common/zeroFormattedNumber';
 import combineDeep from './deep';
 import SimpleSelect from '../common/simpleSelect';
-import { Tooltip } from '../../lib/antd';
+import { Tooltip, Icon } from '../../lib/antd';
 
 import './style.scss';
 
@@ -75,10 +75,16 @@ class OrderBook extends Component {
     const asksMax = asks.length === 0 ? 0 : asks[asks.length - 1][3];
     return Math.max(bidsMax, asksMax);
   }
-  processDeepData(trades) {
+  processDeepData(trades, myOrders) {
     const deep = this.state.deep;
     const step = this.props.basicInfo.deepSelectOptions[deep].step;
-    const ret = combineDeep(trades, step);
+    const deepRet = combineDeep(trades, step);
+    const ret = deepRet.map((item) => {
+      if (myOrders.find(ele => parseFloat(ele.price) === parseFloat(item[0]))) {
+        item.push('myOrder');
+      }
+      return item;
+    });
     return ret;
   }
   handleAskPriceClick(price) {
@@ -123,11 +129,13 @@ class OrderBook extends Component {
     });
   }
   render() {
-    const { data, basicInfo } = this.props;
+    const { data, basicInfo, myOrders } = this.props;
+    const bidMyOrders = myOrders.filter(node => node.kind === 'bid');
+    const askMyOrders = myOrders.filter(node => node.kind === 'ask');
     const { mode } = this.state;
     const { bids, asks } = data;
-    const deepAsks = this.processDeepData(asks);
-    const deepBids = this.processDeepData(bids);
+    const deepAsks = this.processDeepData(asks, askMyOrders);
+    const deepBids = this.processDeepData(bids, bidMyOrders);
     const max = this.getMax(deepAsks, deepBids);
     return (
       <div id="orderBook">
@@ -143,7 +151,8 @@ class OrderBook extends Component {
         <div className={classnames('order-book-container', `mode-${mode}`)}>
           <div className="order-book asks">
             {deepAsks.map((row, i) => (
-              <div className="order-book-row flex-fixed" key={i} onClick={this.handleAskPriceClick.bind(this, row[0])}>
+              // <div className="order-book-row flex-fixed" key={i} onClick={this.handleAskPriceClick.bind(this, row[0])}>
+              <div className={classnames('order-book-row flex-fixed', row[4] ? 'my-order' : '')} key={i} onClick={this.handleAskPriceClick.bind(this, row[0])}>
                 <div className="order-book-bar" style={{ width: `${row[3] * 100 / max}%` }} />
                 <div className="order-book-row-content">
                   <div className="order-book-col price">
@@ -157,12 +166,13 @@ class OrderBook extends Component {
                   </div>
                 </div>
               </div>
-            ))}
+              )
+            )}
           </div>
           {this.props.children}
           <div className="order-book bids">
             {deepBids.map((row, i) => (
-              <div className="order-book-row flex-fixed" key={i} onClick={this.handleBidPriceClick.bind(this, row[0])}>
+              <div className={classnames('order-book-row flex-fixed', row[4] ? 'my-order' : '')} key={i} onClick={this.handleBidPriceClick.bind(this, row[0])}>
                 <div className="order-book-bar" style={{ width: `${row[3] * 100 / max}%` }} />
                 <div className="order-book-row-content">
                   <div className="order-book-col price">
@@ -184,10 +194,11 @@ class OrderBook extends Component {
   }
 }
 
-function mapStateToProps({ market }) {
+function mapStateToProps({ market, account }) {
   return {
     data: market.orderBook,
     basicInfo: market.currentBasicInfo,
+    myOrders: account.orders,
   };
 }
 
