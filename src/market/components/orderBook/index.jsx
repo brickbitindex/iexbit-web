@@ -9,7 +9,7 @@ import wrapWithPanel from '../panel';
 import ZeroFormattedNumber from '../common/zeroFormattedNumber';
 import combineDeep from './deep';
 import SimpleSelect from '../common/simpleSelect';
-import { Tooltip, Icon } from '../../lib/antd';
+import { Tooltip } from '../../lib/antd';
 
 import './style.scss';
 
@@ -75,12 +75,25 @@ class OrderBook extends Component {
     const asksMax = asks.length === 0 ? 0 : asks[asks.length - 1][3];
     return Math.max(bidsMax, asksMax);
   }
+
+  handleMyOrders(data) {
+    const ret = data.map((item) => {
+      const ele = [];
+      ele[0] = item.price;
+      ele[1] = item.volume;
+      return ele;
+    });
+    return ret;
+  }
+
   processDeepData(trades, myOrders) {
     const deep = this.state.deep;
     const step = this.props.basicInfo.deepSelectOptions[deep].step;
     const deepRet = combineDeep(trades, step);
+    const processMyOrders = this.handleMyOrders(myOrders);
+    const deepMyOrder = combineDeep(processMyOrders, step);
     const ret = deepRet.map((item) => {
-      if (myOrders.find(ele => parseFloat(ele.price) === parseFloat(item[0]))) {
+      if (deepMyOrder.find(ele => parseFloat(ele[0]) === parseFloat(item[0]))) {
         item.push('myOrder');
       }
       return item;

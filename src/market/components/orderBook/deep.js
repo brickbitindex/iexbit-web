@@ -36,3 +36,4 @@ export default function combineDeep(trades, step) {
   });
   return ret;
 }
+
