@@ -10,6 +10,15 @@ $itemHeight: 30px;
     width: 100%;
     margin-bottom: 10px;
 
+    .market-tips{
+      line-height: $itemHeight;
+      background-color: #292a2e;
+      color: #aaa;
+      border: 1px solid #292A2E;
+      font-size: 12px;
+      padding-left: 11px;
+    }
+
     .ant-slider {
       margin: 0 6px;
 
@@ -187,3 +196,10 @@ $itemHeight: 30px;
     right: 0;
   }
 }
+.ant-select-dropdown-menu-item-active:not(.ant-select-dropdown-menu-item-disabled) {
+    background-color: #f3ca82;
+}
+.ant-select-dropdown-menu-item-active:hover:not(.ant-select-dropdown-menu-item-disabled) {
+    background-color: #ffe5b0;
+}
+

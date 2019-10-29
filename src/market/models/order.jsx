@@ -2,10 +2,11 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { getDecimalCount } from '../lib/utils';
 
-const typeOptions = [
-  { value: 'limit', label: <FormattedMessage id="order_type_limit" /> },
-  // { value: 'market', label: <FormattedMessage id="order_type_market" /> },
-];
+// const typeOptions = [
+//   { value: 'limit', label: <FormattedMessage id="order_type_limit" /> },
+//   { value: 'market', label: <FormattedMessage id="order_type_market" /> },
+// ];
+const typeOptions = ['limit', 'market'];
 
 const numberReg = /^\d+(\.\d+)?$/;
 
@@ -123,7 +124,6 @@ const model = {
     },
     * updateAskType({ payload }, { select, put }) {
       const originAsk = yield select(({ order }) => order.ask);
-      console.log('originAsk', originAsk);
       const ask = { ...originAsk };
       ask.error.type = !payload;
       ask.type = payload;
@@ -142,7 +142,7 @@ const model = {
           payload: {
             type: 'bid',
             data: {
-              type: originBid.type.value,
+              type: originBid.type,
               price: originBid.price,
               amount: originBid.amount,
             },
@@ -170,7 +170,7 @@ const model = {
           payload: {
             type: 'ask',
             data: {
-              type: originAsk.type.value,
+              type: originAsk.type,
               price: originAsk.price,
               amount: originAsk.amount,
             },

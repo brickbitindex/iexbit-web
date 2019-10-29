@@ -154,7 +154,7 @@ class Order extends Component {
   }
   render() {
     const { basicInfo, anonymous, form, i18n, type } = this.props;
-    console.log('form', form);
+    console.log('a form', form);
     let totalFee = 0;
     let fee = 0;
     let unit;
@@ -178,6 +178,7 @@ class Order extends Component {
     const balance = this.getBalance();
     const sliderValue = this.getSliderValue();
     const marketValue = form.price && form.amount ? new Decimal(parseFloat(form.price * form.amount).toFixed(3)).toString() : undefined;
+    const placeholderI18nMarket = '以市场最优价格买入';
     return (
       <div className="order">
         <div className="order-balance">
@@ -188,20 +189,25 @@ class Order extends Component {
           <Select
             className={classnames('order-item', { error: error.type })}
             placeholder={i18n.order_type}
-            defaultValue={form.type.value}
+            // defaultValue={form.type.value}
+            defaultValue={form.type}
             onChange={this.props.onTypeChange}
           >
-            {form.types.map(t => <Option value={t.value} key={t.value}><FormattedMessage id={`order_type_${t.value}`} /></Option>)}
+            {form.types.map(t => <Option value={t} key={t.value}><FormattedMessage id={`order_type_${t}`} /></Option>)}
           </Select>
         </div>
-        <div className="order-row">
-          <OrderInput
-            className={classnames('order-item', { error: error.price })}
-            value={form.price}
-            placeholder={i18n.order_price}
-            onChange={this.props.onPriceChange}
-            suffix={basicInfo.quote_unit.code}
-          />
+        <div className="order-row">{
+          form.type === 'limit' ?
+            <OrderInput
+              className={classnames('order-item', { error: error.price })}
+              value={form.price}
+              placeholder={i18n.order_price}
+              onChange={this.props.onPriceChange}
+              suffix={basicInfo.quote_unit.code}
+            />
+          :
+            <div className={classnames('order-item market-tips')}>{placeholderI18nMarket}</div>
+        }
         </div>
         <div className="order-row">
           <OrderInput
