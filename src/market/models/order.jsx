@@ -123,6 +123,7 @@ const model = {
     },
     * updateAskType({ payload }, { select, put }) {
       const originAsk = yield select(({ order }) => order.ask);
+      console.log('originAsk', originAsk);
       const ask = { ...originAsk };
       ask.error.type = !payload;
       ask.type = payload;

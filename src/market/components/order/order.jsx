@@ -154,6 +154,7 @@ class Order extends Component {
   }
   render() {
     const { basicInfo, anonymous, form, i18n, type } = this.props;
+    console.log('form', form);
     let totalFee = 0;
     let fee = 0;
     let unit;
