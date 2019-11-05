@@ -178,7 +178,6 @@ class Order extends Component {
     const balance = this.getBalance();
     const sliderValue = this.getSliderValue();
     const marketValue = form.price && form.amount ? new Decimal(parseFloat(form.price * form.amount).toFixed(3)).toString() : undefined;
-    const placeholderI18nMarket = '以市场最优价格买入';
     return (
       <div className="order">
         <div className="order-balance">
@@ -193,7 +192,7 @@ class Order extends Component {
             defaultValue={form.type}
             onChange={this.props.onTypeChange}
           >
-            {form.types.map(t => <Option value={t} key={t.value}><FormattedMessage id={`order_type_${t}`} /></Option>)}
+            {form.types.map(t => <Option value={t} key={t}><FormattedMessage id={`order_type_${t}`} /></Option>)}
           </Select>
         </div>
         <div className="order-row">{
@@ -206,7 +205,7 @@ class Order extends Component {
               suffix={basicInfo.quote_unit.code}
             />
           :
-            <div className={classnames('order-item market-tips')}>{placeholderI18nMarket}</div>
+            <div className={classnames('order-item market-tips')}><FormattedMessage id="order_type_market_tips" /></div>
         }
         </div>
         <div className="order-row">
