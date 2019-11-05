@@ -154,7 +154,6 @@ class Order extends Component {
   }
   render() {
     const { basicInfo, anonymous, form, i18n, type } = this.props;
-    console.log('a form', form);
     let totalFee = 0;
     let fee = 0;
     let unit;
@@ -218,17 +217,26 @@ class Order extends Component {
           />
         </div>
         <div className="order-row-trade">
-          <div className="order-label">
-            <FormattedMessage id="order_budget" />
-            {marketValue && <span className="order-item tt">
-              &nbsp;{marketValue}{basicInfo.quote_unit.code}
-            </span>}
-          </div>
+          {form.type === 'limit' ?
+            <div className="order-label">
+              <FormattedMessage id="order_budget" />
+              {marketValue && <span className="order-item tt">
+                &nbsp;{marketValue}{basicInfo.quote_unit.code}
+              </span>}
+            </div>
+            :
+            ''
+           }
           <div><FormattedMessage id="history_table_trades_fee" />: {exchangeFee}</div>
         </div>
-        <div className="order-row small">
-          <Slider step={0.1} value={sliderValue} handle={handle} onChange={this.handleSliderChange} />
-        </div>
+        {form.type === 'limit' ?
+          <div className="order-row small">
+            <Slider step={0.1} value={sliderValue} handle={handle} onChange={this.handleSliderChange} />
+          </div>
+          :
+          null
+        }
+
         {/* <div className="order-row small">
           <div className="order-lable">{''}</div>
           <div className="order-item order-amount-btns">

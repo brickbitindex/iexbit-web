@@ -22,9 +22,11 @@ function checkFormError(form) {
     error.type = true;
     result = true;
   }
-  if (!(price && price !== '' && numberReg.test(price))) {
-    error.price = true;
-    result = true;
+  if (type === 'limit') {
+    if (!(price && price !== '' && numberReg.test(price))) {
+      error.price = true;
+      result = true;
+    }
   }
   if (!(amount && amount !== '' && numberReg.test(amount))) {
     error.amount = true;
