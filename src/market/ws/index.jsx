@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'dva';
 // import autobind from 'autobind-decorator';
 import ActionCable from 'actioncable';
-import { message } from '../lib/antd';
+// import { message } from '../lib/antd';
 
 const channalConnect = {};
 
@@ -38,28 +38,29 @@ class IActionCable extends Component {
         this.checkLoading('myOrders');
         this.checkLoading('order');
       }
-      message.info('text_connect');
-      this.props.dispatch({
-        type: 'utils/pushMessage',
-        payload: {
-          message: 'text_connect',
-          from: 'sys',
-          level: 'verbose',
-        },
-      });
+      // message.info('text_connect');
+      // this.props.dispatch({
+      //   type: 'utils/pushMessage',
+      //   payload: {
+      //     message: 'text_connect',
+      //     from: 'sys',
+      //     level: 'verbose',
+      //   },
+      // });
     }
   }
   channalDisconnected(tag) {
     if (getAllChannelConnect()) {
-      message.warn('text_disconnect');
-      this.props.dispatch({
-        type: 'utils/pushMessage',
-        payload: {
-          message: 'text_disconnect',
-          from: 'sys',
-          level: 'warn',
-        },
-      });
+      // message.warn('text_disconnect');
+      // this.props.dispatch({
+      //   type: 'utils/pushMessage',
+      //   payload: {
+      //     message: 'text_disconnect',
+      //     from: 'sys',
+      //     level: 'warn',
+      //   },
+      // });
+      console.log('text_disconnect');
     }
     channalConnect[tag] = false;
   }

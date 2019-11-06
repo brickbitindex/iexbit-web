@@ -182,6 +182,19 @@ $itemHeight: 30px;
   }
 }
 
+.ant-select-dropdown-menu-item-active:not(.ant-select-dropdown-menu-item-disabled) {
+    background-color: #f3ca82;
+}
+.ant-select-dropdown-menu-item-active:hover:not(.ant-select-dropdown-menu-item-disabled) {
+    background-color: #ffe5b0;
+}
+
+.ant-modal-confirm .ant-modal-confirm-btns button + button {
+  color: #fff;
+  background-color: #f3ca82;
+}
+
+
 @media (max-width: 767px) {
   .modal-tips.ant-modal {
     right: 0;
