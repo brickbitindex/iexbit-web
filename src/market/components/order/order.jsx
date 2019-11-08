@@ -190,7 +190,7 @@ class Order extends Component {
             defaultValue={form.type.value}
             onChange={this.props.onTypeChange}
           >
-            {form.types.map(t => <Option value={t.value}><FormattedMessage id={`order_type_${t.value}`} /></Option>)}
+            {form.types.map(t => <Option value={t.value} key={t.value}><FormattedMessage id={`order_type_${t.value}`} /></Option>)}
           </Select>
         </div>
         <div className="order-row">
