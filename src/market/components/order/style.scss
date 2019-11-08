@@ -144,12 +144,12 @@ $itemHeight: 30px;
     background-color: #292a2e;
     .ant-modal-body {
       padding: 24px;
-      .ant-confirm-title {
+      .ant-modal-confirm-title {
         color: #fff;
         font-size: 16px;
         margin-bottom: 12px;
       }
-      .ant-confirm-content {
+      .ant-modal-confirm-content {
         color: #fff;
         font-size: 14px;
         line-height: 1.5;
@@ -157,7 +157,7 @@ $itemHeight: 30px;
       }
     }
   }
-  .ant-confirm-btns {
+  .ant-modal-confirm-btns {
     display: flex;
     justify-content: center;
     width: 100%;

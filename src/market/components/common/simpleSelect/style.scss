@@ -23,9 +23,11 @@
     top: 50%;
     right: 0;
     transform: translate(0, -50%);
-    font-family: "anticon" !important;
-    content: "\e61d";
+    content: "";
+    background-image: url('https://assets.zjzsxhy.com/upload/f795ab6e-3c1d-4431-8880-bc1c293c80d8.svg');
     pointer-events: none;
-    font-size: 12px;
+    background-size: cover;
+    width: 12px;
+    height: 12px;
   }
 }
