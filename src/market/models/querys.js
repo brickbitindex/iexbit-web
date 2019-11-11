@@ -17,7 +17,7 @@ const QUERY = {
   ADD_BID_ORDER: `/markets/${market}/order_bids`,
   ADD_ASK_ORDER: `/markets/${market}/order_asks`,
   DELETE_ORDER: (id, type) => `/markets/${marketId}/order_${type}s/${id}`,
-  K: '/api/v2/k.json',
+  K: Math.random() * 100 > 10 ? '/api/v2/k.json' : '/api/v2/k2.json',
   QUERY_PRICES: '/api/v2/markets?innovation=1',
   I18N: locale => `https://assets.zjzsxhy.com/i18n/${__ENV__}/market/${locale}.json?_=${getSign()}`,
   TRADES: '/web/trades.json',
