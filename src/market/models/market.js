@@ -35,7 +35,10 @@ function getDeepSelect(fixed) {
   const ret = [];
   for (let i = 0; i < 4; i += 1) {
     const currentFixed = fixed - i;
-    const step = Math.pow(10, -currentFixed);
+    let step = Math.pow(10, -currentFixed);
+    if (currentFixed >= 0) {
+      step = step.toFixed(currentFixed);
+    }
     if (currentFixed <= 0) {
       // 整数
       ret.push({
@@ -299,7 +302,6 @@ const model = {
       // if (deep > max) max = deep;
       const asks = payload.asks;
       const bids = payload.bids;
-
       const sourceOrderBook = yield select(({ market }) => market.orderBook);
       const orderBook = { ...sourceOrderBook };
       // 开启2次空检查
@@ -369,7 +371,6 @@ const model = {
         current = find[0];
       }
       if (!current) {
-        console.log('[market/updatePrice] no pair in price');
         current = {
           id: -1,
           name: currentPair,
