@@ -15,7 +15,7 @@ import Mask from '../common/anonymousMask';
 Decimal.config({ toExpNeg: -16 });
 
 const Handle = Slider.Handle;
-const Option = Select.Option;
+const Option = { Select };
 
 const handle = (props) => {
   const { value, dragging, index, ...restProps } = props;

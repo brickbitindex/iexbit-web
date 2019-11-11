@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import classnames from 'classnames';
 import autobind from 'autobind-decorator';
 import { FormattedMessage } from 'react-intl';
-import { Menu, Dropdown } from '../../lib/antd';
+import { Menu, Dropdown, Icon } from '../../lib/antd';
 
 import './account.scss';
 
@@ -69,7 +69,7 @@ class Account extends Component {
           </span>
         ) : (
           <Dropdown className="header-opts-btn simple-btn" placement="bottomRight" overlay={menu}>
-            <i className="anticon anticon-user" />
+            <Icon type="user" />
           </Dropdown>
         )}
       </div>

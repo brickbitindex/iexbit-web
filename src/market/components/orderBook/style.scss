@@ -120,14 +120,15 @@
       transform: translate(-50%, -35%) rotate(-90deg) scale(0.75, 1);
     }
     .slide-sell {
-      transform: translate(-50%, -65%) rotate(90deg) scale(0.75, 1);
+      transform: translate(-50%, -65%) rotate(-90deg) scale(0.75, 1);
     }
   }
   .slide-buy {
     transform: rotate(-90deg);
   }
+
   .slide-sell {
-    transform: rotate(90deg);
+    transform: rotate(-90deg);
   }
 
   .simple-btn {
