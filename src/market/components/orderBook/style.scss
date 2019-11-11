@@ -22,8 +22,7 @@
       width: 100%;
       left: 0;
       height: 100%;
-      overflow-y: scroll;
-      overflow-x: hidden;
+      overflow: hidden;
       transition: height ease 0.4s;
 
       .order-book-bar {

@@ -8,6 +8,7 @@ import Datefeed from './datafeed';
 import overrides from './overrides';
 import { Tooltip, Icon } from '../../lib/antd';
 import SimpleSelect from '../common/simpleSelect';
+import DepthChart from './depth';
 
 import './style.scss';
 
@@ -102,6 +103,7 @@ class Chart extends Component {
       loading: true,
       resolution: '15',
       chartType: 9,
+      showDepth: false,
       studies: {
         ma7: null,
         ma25: null,
@@ -116,7 +118,7 @@ class Chart extends Component {
     this.props.onTitleContentChange(this.getPanelTitleContent());
   }
   getPanelTitleContent() {
-    const { studies, chartType, resolution, loading } = this.state;
+    const { studies, chartType, resolution, loading, showDepth } = this.state;
     const { messages } = this.props;
     if (loading) return [];
     const tools = [
@@ -150,6 +152,9 @@ class Chart extends Component {
           <Icon type="arrows-alt" />
         </span>
       </Tooltip>,
+      <span className={classnames('simple-btn tooltip-container depth', { active: showDepth })} onClick={this.handleShowDepth} key="depth">
+        <img src="https://assets.zjzsxhy.com/upload/da79d936-7dcc-493f-a6a3-7f5cda386c72.svg" alt="" />
+      </span>,
       <a className="cmclogo" target="_blank" rel="noopener noreferrer" href={`https://coinmarketcap.com/currencies/${window.gon.current_market.base_unit.key}/`} key="CMC">
         <span className="simple-btn tooltip-container">
           <img src="https://assets.zjzsxhy.com/upload/047cd154-d0c6-4cfc-92ab-09bffaf83e27.svg" alt="" />
@@ -366,9 +371,25 @@ class Chart extends Component {
       this.props.onTitleContentChange(this.getPanelTitleContent());
     });
   }
+  @autobind
+  handleShowDepth() {
+    const { showDepth } = this.state;
+    this.setState({
+      showDepth: !showDepth,
+    }, () => {
+      this.props.onTitleContentChange(this.getPanelTitleContent());
+    });
+  }
   render() {
+    const { showDepth } = this.state;
+
     return (
-      <div id="chart" />
+      <div className="chart-framework">
+        <div id="chart" style={{ display: showDepth ? 'none' : 'block' }} />
+        <div id="depthChartContainer">
+          <DepthChart show={showDepth} />
+        </div>
+      </div>
     );
   }
 }

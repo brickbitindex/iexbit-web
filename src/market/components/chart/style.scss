@@ -2,6 +2,11 @@
   height: 100%;
 }
 
+.chart-framework {
+  height: 100%;
+  overflow: hidden;
+}
+
 .chart-container {
   height: 100%;
 
@@ -44,9 +49,26 @@
     .cmclogo {
       float: right;
     }
+    .depth {
+      float: right;
+
+      img {
+        height: 16px;
+      }
+    }
   }
 }
 
 .cb-panel.chart-panel {
   margin-bottom: 2px;
 }
+
+#depthChartContainer {
+  height: 100%;
+
+  canvas {
+    height: 100%;
+    width: 100%;
+  }
+}
+
