@@ -61,7 +61,12 @@
 .ant-select-dropdown-menu-item-active {
   background-color: @primary-color;
 }
-
+.ant-select-dropdown-menu-item-active:hover:not(.ant-select-dropdown-menu-item-disapbled){
+  background-color: @primary-color;
+}
+.ant-select-dropdown-menu-item-active:not(.ant-select-dropdown-menu-item-disapbled){
+  background-color: @primary-color;
+}
 
 // Input
 // ---
@@ -138,6 +143,9 @@
 .ant-table-tbody > tr:hover > td {
   background-color: #232323;
 }
+.ant-table-thead > tr.ant-table-row-hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td, .ant-table-tbody > tr.ant-table-row-hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td, .ant-table-thead > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td, .ant-table-tbody > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
+    background: #232323;
+}
 
 // small Table
 @component-background: #232323;
@@ -178,4 +186,6 @@
 .ant-modal-header {
   border-bottom: 1px solid #545454;
 }
+
+
 

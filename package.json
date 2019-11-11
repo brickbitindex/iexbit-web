@@ -64,7 +64,7 @@
   },
   "dependencies": {
     "actioncable": "^5.1.4",
-    "antd": "^3.6.2",
+    "antd": "3.25.0",
     "autobind-decorator": "^2.1.0",
     "classnames": "^2.2.5",
     "decimal.js-light": "^2.3.1",

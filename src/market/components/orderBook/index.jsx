@@ -9,7 +9,7 @@ import wrapWithPanel from '../panel';
 import ZeroFormattedNumber from '../common/zeroFormattedNumber';
 import combineDeep from './deep';
 import SimpleSelect from '../common/simpleSelect';
-import { Tooltip } from '../../lib/antd';
+import { Tooltip, Icon } from '../../lib/antd';
 
 import './style.scss';
 
@@ -34,8 +34,8 @@ class OrderBook extends Component {
           onClick={this.handleModeChange.bind(this, 'all')}
         >
           <div className="slide-all">
-            <i className="anticon anticon-verticle-left slide-buy" />
-            <i className="anticon anticon-verticle-left slide-sell" />
+            <Icon type="vertical-left" className="slide-buy" />
+            <Icon type="vertical-right" className="slide-sell" />
           </div>
         </span>
       </Tooltip>,
@@ -44,7 +44,7 @@ class OrderBook extends Component {
           className={classnames('simple-btn m-hide', { active: mode === 'buy' })}
           onClick={this.handleModeChange.bind(this, 'buy')}
         >
-          <i className="anticon anticon-verticle-left slide-buy" />
+          <Icon type="vertical-left" className="slide-buy" />
         </span>
       </Tooltip>,
       <Tooltip title={<FormattedMessage id="orderbook_sell" />} key="2">
@@ -52,7 +52,7 @@ class OrderBook extends Component {
           className={classnames('simple-btn m-hide', { active: mode === 'sell' })}
           onClick={this.handleModeChange.bind(this, 'sell')}
         >
-          <i className="anticon anticon-verticle-left slide-sell" />
+          <Icon type="vertical-right" className="slide-sell" />
         </span>
       </Tooltip>,
       <Tooltip title={<FormattedMessage id="orderbook_deep" />} key="3">
