@@ -122,6 +122,8 @@ const model = {
       const bid = { ...originBid };
       bid.error.type = !payload;
       bid.type = payload;
+      bid.price = undefined;
+      bid.amount = undefined;
       yield put({ type: 'updateBid', bid });
     },
     * updateAskType({ payload }, { select, put }) {
@@ -129,6 +131,8 @@ const model = {
       const ask = { ...originAsk };
       ask.error.type = !payload;
       ask.type = payload;
+      ask.price = undefined;
+      ask.amount = undefined;
       yield put({ type: 'updateAsk', ask });
     },
     * submitBidOrder(_, { select, put }) {

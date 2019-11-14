@@ -73,7 +73,7 @@ const model = {
           yield put({
             type: 'utils/pushMessage',
             payload: {
-              message: `messagecenter_order_${p.kind}_done`,
+              message: `messagecenter_order_${p.kind}_${p.ord_type}_done`,
               from: 'trade',
               level: 'info',
               data: {

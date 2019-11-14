@@ -34,11 +34,7 @@ class MyOrders extends Component {
       dataIndex: 'kind',
       key: 'kind',
       className: 'kind',
-      render: (text, record) => {
-        console.log('text', text);
-        console.log('record', record);
-        return (text === 'ask' ? <span className="red-text"><FormattedMessage id="order_sell" />(<FormattedMessage id={`order_type_${record.ord_type}`} />)</span> : <span className="green-text"><FormattedMessage id="order_buy" />(<FormattedMessage id={`order_type_${record.ord_type}`} />) </span>);
-      },
+      render: (text, record) => (text === 'ask' ? <span className="red-text"><FormattedMessage id="order_sell" />(<FormattedMessage id={`order_type_${record.ord_type}`} />)</span> : <span className="green-text"><FormattedMessage id="order_buy" />(<FormattedMessage id={`order_type_${record.ord_type}`} />) </span>),
     }, {
     //   title: <FormattedMessage id="myorder_type" />,
     //   dataIndex: 'type',
