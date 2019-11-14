@@ -133,7 +133,7 @@ const model = {
         dispatch({ type: 'queryPrices' });
       }
 
-      // 去掉定时请求市场数据
+      // 定时请求市场数据
       // setInterval(qp, 30000);
       qp();
     },
@@ -171,7 +171,7 @@ const model = {
         yield put({
           type: 'utils/pushMessage',
           payload: {
-            message: `messagecenter_order_${payload.type}_success`,
+            message: `messagecenter_order_${payload.type}_${data.type}_success`,
             from: 'trade',
             level: 'info',
             data: {

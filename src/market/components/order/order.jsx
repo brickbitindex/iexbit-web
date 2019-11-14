@@ -187,20 +187,25 @@ class Order extends Component {
           <Select
             className={classnames('order-item', { error: error.type })}
             placeholder={i18n.order_type}
-            defaultValue={form.type.value}
+            // defaultValue={form.type.value}
+            defaultValue={form.type}
             onChange={this.props.onTypeChange}
           >
-            {form.types.map(t => <Option value={t.value} key={t.value}><FormattedMessage id={`order_type_${t.value}`} /></Option>)}
+            {form.types.map(t => <Option value={t} key={t}><FormattedMessage id={`order_type_${t}`} /></Option>)}
           </Select>
         </div>
-        <div className="order-row">
-          <OrderInput
-            className={classnames('order-item', { error: error.price })}
-            value={form.price}
-            placeholder={i18n.order_price}
-            onChange={this.props.onPriceChange}
-            suffix={basicInfo.quote_unit.code}
-          />
+        <div className="order-row">{
+          form.type === 'limit' ?
+            <OrderInput
+              className={classnames('order-item', { error: error.price })}
+              value={form.price}
+              placeholder={i18n.order_price}
+              onChange={this.props.onPriceChange}
+              suffix={basicInfo.quote_unit.code}
+            />
+          :
+            <div className={classnames('order-item market-tips')}><FormattedMessage id="order_type_market_tips" /></div>
+        }
         </div>
         <div className="order-row">
           <OrderInput
@@ -212,17 +217,26 @@ class Order extends Component {
           />
         </div>
         <div className="order-row-trade">
-          <div className="order-label">
-            <FormattedMessage id="order_budget" />
-            {marketValue && <span className="order-item tt">
-              &nbsp;{marketValue}{basicInfo.quote_unit.code}
-            </span>}
-          </div>
+          {form.type === 'limit' ?
+            <div className="order-label">
+              <FormattedMessage id="order_budget" />
+              {marketValue && <span className="order-item tt">
+                &nbsp;{marketValue}{basicInfo.quote_unit.code}
+              </span>}
+            </div>
+            :
+            ''
+           }
           <div><FormattedMessage id="history_table_trades_fee" />: {exchangeFee}</div>
         </div>
-        <div className="order-row small">
-          <Slider step={0.1} value={sliderValue} handle={handle} onChange={this.handleSliderChange} />
-        </div>
+        {form.type === 'limit' ?
+          <div className="order-row small">
+            <Slider step={0.1} value={sliderValue} handle={handle} onChange={this.handleSliderChange} />
+          </div>
+          :
+          null
+        }
+
         {/* <div className="order-row small">
           <div className="order-lable">{''}</div>
           <div className="order-item order-amount-btns">

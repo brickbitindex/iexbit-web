@@ -2,10 +2,11 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { getDecimalCount } from '../lib/utils';
 
-const typeOptions = [
-  { value: 'limit', label: <FormattedMessage id="order_type_limit" /> },
-  // { value: 'market', label: <FormattedMessage id="order_type_market" /> },
-];
+// const typeOptions = [
+//   { value: 'limit', label: <FormattedMessage id="order_type_limit" /> },
+//   { value: 'market', label: <FormattedMessage id="order_type_market" /> },
+// ];
+const typeOptions = ['limit', 'market'];
 
 const numberReg = /^\d+(\.\d+)?$/;
 
@@ -21,9 +22,11 @@ function checkFormError(form) {
     error.type = true;
     result = true;
   }
-  if (!(price && price !== '' && numberReg.test(price))) {
-    error.price = true;
-    result = true;
+  if (type === 'limit') {
+    if (!(price && price !== '' && numberReg.test(price))) {
+      error.price = true;
+      result = true;
+    }
   }
   if (!(amount && amount !== '' && numberReg.test(amount))) {
     error.amount = true;
@@ -119,6 +122,8 @@ const model = {
       const bid = { ...originBid };
       bid.error.type = !payload;
       bid.type = payload;
+      bid.price = undefined;
+      bid.amount = undefined;
       yield put({ type: 'updateBid', bid });
     },
     * updateAskType({ payload }, { select, put }) {
@@ -126,6 +131,8 @@ const model = {
       const ask = { ...originAsk };
       ask.error.type = !payload;
       ask.type = payload;
+      ask.price = undefined;
+      ask.amount = undefined;
       yield put({ type: 'updateAsk', ask });
     },
     * submitBidOrder(_, { select, put }) {
@@ -141,7 +148,7 @@ const model = {
           payload: {
             type: 'bid',
             data: {
-              type: originBid.type.value,
+              type: originBid.type,
               price: originBid.price,
               amount: originBid.amount,
             },
@@ -169,7 +176,7 @@ const model = {
           payload: {
             type: 'ask',
             data: {
-              type: originAsk.type.value,
+              type: originAsk.type,
               price: originAsk.price,
               amount: originAsk.amount,
             },

@@ -10,6 +10,15 @@ $itemHeight: 30px;
     width: 100%;
     margin-bottom: 10px;
 
+    .market-tips{
+      line-height: $itemHeight;
+      background-color: #292a2e;
+      color: #aaa;
+      border: 1px solid #292A2E;
+      font-size: 12px;
+      padding-left: 11px;
+    }
+
     .ant-slider {
       margin: 0 6px;
 
