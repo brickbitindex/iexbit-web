@@ -15,7 +15,7 @@ import Mask from '../common/anonymousMask';
 Decimal.config({ toExpNeg: -16 });
 
 const Handle = Slider.Handle;
-const Option = { Select };
+const { Option } = Select;
 
 const handle = (props) => {
   const { value, dragging, index, ...restProps } = props;
@@ -157,6 +157,7 @@ class Order extends Component {
     let totalFee = 0;
     let fee = 0;
     let unit;
+
     if (type === 'buy') {
       fee = basicInfo.ask_config.fee_rate && basicInfo.ask_config.fee_rate.toString();
       totalFee = parseFloat(form.amount * fee || 0);

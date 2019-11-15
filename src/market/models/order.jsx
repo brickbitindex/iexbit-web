@@ -1,5 +1,5 @@
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+// import React from 'react';
+// import { FormattedMessage } from 'react-intl';
 import { getDecimalCount } from '../lib/utils';
 
 // const typeOptions = [
