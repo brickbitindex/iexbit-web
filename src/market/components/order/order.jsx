@@ -30,6 +30,12 @@ const handle = (props) => {
 };
 
 class Order extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: null,
+    };
+  }
   getBalance() {
     const { type, basicInfo } = this.props;
     const key = type === 'buy' ? basicInfo.quote_unit.code : basicInfo.base_unit.code;
@@ -61,13 +67,16 @@ class Order extends Component {
     const amount = this.props.form.amount || 0;
     const price = this.props.form.price || 0;
     let percent = 0;
+    if (balance.balance === 0) return 0;
     if (this.props.type === 'buy') {
       if (price) {
         percent = Math.round((amount * price) / balance.balance * 1000) / 10;
       }
     } else {
+      if (balance.balance === 0) return;
       percent = Math.round(amount / balance.balance * 1000) / 10;
     }
+    // if (isNaN(percent)) return 0;
     if (isNaN(percent)) return 0;
     return percent;
   }
