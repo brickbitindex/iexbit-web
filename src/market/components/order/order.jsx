@@ -61,6 +61,7 @@ class Order extends Component {
     const amount = this.props.form.amount || 0;
     const price = this.props.form.price || 0;
     let percent = 0;
+    if (balance.balance === 0) return 0;
     if (this.props.type === 'buy') {
       if (price) {
         percent = Math.round((amount * price) / balance.balance * 1000) / 10;
@@ -68,6 +69,7 @@ class Order extends Component {
     } else {
       percent = Math.round(amount / balance.balance * 1000) / 10;
     }
+    // if (isNaN(percent)) return 0;
     if (isNaN(percent)) return 0;
     return percent;
   }
