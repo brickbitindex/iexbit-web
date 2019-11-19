@@ -73,7 +73,6 @@ class Order extends Component {
         percent = Math.round((amount * price) / balance.balance * 1000) / 10;
       }
     } else {
-      if (balance.balance === 0) return;
       percent = Math.round(amount / balance.balance * 1000) / 10;
     }
     // if (isNaN(percent)) return 0;
