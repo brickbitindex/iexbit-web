@@ -30,12 +30,6 @@ const handle = (props) => {
 };
 
 class Order extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: null,
-    };
-  }
   getBalance() {
     const { type, basicInfo } = this.props;
     const key = type === 'buy' ? basicInfo.quote_unit.code : basicInfo.base_unit.code;
