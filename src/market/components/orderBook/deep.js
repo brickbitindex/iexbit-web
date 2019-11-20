@@ -7,8 +7,9 @@ export default function combineDeep(trades, step) {
   let deep = 0;
   const timedTrades = [];
   let pointer = -1;
-  for (let i = 0; i < trades.length; i += 1) {
-    const trade = trades[i];
+  const _trades = trades.filter(t => t[0]);
+  for (let i = 0; i < _trades.length; i += 1) {
+    const trade = _trades[i];
     const timedTrade = timedTrades[pointer];
     // 0.00015 -> 4位 -> 0.00015 * 10000 -> 1.5 -> 1
     const amount = new Decimal(trade[0]).div(step).toString().split('.')[0];
