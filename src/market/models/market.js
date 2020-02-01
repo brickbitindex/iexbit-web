@@ -22,6 +22,8 @@ const queryRate = () => fetch.get(QUERY.PRICE).catch(err => err);
 const queryPrices = () => fetch.get(QUERY.QUERY_PRICES).catch(err => err);
 
 
+let initDeepFixed;
+
 function getDecimalFixed(decimal) {
   if (new Decimal('1').lte(decimal)) return 0;
   return decimal.log().abs().toNumber();
@@ -69,6 +71,7 @@ function initCurrentBasicInfo() {
   currentBasicInfo.ask_config.pricescale = parseInt(new Decimal('1').div(currentBasicInfo.ask_config.price_minmov).toString(), 10);
   // 用于价格的fixed
   currentBasicInfo.ask_config.price_fixed = getDecimalFixed(currentBasicInfo.ask_config.price_minmov);
+  initDeepFixed = currentBasicInfo.ask_config.price_fixed;
   // 用于数量的fixed
   currentBasicInfo.ask_config.amount_fixed = getDecimalFixed(currentBasicInfo.ask_config.min_amount);
   currentBasicInfo.bid_config = {
@@ -106,6 +109,7 @@ const model = {
     },
     quoteUnitUsdtPrice: 1,
     datafeed: null,
+    currentDeepFixed: 0,
   },
   subscriptions: {
     // TODO:
@@ -114,7 +118,7 @@ const model = {
       const id = document.body.getAttribute('data-market_id') || '';
       const pairSymbol = pair.toLowerCase().replace('/', '_');
       const currentBasicInfo = initCurrentBasicInfo();
-
+      const currentDeepFixed = initDeepFixed;
       dispatch({
         type: 'updateState',
         payload: {
@@ -122,6 +126,7 @@ const model = {
           pair,
           pairSymbol,
           currentBasicInfo,
+          currentDeepFixed,
         },
       });
 
@@ -355,6 +360,17 @@ const model = {
         type: 'updateState',
         payload: {
           usdtRate: dataFee,
+        },
+      });
+    },
+    * updateCurrentDeepFixed({ payload }, { select, put }) {
+      const deepSelectOptions = yield select(({ market }) => market.currentBasicInfo.deepSelectOptions);
+      const currentFixed = deepSelectOptions[payload.currentDeepFixedKey].step;
+      const fixed = getDecimalCount(currentFixed);
+      yield put({
+        type: 'updateState',
+        payload: {
+          currentDeepFixed: fixed,
         },
       });
     },
