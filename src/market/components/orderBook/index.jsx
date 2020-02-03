@@ -222,10 +222,13 @@ function mapStateToProps({ market, account }) {
   };
 }
 
-const DeepOption = injectIntl(({ i, deepSelect, intl }) => (
-  <option value={i.toString()} key={i}>{deepSelect.text(intl)}</option>
-));
+// const DeepOption = injectIntl(({ i, deepSelect, intl }) => (
+//   <option value={i.toString()} key={i}>{deepSelect.text(intl)}</option>;
+// ));
 
+const DeepOption = injectIntl(({ i, deepSelect }) => (
+  <option value={i.toString()} key={i}>{deepSelect.step}</option>
+));
 
 export default wrapWithPanel(connect(mapStateToProps)(OrderBook), {
   title: <span />,
