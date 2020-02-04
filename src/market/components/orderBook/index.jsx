@@ -223,7 +223,7 @@ function mapStateToProps({ market, account }) {
 }
 
 // const DeepOption = injectIntl(({ i, deepSelect, intl }) => (
-//   <option value={i.toString()} key={i}>{deepSelect.text(intl)}</option>;
+//   <option value={i.toString()} key={i}>{deepSelect.text(intl)}</option>
 // ));
 
 const DeepOption = injectIntl(({ i, deepSelect }) => (

@@ -9,8 +9,9 @@ import Decimal from 'decimal.js-light';
 import OrderInput from './input';
 import OrderButton from './button';
 // import Tooltip from '../common/tooltip';
-import { Select, Tooltip, Modal } from '../../lib/antd';
+import { Select, Tooltip, Modal, message } from '../../lib/antd';
 import Mask from '../common/anonymousMask';
+import { format } from '../../lib/utils';
 
 Decimal.config({ toExpNeg: -16 });
 
@@ -75,10 +76,23 @@ class Order extends Component {
   }
   @autobind
   handleSubmit() {
-    const { anonymous, trades, i18n, form } = this.props;
+    const { anonymous, trades, i18n, form, basicInfo } = this.props;
     if (anonymous) return;
     const currentPrice = trades.length ? trades[0].price : 0;
-    if (form.price > currentPrice * 1.25 || form.price < currentPrice * 0.75) {
+    // if (parseFloat(form.price) === 0) {
+    //   message.error(format(i18n.order_min_price_error, { minmov: basicInfo.bid_config.price_minmov, bid: basicInfo.quote_unit.code }));
+    //   return;
+    // }
+    // if (parseFloat(form.amount) === 0) {
+    //   message.error(format(i18n.order_min_amount_error, { minmov: basicInfo.bid_config.min_amount, ask: basicInfo.base_unit.code }));
+    //   return;
+    // }
+    // const totalfunds = parseFloat(form.price) * parseFloat(form.amount);
+    // if (totalfunds < parseFloat(basicInfo.bid_config.min_funds)) {
+    //   message.error(format(i18n.order_min_volume, { funds: basicInfo.bid_config.min_funds, bid: basicInfo.quote_unit.code }));
+    //   return;
+    // }
+    if (parseFloat(form.price) > parseFloat(currentPrice) * 1.25 || parseFloat(form.price) < parseFloat(currentPrice) * 0.75) {
       Modal.confirm({
         title: i18n.order_tips_title,
         content: (<div>

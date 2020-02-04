@@ -66,6 +66,7 @@ function initCurrentBasicInfo() {
     fee_rate: new Decimal(origin.ask_config.fee_rate),
     price_minmov: new Decimal(origin.ask_config.price_minmov),
     min_amount: new Decimal(origin.ask_config.min_amount),
+    min_funds: new Decimal(origin.ask_config.min_funds),
   };
   // 用于chart的pricescale
   currentBasicInfo.ask_config.pricescale = parseInt(new Decimal('1').div(currentBasicInfo.ask_config.price_minmov).toString(), 10);
@@ -78,6 +79,7 @@ function initCurrentBasicInfo() {
     fee_rate: new Decimal(origin.bid_config.fee_rate),
     price_minmov: new Decimal(origin.bid_config.price_minmov),
     min_amount: new Decimal(origin.bid_config.min_amount),
+    min_funds: new Decimal(origin.bid_config.min_funds),
   };
   currentBasicInfo.bid_config.pricescale = parseInt(new Decimal('1').div(currentBasicInfo.bid_config.price_minmov).toString(), 10);
   currentBasicInfo.bid_config.price_fixed = getDecimalFixed(currentBasicInfo.bid_config.price_minmov);
