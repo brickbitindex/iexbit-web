@@ -89,7 +89,7 @@ class Order extends Component {
     }
     const totalfunds = parseFloat(form.price) * parseFloat(form.amount);
     if (totalfunds < parseFloat(basicInfo.bid_config.min_funds)) {
-      message.error(format(i18n.order_min_volume, { funds: basicInfo.bid_config.min_funds, bid: basicInfo.quote_unit.code }));
+      message.error(format(i18n.order_min_funds_error, { funds: basicInfo.bid_config.min_funds, bid: basicInfo.quote_unit.code }));
       return;
     }
     if (parseFloat(form.price) > parseFloat(currentPrice) * 1.25 || parseFloat(form.price) < parseFloat(currentPrice) * 0.75) {
