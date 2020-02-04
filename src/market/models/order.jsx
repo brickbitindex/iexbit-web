@@ -1,7 +1,6 @@
 // import React from 'react';
 // import { FormattedMessage } from 'react-intl';
 import { getDecimalCount } from '../lib/utils';
-
 // const typeOptions = [
 //   { value: 'limit', label: <FormattedMessage id="order_type_limit" /> },
 //   { value: 'market', label: <FormattedMessage id="order_type_market" /> },
@@ -23,12 +22,12 @@ function checkFormError(form) {
     result = true;
   }
   if (type === 'limit') {
-    if (!(price && price !== '' && numberReg.test(price))) {
+    if (!(price && price !== '' && numberReg.test(price) && parseFloat(price) !== 0)) {
       error.price = true;
       result = true;
     }
   }
-  if (!(amount && amount !== '' && numberReg.test(amount))) {
+  if (!(amount && amount !== '' && numberReg.test(amount) && parseFloat(amount) !== 0)) {
     error.amount = true;
     result = true;
   }

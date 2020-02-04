@@ -18,3 +18,18 @@ export function formatMessage({ intl, id, values }) {
   return intl.formatMessage(messages.message, values);
 }
 
+export function format(str, ...args) {
+  const t = typeof args[0];
+  let key;
+  if (args.length === 0) {
+    return str;
+  }
+  args = (t === 'string' || t === 'number') ?
+    args : args[0];
+
+  for (key in args) {
+    str = str.replace(new RegExp('\\{' + key + '\\}', 'gi'), args[key]);
+  }
+  return str;
+}
+

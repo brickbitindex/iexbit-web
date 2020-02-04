@@ -135,6 +135,12 @@ class OrderBook extends Component {
   }
   @autobind
   handleDeepChange(deep) {
+    this.props.dispatch({
+      type: 'market/updateCurrentDeepFixed',
+      payload: {
+        currentDeepFixedKey: deep.target.value,
+      },
+    });
     this.setState({
       deep: deep.target.value,
     }, () => {
@@ -142,7 +148,7 @@ class OrderBook extends Component {
     });
   }
   render() {
-    const { data, basicInfo, myOrders } = this.props;
+    const { data, basicInfo, myOrders, currentDeepFixed } = this.props;
     const bidMyOrders = myOrders.filter(node => node.kind === 'bid');
     const askMyOrders = myOrders.filter(node => node.kind === 'ask');
     const { mode } = this.state;
@@ -169,7 +175,7 @@ class OrderBook extends Component {
                 <div className="order-book-bar" style={{ width: `${row[3] * 100 / max}%` }} />
                 <div className="order-book-row-content">
                   <div className="order-book-col price">
-                    <tt className="red-text"><ZeroFormattedNumber value={row[0]} fixed={basicInfo.ask_config.price_fixed} /></tt>
+                    <tt className="red-text"><ZeroFormattedNumber value={row[0]} fixed={currentDeepFixed} /></tt>
                   </div>
                   <div className="order-book-col amount">
                     <tt><ZeroFormattedNumber value={row[1]} fixed={basicInfo.ask_config.amount_fixed} /></tt>
@@ -189,7 +195,7 @@ class OrderBook extends Component {
                 <div className="order-book-bar" style={{ width: `${row[3] * 100 / max}%` }} />
                 <div className="order-book-row-content">
                   <div className="order-book-col price">
-                    <tt className="green-text"><ZeroFormattedNumber value={row[0]} fixed={basicInfo.bid_config.price_fixed} /></tt>
+                    <tt className="green-text"><ZeroFormattedNumber value={row[0]} fixed={currentDeepFixed} /></tt>
                   </div>
                   <div className="order-book-col amount">
                     <tt><ZeroFormattedNumber value={row[1]} fixed={basicInfo.bid_config.amount_fixed} /></tt>
@@ -211,14 +217,18 @@ function mapStateToProps({ market, account }) {
   return {
     data: market.orderBook,
     basicInfo: market.currentBasicInfo,
+    currentDeepFixed: market.currentDeepFixed,
     myOrders: account.orders,
   };
 }
 
-const DeepOption = injectIntl(({ i, deepSelect, intl }) => (
-  <option value={i.toString()} key={i}>{deepSelect.text(intl)}</option>
-));
+// const DeepOption = injectIntl(({ i, deepSelect, intl }) => (
+//   <option value={i.toString()} key={i}>{deepSelect.text(intl)}</option>
+// ));
 
+const DeepOption = injectIntl(({ i, deepSelect }) => (
+  <option value={i.toString()} key={i}>{deepSelect.step}</option>
+));
 
 export default wrapWithPanel(connect(mapStateToProps)(OrderBook), {
   title: <span />,
