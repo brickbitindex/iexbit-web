@@ -48,7 +48,7 @@ function parseJSON(response) {
 function processData(data) {
   if (data.success === false) {
     // TODO: 兼容老版本
-    if (data.message) {
+    if (data.message && typeof (data.message) === 'string') {
       message.error(data.message);
     } else {
       data.errors.forEach(e => message.error(e.message ? e.message : e));
@@ -58,6 +58,7 @@ function processData(data) {
 }
 
 function catchError(error) {
+  console.log('error', error);
   if (error.message.slice(1, 4) !== '401') message.error(error.message);
   return {
     success: false,
