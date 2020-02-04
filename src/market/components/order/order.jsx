@@ -79,19 +79,19 @@ class Order extends Component {
     const { anonymous, trades, i18n, form, basicInfo } = this.props;
     if (anonymous) return;
     const currentPrice = trades.length ? trades[0].price : 0;
-    // if (parseFloat(form.price) === 0) {
-    //   message.error(format(i18n.order_min_price_error, { minmov: basicInfo.bid_config.price_minmov, bid: basicInfo.quote_unit.code }));
-    //   return;
-    // }
-    // if (parseFloat(form.amount) === 0) {
-    //   message.error(format(i18n.order_min_amount_error, { minmov: basicInfo.bid_config.min_amount, ask: basicInfo.base_unit.code }));
-    //   return;
-    // }
-    // const totalfunds = parseFloat(form.price) * parseFloat(form.amount);
-    // if (totalfunds < parseFloat(basicInfo.bid_config.min_funds)) {
-    //   message.error(format(i18n.order_min_volume, { funds: basicInfo.bid_config.min_funds, bid: basicInfo.quote_unit.code }));
-    //   return;
-    // }
+    if (parseFloat(form.price) === 0) {
+      message.error(format(i18n.order_min_price_error, { minmov: basicInfo.bid_config.price_minmov, bid: basicInfo.quote_unit.code }));
+      return;
+    }
+    if (parseFloat(form.amount) === 0) {
+      message.error(format(i18n.order_min_amount_error, { minmov: basicInfo.bid_config.min_amount, ask: basicInfo.base_unit.code }));
+      return;
+    }
+    const totalfunds = parseFloat(form.price) * parseFloat(form.amount);
+    if (totalfunds < parseFloat(basicInfo.bid_config.min_funds)) {
+      message.error(format(i18n.order_min_volume, { funds: basicInfo.bid_config.min_funds, bid: basicInfo.quote_unit.code }));
+      return;
+    }
     if (parseFloat(form.price) > parseFloat(currentPrice) * 1.25 || parseFloat(form.price) < parseFloat(currentPrice) * 0.75) {
       Modal.confirm({
         title: i18n.order_tips_title,
