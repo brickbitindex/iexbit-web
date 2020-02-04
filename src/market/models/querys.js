@@ -58,7 +58,6 @@ function processData(data) {
 }
 
 function catchError(error) {
-  console.log('error', error);
   if (error.message.slice(1, 4) !== '401') message.error(error.message);
   return {
     success: false,

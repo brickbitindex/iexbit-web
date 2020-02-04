@@ -189,8 +189,6 @@ const model = {
             },
           },
         });
-      } else {
-        console.log('response', response);
       }
     },
     * queryPrices(_, { select, call, put }) {
