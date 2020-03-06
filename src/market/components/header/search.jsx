@@ -22,8 +22,8 @@ const localeEntertainment = {
 function reducePrices(data, locale) {
   let ret = {};
   const carrotMarket = {};
-  const normalData = data.filter(node => !node.innovation);
-  normalData.forEach((node) => {
+  // const normalData = data.filter(node => !node.innovation);
+  data.forEach((node) => {
     const names = node.name.split('/');
     if (!ret[names[1]]) {
       ret[names[1]] = [];
@@ -50,25 +50,31 @@ function reducePrices(data, locale) {
     return 1;
   });
 
-  // 加入创新区
-  const innovationData = data.filter(node => node.innovation);
-  const innovationMarket = [];
-  innovationData.forEach((node) => {
-    const names = node.name.split('/');
-    innovationMarket.push({
-      ...node,
-      currency: names[0],
-    });
-  });
-  ret.push({
-    // TODO: 语言
-    market: localeMap[locale],
-    currencies: innovationMarket,
-  });
+  // // 加入创新区
+  // const innovationData = data.filter(node => node.innovation);
+  // const innovationMarket = [];
+  // innovationData.forEach((node) => {
+  //   const names = node.name.split('/');
+  //   innovationMarket.push({
+  //     ...node,
+  //     currency: names[0],
+  //   });
+  // });
+//   ret.push({
+//     // TODO: 语言
+//     market: localeMap[locale],
+//     currencies: innovationMarket,
+//   });
 
- // 加入娱乐区
-  if (carrotMarket.currencies) {
-    ret.push(carrotMarket);
+//  // 加入娱乐区
+//   if (carrotMarket.currencies) {
+//     ret.push(carrotMarket);
+//   }
+
+  const usdtMarket = ret.filter(item => item.market === 'USDT')[0];
+  if (usdtMarket) {
+    ret = ret.filter(item => item.market !== 'USDT');
+    ret.unshift(usdtMarket);
   }
 
   return ret;
