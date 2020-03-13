@@ -56,7 +56,6 @@ class WrappedTabPanelComponent extends Component {
   render() {
     const { current } = this.state;
     const { loadings, brbDeductionNumber } = this.props;
-    console.log('brbDeductionNumber', brbDeductionNumber);
     const loading = loadings[current];
     const outerClassName = this.props.className;
     const brbOperations = (
