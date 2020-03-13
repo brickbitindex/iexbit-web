@@ -60,7 +60,6 @@ class IActionCable extends Component {
       //     level: 'warn',
       //   },
       // });
-      console.log('text_disconnect');
     }
     channalConnect[tag] = false;
   }

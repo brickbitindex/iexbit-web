@@ -25,6 +25,8 @@ const QUERY = {
   PRICE: '/web/settings/cny_price',
   // i18n
   UPDATE_LOCALE: '/web/members/language',
+  // brb抵扣
+  QUERY_DEDUCTION_NUMBER: 'https://assets.zjzsxhy.com/data/brb_discount.json',
 };
 
 const $token = document.querySelector('meta[name=csrf-token]');

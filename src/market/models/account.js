@@ -3,9 +3,15 @@
 import QUERY, { fetch } from './querys';
 import { message } from '../lib/antd';
 
+const $ = window.$;
+
 const deleteOrder = (id, type) => fetch.delete(QUERY.DELETE_ORDER(id, type)).catch(err => err);
 const queryHistoryLog = (payload, options) => fetch.get(QUERY.TRADES, payload, options).catch(err => err);
 const clearOrders = payload => fetch.post(QUERY.CLEAR_ORDERS, payload).catch(err => err);
+// 获取brb折扣值
+const queryBrbDeduction = () => new Promise((resolve) => {
+  $.ajax(QUERY.QUERY_DEDUCTION_NUMBER).done(data => resolve(data));
+});
 
 const marketId = window.document.body.dataset.market_id;
 const locale = window.locale;
@@ -24,6 +30,7 @@ const model = {
     },
     page: 1,
     count: 20,
+    brbDeductionNumber: '',
   },
   subscriptions: {
     setup({ dispatch }) {
@@ -116,6 +123,18 @@ const model = {
             },
           });
         }
+      }
+    },
+
+    * queryBrbDeduction({ _ }, { call, put }) {
+      const data = yield call(queryBrbDeduction);
+      if (data.success) {
+        yield put({
+          type: 'updateState',
+          payload: {
+            brbDeductionNumber: data.data.discount,
+          },
+        });
       }
     },
   },

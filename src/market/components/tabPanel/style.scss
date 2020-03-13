@@ -24,6 +24,11 @@ $primary-color: #F3CA82;
     &-content {
       height: calc(100% - 31px);
     }
+    &-extra-content {
+      margin-right: 10px;
+      height: 31px;
+      line-height: 31px;
+    }
   }
 
   .ant-table {
