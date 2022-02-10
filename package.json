@@ -50,7 +50,7 @@
     "json-loader": "^0.5.4",
     "less": "2.7.2",
     "less-loader": "^4.1.0",
-    "node-sass": "^3.4.2",
+    "node-sass": "^7.0.0",
     "postcss-loader": "^2.1.5",
     "react-transform-catch-errors": "^1.0.2",
     "react-transform-hmr": "^1.0.4",
