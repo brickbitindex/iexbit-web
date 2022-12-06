@@ -76,7 +76,7 @@
     "keymaster": "^1.6.2",
     "moment": "^2.19.4",
     "postcss-loader": "^2.1.5",
-    "qs": "^6.5.1",
+    "qs": "^6.7.3",
     "rc-slider": "^8.6.0",
     "rc-tooltip": "^3.7.0",
     "react": "^15.0.0",
